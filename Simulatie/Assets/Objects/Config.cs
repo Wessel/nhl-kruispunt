@@ -1,0 +1,60 @@
+using Newtonsoft.Json;
+using System;
+using UnityEngine;
+
+[Serializable]
+public class Config
+{
+  private static Config _instance;
+  private static readonly object _lock = new object();
+
+  [JsonProperty("method")]
+  public string Method { get; set; }
+
+  [JsonProperty("ip")]
+  public string IP { get; set; }
+
+  [JsonProperty("publish_port")]
+  public int PublishPort { get; set; }
+
+  [JsonProperty("listen_port")]
+  public int ListenPort { get; set; }
+
+  private Config() { }
+
+  public static Config Instance
+  {
+    get
+    {
+      lock (_lock)
+      {
+        if (_instance == null)
+        {
+          LoadConfig();
+        }
+        return _instance;
+      }
+    }
+  }
+
+  private static void LoadConfig()
+  {
+    try
+    {
+      TextAsset configText = Resources.Load<TextAsset>("config");
+      if (configText != null)
+      {
+        _instance = JsonConvert.DeserializeObject<Config>(configText.text);
+        Debug.Log("Config loaded successfully.");
+      }
+      else
+      {
+        Debug.LogError("Config file not found in Resources.");
+      }
+    }
+    catch (Exception ex)
+    {
+      Debug.LogError($"Error loading config: {ex.Message}");
+    }
+  }
+}

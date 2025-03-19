@@ -1,0 +1,7 @@
+{
+    "method": "tcp",
+    "ip": "localhost",
+    "publish_port": 12345,
+    "listen_port": 23456
+  }
+  
