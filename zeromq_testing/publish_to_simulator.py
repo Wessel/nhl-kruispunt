@@ -10,18 +10,20 @@ def main():
   publisher = context.socket(zmq.PUB)
 
   # Bind the publisher to a test port
-  publisher.bind("tcp://localhost:23456")
+  publisher.bind("tcp://*:5557")
 
   # Give subscribers time to connect (important for PUB/SUB)
   time.sleep(1)
 
   # Define a topic and message
-  topic = "python_test"
+  topic = "test"
   message = "Hello from Python!"
 
   # Send the message as two frames (topic + message)
-  publisher.send_multipart([topic.encode('utf-8'), message.encode('utf-8')])
-  print(f"📩 Message sent on topic '{topic}': {message}")
+  while True:
+    publisher.send_multipart([topic.encode('utf-8'), message.encode('utf-8')])
+    print(f"📩 Message sent on topic '{topic}': {message}")
+    time.sleep(1)
 
   # Allow some time for the message to be sent before shutting down
   time.sleep(1)

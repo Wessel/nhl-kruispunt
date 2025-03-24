@@ -40,13 +40,15 @@ public class Publisher : MonoBehaviour
     using (var pubSocket = new PublisherSocket())
     {
       pubSocket.Options.SendHighWatermark = 1000;
-      pubSocket.Bind($"{Config.Instance.Method}://{Config.Instance.IP}:{Config.Instance.PublishPort}");
-      Debug.Log($"Publisher bound to {Config.Instance.Method}://{Config.Instance.IP}:{Config.Instance.PublishPort}");
+      pubSocket.Bind($"{Config.Instance.Method}://*:{Config.Instance.PublishPort}");
+      Debug.Log($"Publisher bound to {Config.Instance.Method}://*:{Config.Instance.PublishPort}");
 
       while (_isRunning)
       {
-        string message = $"Message sent at {DateTime.Now}";
-        pubSocket.SendFrame(message);
+        string topic = "python_test";
+        string message = "doet de pub het al?";
+        pubSocket.SendMoreFrame(topic).SendFrame(message);
+        Debug.Log($"Published: ({topic}) {message}");
         Thread.Sleep(1000);
       }
     }

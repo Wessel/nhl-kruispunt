@@ -6,8 +6,8 @@ context = zmq.Context()
 # Create a SUB (Subscriber) socket
 subscriber = context.socket(zmq.SUB)
 
-# Connect to the Unity publisher
-unity_address = "tcp://localhost:12345"
+# Connect to the publisher
+unity_address = "tcp://192.168.56.24:5557"
 subscriber.connect(unity_address)
 
 # Subscribe to all topics
