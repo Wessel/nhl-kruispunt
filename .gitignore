@@ -2,8 +2,6 @@ tmp/
 src/tmp
 
 node_modules/
-
-obj/
-out/
+build/
 
 !.gitkeep
