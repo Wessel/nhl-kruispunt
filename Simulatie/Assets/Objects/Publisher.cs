@@ -40,8 +40,8 @@ public class Publisher : MonoBehaviour
     using (var pubSocket = new PublisherSocket())
     {
       pubSocket.Options.SendHighWatermark = 1000;
-      pubSocket.Bind($"{Config.Instance.Method}://*:{Config.Instance.PublishPort}");
-      Debug.Log($"Publisher bound to {Config.Instance.Method}://*:{Config.Instance.PublishPort}");
+      pubSocket.Bind($"{Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
+      Debug.Log($"Publisher bound to {Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
 
       while (_isRunning)
       {

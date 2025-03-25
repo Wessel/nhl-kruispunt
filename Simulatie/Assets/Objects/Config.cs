@@ -11,11 +11,14 @@ public class Config
   [JsonProperty("method")]
   public string Method { get; set; }
 
-  [JsonProperty("ip")]
-  public string IP { get; set; }
+  [JsonProperty("publish_ip")]
+  public string PublishIP { get; set; }
 
   [JsonProperty("publish_port")]
   public int PublishPort { get; set; }
+
+  [JsonProperty("listen_ip")]
+  public string ListenIP { get; set; }
 
   [JsonProperty("listen_port")]
   public int ListenPort { get; set; }
@@ -37,7 +40,7 @@ public class Config
     }
   }
 
-  private static void LoadConfig()
+  public static void LoadConfig()
   {
     try
     {
@@ -45,7 +48,6 @@ public class Config
       if (configText != null)
       {
         _instance = JsonConvert.DeserializeObject<Config>(configText.text);
-        Debug.Log("Config loaded successfully.");
       }
       else
       {

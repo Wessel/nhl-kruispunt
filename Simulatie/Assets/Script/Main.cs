@@ -5,7 +5,7 @@ public class MainController : MonoBehaviour
 {
   private void Start()
   {
-    Debug.Log("Initializing Message System...");
+    Config.LoadConfig();
     StartCoroutine(InvokeAfterDelay());
   }
 
@@ -18,8 +18,6 @@ public class MainController : MonoBehaviour
 
   private void OnApplicationQuit()
   {
-    Debug.Log("Shutting down Message System...");
-
     if (EventManager.Instance != null)
     {
       EventManager.Instance.onStopClient.Invoke();

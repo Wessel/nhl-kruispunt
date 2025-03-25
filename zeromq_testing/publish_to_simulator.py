@@ -10,13 +10,13 @@ def main():
   publisher = context.socket(zmq.PUB)
 
   # Bind the publisher to a test port
-  publisher.bind("tcp://*:5557")
+  publisher.bind("tcp://*:5556")
 
   # Give subscribers time to connect (important for PUB/SUB)
   time.sleep(1)
 
   # Define a topic and message
-  topic = "test"
+  topic = ""
   message = "Hello from Python!"
 
   # Send the message as two frames (topic + message)
