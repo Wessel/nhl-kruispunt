@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TrafficLight : MonoBehaviour
 {
-  public enum LightState { Red, Yellow, Green }
   public LightState currentLight;
 
   private SpriteRenderer spriteRenderer;
@@ -11,32 +10,11 @@ public class TrafficLight : MonoBehaviour
   public Sprite yellowLight;
   public Sprite greenLight;
 
-  public float redTime = 5f;
-  public float yellowTime = 1f;
-  public float greenTime = 5f;
-
   private void Start()
   {
     spriteRenderer = GetComponent<SpriteRenderer>();
-    StartCoroutine(TrafficCycle());
   }
-
-  IEnumerator TrafficCycle()
-  {
-    while (true)
-    {
-      SetLight(LightState.Red);
-      yield return new WaitForSeconds(redTime);
-
-      SetLight(LightState.Yellow);
-      yield return new WaitForSeconds(yellowTime);
-
-      SetLight(LightState.Green);
-      yield return new WaitForSeconds(greenTime);
-    }
-  }
-
-  void SetLight(LightState newState)
+  public void SetLight(LightState newState)
   {
     currentLight = newState;
     switch (newState)
