@@ -1,21 +1,21 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Splines;
+using Unity.Mathematics;
 
 public class CarMovement : MonoBehaviour
 {
-  public Transform target;
+  public SplineContainer road;
   public float speed = 5f;
-  private float currentSpeed;
 
   private bool isStopped = false;
   private TrafficLight currentTrafficLight;
 
+  private float t = 0f;
   private Rigidbody2D rb;
 
   void Start()
   {
     rb = GetComponent<Rigidbody2D>();
-    currentSpeed = speed;
   }
 
   void Update()
@@ -27,27 +27,32 @@ public class CarMovement : MonoBehaviour
     }
     else
     {
-      MoveTowardsTarget();
+      MoveOnRoad();
     }
   }
 
-  void MoveTowardsTarget()
+  private void MoveOnRoad()
   {
-    if (target == null) return;
+    // Move along the spline
+    t += (speed / road.Spline.GetLength()) * Time.deltaTime;
 
-    Vector2 direction = (target.position - transform.position).normalized;
-    rb.linearVelocity = direction * currentSpeed;
+    // Get position and tangent along the spline
+    Vector3 position = road.EvaluatePosition(t);
+    float3 tangent = road.EvaluateTangent(t);
 
-    // Rotate the object to face the target
-    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    // Calculate the angle in degrees
+    float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
+
+    // Apply position and rotation using Rigidbody
+    rb.MovePosition(position);
+    rb.MoveRotation(angle);
   }
 
-  public void StopCar()
+  private void StopCar()
   {
     isStopped = true;
   }
-  public void StartCar()
+  private void StartCar()
   {
     isStopped = false;
   }

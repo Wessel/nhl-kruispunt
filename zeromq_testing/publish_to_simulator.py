@@ -6,17 +6,18 @@ def main():
   # Create a ZeroMQ context
   context = zmq.Context()
 
+
   # Create a PUB (Publisher) socket
   publisher = context.socket(zmq.PUB)
 
   # Bind the publisher to a test port
-  publisher.bind("tcp://*:5556")
+  publisher.bind("tcp://10.121.17.133:5557")
 
   # Give subscribers time to connect (important for PUB/SUB)
   time.sleep(1)
 
   # Define a topic and message
-  topic = ""
+  topic = "test"
   message = "Hello from Python!"
 
   # Send the message as two frames (topic + message)

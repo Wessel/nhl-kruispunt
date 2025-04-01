@@ -8,7 +8,7 @@ public class TrafficLightController : MonoBehaviour
 	public float yellowTime = 1f;
 	public float greenTime = 5f;
 
-	public List<TrafficLight> trafficLights = new List<TrafficLight>();
+	public List<TrafficLight> trafficLights = new();
 
 	private void Start()
 	{
@@ -37,8 +37,7 @@ public class TrafficLightController : MonoBehaviour
     {
       if (child.CompareTag("TrafficLight"))
       {
-        TrafficLight trafficLight = child.GetComponent<TrafficLight>();
-        if (trafficLight != null)
+        if (child.TryGetComponent<TrafficLight>(out var trafficLight))
         {
           trafficLights.Add(trafficLight);
         }

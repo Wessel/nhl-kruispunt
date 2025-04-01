@@ -8,7 +8,7 @@ public class Subscriber : MonoBehaviour
 {
   private Thread _listenerThread;
   private bool _isListening;
-  private readonly ConcurrentQueue<string> _messageQueue = new ConcurrentQueue<string>();
+  private readonly ConcurrentQueue<string> _messageQueue = new();
   private SubscriberSocket _subSocket;
 
   private void Start()
