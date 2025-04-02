@@ -1,0 +1,7 @@
+{
+  "method": "tcp",
+  "publish_ip": "*",
+  "publish_port": 5557,
+  "listen_ip": "localhost",
+  "listen_port": 5556
+}
