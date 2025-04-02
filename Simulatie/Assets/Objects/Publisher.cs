@@ -45,8 +45,8 @@ public class Publisher : MonoBehaviour
 
       while (_isRunning)
       {
-        string topic = "python_test";
-        string message = "doet de pub het al?";
+        string topic = "simulatie_send";
+        string message = "Hallo vanuit mijn simulatie";
         pubSocket.SendMoreFrame(topic).SendFrame(message);
         Debug.Log($"Published: ({topic}) {message}");
         Thread.Sleep(1000);
