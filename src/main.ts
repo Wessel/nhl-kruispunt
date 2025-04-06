@@ -1,5 +1,5 @@
-import { ZmqSubscriber } from "./subscriber";
-import { ZmqPublisher } from "./publisher";
+import { ZmqSubscriber } from "./zeromq/subscriber";
+import { ZmqPublisher } from "./zeromq/publisher";
 
 const subscriber = new ZmqSubscriber()
   .connect("tcp://192.168.56.243:5557")
