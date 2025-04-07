@@ -2,16 +2,16 @@ import { TrafficLight, TrafficLightState } from "./trafficLight";
 
 export class Lane {
   public name: string = '';
-  public trafficLights: TrafficLight[] = [];
+  private _trafficLights: TrafficLight[] = [];
 
-  lane(name: string): this {
+  constructor(name: string) {
     this.name = name;
 
     return this;
   }
 
   bind_trafficlight(trafficlight: TrafficLight): this {
-    this.trafficLights.push(trafficlight);
+    this._trafficLights.push(trafficlight);
 
     return this;
   }
@@ -19,7 +19,7 @@ export class Lane {
   get_state_map(): { [key: string]: TrafficLightState } {
     const stateMap: { [key: string]: TrafficLightState } = {};
 
-    this.trafficLights.forEach((trafficLight) => {
+    this._trafficLights.forEach((trafficLight) => {
       stateMap[trafficLight.id] = trafficLight.state;
     });
 

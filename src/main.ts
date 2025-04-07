@@ -1,24 +1,20 @@
-import { ZmqSubscriber } from "./zeromq/subscriber";
-import { ZmqPublisher } from "./zeromq/publisher";
+import { Controller } from "./controller";
+import { Lane } from "./lane";
+import { TrafficLight } from "./trafficLight";
+import {  Stopwatch } from "./stopwatch";
 
-const subscriber = new ZmqSubscriber()
-  .connect("tcp://192.168.56.243:5557")
-  .subscribe('python_test', (topic, message) => {
-    console.log(`Received: [${topic}] ${message}`);
-  })
-  .bind();
+const clock = new Stopwatch();
 
-const publisher = new ZmqPublisher()
-  .bind("tcp://*:5557");
+clock.set_speed(1);
 
-setInterval(async() => {
-  const message = `Message ${Math.random()}`;
-  console.log(`Publishing: ${message}`);
-  publisher.send("python_test", message);
-}, 1000);
+const lane1: Lane = new Lane("lane1")
+  .bind_trafficlight(new TrafficLight('1.1', clock, 5000));
 
-process.on("SIGINT", async () => {
-  publisher.close();
-  subscriber.close();
-  process.exit();
-});
+const controller: Controller = new Controller(5557, clock)
+  .bind_lane(lane1)
+  .connect_to_simulator('tcp://localhost:5557');
+
+
+setInterval(() => {
+  controller.transmit_state();
+}, Math.round(1000 / clock.speed));
