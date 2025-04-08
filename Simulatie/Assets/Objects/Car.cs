@@ -2,20 +2,21 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 
-public class CarMovement : MonoBehaviour
+public class Car : MonoBehaviour
 {
   public SplineContainer road;
   public float speed = 5f;
+  public float splineDistance = 0f;
 
   private bool isStopped = false;
   private TrafficLight currentTrafficLight;
+  private Rigidbody2D rigidBody;
+  private BoxCollider2D boxCollider;
 
-  private float t = 0f;
-  private Rigidbody2D rb;
-
-  void Start()
+  void Awake()
   {
-    rb = GetComponent<Rigidbody2D>();
+    rigidBody = GetComponent<Rigidbody2D>();
+    boxCollider = GetComponent<BoxCollider2D>();
   }
 
   void Update()
@@ -23,7 +24,7 @@ public class CarMovement : MonoBehaviour
     CheckTrafficLight();
     if (isStopped)
     {
-      rb.linearVelocity = Vector2.zero;
+      rigidBody.linearVelocity = Vector2.zero;
     }
     else
     {
@@ -34,19 +35,43 @@ public class CarMovement : MonoBehaviour
   private void MoveOnRoad()
   {
     // Move along the spline
-    t += (speed / road.Spline.GetLength()) * Time.deltaTime;
+    splineDistance += (speed / road.Spline.GetLength()) * Time.deltaTime;
 
     // Get position and tangent along the spline
-    Vector3 position = road.EvaluatePosition(t);
-    float3 tangent = road.EvaluateTangent(t);
+    Vector3 position = road.EvaluatePosition(splineDistance);
+    float3 tangent = road.EvaluateTangent(splineDistance);
 
     // Calculate the angle in degrees
     float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
 
     // Apply position and rotation using Rigidbody
-    rb.MovePosition(position);
-    rb.MoveRotation(angle);
+    rigidBody.MovePosition(position);
+    rigidBody.MoveRotation(angle);
+
+    // Calculate the new size and offset for the box collider
+    Vector2 size = boxCollider.size;
+    Vector2 offset = boxCollider.offset;
+
+    // Rotate the size and offset based on the angle
+    float rad = angle * Mathf.Deg2Rad;
+    float cos = Mathf.Cos(rad);
+    float sin = Mathf.Sin(rad);
+
+    Vector2 newSize = new Vector2(
+        Mathf.Abs(size.x * cos) + Mathf.Abs(size.y * sin),
+        Mathf.Abs(size.x * sin) + Mathf.Abs(size.y * cos)
+    );
+
+    Vector2 newOffset = new Vector2(
+        offset.x * cos - offset.y * sin,
+        offset.x * sin + offset.y * cos
+    );
+
+    // Apply the new size and offset to the box collider
+    boxCollider.size = newSize;
+    boxCollider.offset = newOffset;
   }
+
 
   private void StopCar()
   {
@@ -67,7 +92,11 @@ public class CarMovement : MonoBehaviour
 				currentTrafficLight = trafficLight;
 			}
 		}
-	}
+    else if (other.CompareTag("Car"))
+    {
+      StopCar();
+    }
+  }
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
@@ -79,7 +108,11 @@ public class CarMovement : MonoBehaviour
 				currentTrafficLight = null;
 			}
 		}
-	}
+    else if (other.CompareTag("Car"))
+    {
+      StartCar();
+    }
+  }
 
   // Check the current light state and act accordingly
   private void CheckTrafficLight()
@@ -99,5 +132,10 @@ public class CarMovement : MonoBehaviour
           break;
       }
     }
+  }
+  public void SetNewRoad(SplineContainer newRoad)
+  {
+    road = newRoad;
+    splineDistance = 0f;
   }
 }
