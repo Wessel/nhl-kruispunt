@@ -22,7 +22,7 @@ export class Controller {
     this._clock = clock;
 
     this._publisher = new ZmqPublisher(this._heartbeatDelay, this._clock);
-
+``
     this._publisher
       .bind('tcp://*:' + publisher_port)
       .toggle_heartbeat_loop();
@@ -49,7 +49,7 @@ export class Controller {
   }
 
   transmit_state(): this {
-    const state_map: { [key: string]: { [key: string]: TrafficLightState } } = this.get_state_map();
+    const state_map: { [key: string]: TrafficLightState } = this.get_state_map();
     const state_message: string = JSON.stringify(state_map);
 
     this._publisher.send('stoplichten', state_message);
@@ -57,12 +57,14 @@ export class Controller {
     return this;
   }
 
-  get_state_map(): { [key: string]: { [key: string]: TrafficLightState } } {
-    const state_map: { [key: string]: { [key: string]: TrafficLightState } } = {};
+  get_state_map(): { [key: string]: TrafficLightState } {
+    const state_map: { [key: string]: TrafficLightState } = {};
 
     for (const lane of this.lanes) {
       for (const lane_name in lane) {
-        state_map[lane_name] = lane[lane_name].get_state_map();
+        for (const l in lane[lane_name].get_state_map()) {
+          state_map[l] = lane[lane_name].get_state_map()[l];
+        }
       }
     }
 

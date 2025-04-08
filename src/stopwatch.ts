@@ -84,7 +84,9 @@ export class Stopwatch {
    */
   set_speed(multiplier: number): Stopwatch {
     if (multiplier > 0) {
-      this._start = performance.now() - this.duration / this.speed;
+      this._end = null;
+      this._start = performance.now();
+
       this.speed = multiplier;
     }
 

@@ -1,55 +1,64 @@
-lockfileVersion: '6.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  zeromq:
-    specifier: ^6.4.1
-    version: 6.4.1
+importers:
 
-devDependencies:
-  '@types/node':
-    specifier: ^22.13.12
-    version: 22.14.0
-  typescript:
-    specifier: ^5.8.2
-    version: 5.8.3
+  .:
+    dependencies:
+      zeromq:
+        specifier: ^6.4.1
+        version: 6.4.1
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.12
+        version: 22.14.0
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
 
 packages:
 
-  /@types/node@22.14.0:
+  '@types/node@22.14.0':
     resolution: {integrity: sha512-Kmpl+z84ILoG+3T/zQFyAJsU6EPTmOCj8/2+83fSN6djd6I4o7uOuGIH6vq3PrjY5BGitSbFuMN18j3iknubbA==}
-    dependencies:
-      undici-types: 6.21.0
-    dev: true
 
-  /cmake-ts@0.6.1:
+  cmake-ts@0.6.1:
     resolution: {integrity: sha512-uUn2qGhf20j8W/sQ7+UnvvqO1zNccqgbLgwRJi7S23FsjMWJqxvKK80Vc+tvLNKfpJzwH0rgoQD1l24SMnX0yg==}
     hasBin: true
-    dev: false
 
-  /node-addon-api@8.3.1:
+  node-addon-api@8.3.1:
     resolution: {integrity: sha512-lytcDEdxKjGJPTLEfW4mYMigRezMlyJY8W4wxJK8zE533Jlb8L8dRuObJFWg2P+AuOIxoCgKF+2Oq4d4Zd0OUA==}
     engines: {node: ^18 || ^20 || >= 21}
-    dev: false
 
-  /typescript@5.8.3:
+  typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
-  /undici-types@6.21.0:
+  undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-    dev: true
 
-  /zeromq@6.4.1:
+  zeromq@6.4.1:
     resolution: {integrity: sha512-e9CHngR7wH7Cv7k1ASfYh/k8DurBD1Myx28EyAEiWKhqyhGy30lP3M6NBNN2gb6WmVqNq+KJGEJXO7vTvFW2bA==}
     engines: {node: '>= 12'}
-    requiresBuild: true
+
+snapshots:
+
+  '@types/node@22.14.0':
+    dependencies:
+      undici-types: 6.21.0
+
+  cmake-ts@0.6.1: {}
+
+  node-addon-api@8.3.1: {}
+
+  typescript@5.8.3: {}
+
+  undici-types@6.21.0: {}
+
+  zeromq@6.4.1:
     dependencies:
       cmake-ts: 0.6.1
       node-addon-api: 8.3.1
-    dev: false

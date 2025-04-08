@@ -1,9 +1,9 @@
 import { Stopwatch } from "./stopwatch";
 
 export enum TrafficLightState {
-  RED = 'red',
-  GREEN = 'green',
-  YELLOW = 'yellow',
+  RED = 'rood',
+  GREEN = 'groen',
+  YELLOW = 'geel',
 };
 
 export class TrafficLight {
