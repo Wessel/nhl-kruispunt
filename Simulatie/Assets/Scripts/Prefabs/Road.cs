@@ -1,23 +1,31 @@
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class Road : MonoBehaviour
 {
-    void Start()
-    {
-        EnsureBoxColliderSize();
+    private RoadType roadType;
+    private SplineContainer spline;
+  void Awake()
+  {
+    spline = GetComponent<SplineContainer>();
+  }
+  public float getLength()
+  {
+    return spline.Spline.GetLength();
   }
 
-    
-    void Update()
-    {
-        
-    }
+  public Vector3 getNewPosition(float distance)
+  {
+    return spline.Spline.EvaluatePosition(distance);
+  }
 
-    private void EnsureBoxColliderSize()
-    {
-      SpriteRenderer sr = GetComponent<SpriteRenderer>();
-      BoxCollider2D col = GetComponent<BoxCollider2D>();
+  public Vector3 getNewTangent(float distance)
+  {
+    return spline.Spline.EvaluateTangent(distance);
+  }
 
-      if (col != null) col.size = sr.size;
-    }
+  public RoadType getRoadType()
+  {
+    return roadType;
+  }
 }
