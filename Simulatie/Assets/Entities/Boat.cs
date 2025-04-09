@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Boat : Vehicle
+public class Boat : MovingEntity
 {
   protected override void Awake()
   {

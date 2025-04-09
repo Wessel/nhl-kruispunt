@@ -3,8 +3,8 @@ using UnityEngine.Splines;
 
 public class Road : MonoBehaviour
 {
-    private RoadType roadType;
-    private SplineContainer spline;
+  public RoadType roadType;
+  private SplineContainer spline;
   void Awake()
   {
     spline = GetComponent<SplineContainer>();
@@ -16,12 +16,12 @@ public class Road : MonoBehaviour
 
   public Vector3 getNewPosition(float distance)
   {
-    return spline.Spline.EvaluatePosition(distance);
+    return spline.EvaluatePosition(distance);
   }
 
   public Vector3 getNewTangent(float distance)
   {
-    return spline.Spline.EvaluateTangent(distance);
+    return spline.EvaluateTangent(distance);
   }
 
   public RoadType getRoadType()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bike : Vehicle
+public class Bike : MovingEntity
 {
   protected override void Awake()
   {
