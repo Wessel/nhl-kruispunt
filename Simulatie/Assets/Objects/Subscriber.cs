@@ -47,7 +47,7 @@ public class Subscriber : MonoBehaviour
     _subSocket = new SubscriberSocket();
     _subSocket.Options.ReceiveHighWatermark = 1000;
     _subSocket.Connect($"{Config.Instance.Method}://{Config.Instance.ListenIP}:{Config.Instance.ListenPort}");
-    _subSocket.SubscribeToAnyTopic();
+    _subSocket.Subscribe("stoplichten");
     Debug.Log("Subscriber connected.");
 
     while (_isListening)
@@ -62,7 +62,7 @@ public class Subscriber : MonoBehaviour
 		while (!_messageQueue.IsEmpty)
 		{
 			if (_messageQueue.TryDequeue(out var topic) && _messageQueue.TryDequeue(out var message))
-				Debug.Log($"Received Topic: {topic}, Message: {message}");
+				Debug.Log(message);
 		}
 	}
 }

@@ -33,7 +33,6 @@ public class Publisher : MonoBehaviour
     _publisherThread = null;
     Debug.Log("Publisher stopped.");
   }
-
   private void PublisherWork()
   {
     AsyncIO.ForceDotNet.Force();
@@ -45,8 +44,9 @@ public class Publisher : MonoBehaviour
 
       while (_isRunning)
       {
-        string topic = "simulatie_send";
-        string message = "Hallo vanuit mijn simulatie";
+        // Topics: sensoren_rijbanen, sensoren_bruggen, sensoren_speciaal, tijd (simulatietijd in msa, minimaal 1 keer per 100ms), voorrangsvoertuig
+        string topic = "";
+        string message = "";
         pubSocket.SendMoreFrame(topic).SendFrame(message);
         Debug.Log($"Published: ({topic}) {message}");
         Thread.Sleep(1000);

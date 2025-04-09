@@ -2,20 +2,24 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 
-public class CarMovement : MonoBehaviour
+public class Car : MonoBehaviour
 {
   public SplineContainer road;
   public float speed = 5f;
+  public float splineDistance = 0f;
+  public float followDistance = 1.5f;
 
+  private float currentSpeed;
+  private Car carInFront;
   private bool isStopped = false;
   private TrafficLight currentTrafficLight;
+  private Rigidbody2D rigidBody;
+  private BoxCollider2D boxCollider;
 
-  private float t = 0f;
-  private Rigidbody2D rb;
-
-  void Start()
+  void Awake()
   {
-    rb = GetComponent<Rigidbody2D>();
+    rigidBody = GetComponent<Rigidbody2D>();
+    boxCollider = GetComponent<BoxCollider2D>();
   }
 
   void Update()
@@ -23,7 +27,7 @@ public class CarMovement : MonoBehaviour
     CheckTrafficLight();
     if (isStopped)
     {
-      rb.linearVelocity = Vector2.zero;
+      currentSpeed = 0f;
     }
     else
     {
@@ -33,21 +37,30 @@ public class CarMovement : MonoBehaviour
 
   private void MoveOnRoad()
   {
-    // Move along the spline
-    t += (speed / road.Spline.GetLength()) * Time.deltaTime;
+    currentSpeed = speed;
 
-    // Get position and tangent along the spline
-    Vector3 position = road.EvaluatePosition(t);
-    float3 tangent = road.EvaluateTangent(t);
+    if (carInFront != null)
+    {
+      float distanceToFront = Vector3.Distance(transform.position, carInFront.transform.position);
 
-    // Calculate the angle in degrees
+      currentSpeed = speed * 0.5f;
+
+      if (distanceToFront < followDistance)
+      {
+        currentSpeed = 0f;
+      }
+    }
+
+    splineDistance += (currentSpeed / road.Spline.GetLength()) * Time.deltaTime;
+
+    Vector3 position = road.EvaluatePosition(splineDistance);
+    float3 tangent = road.EvaluateTangent(splineDistance);
+
     float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
 
-    // Apply position and rotation using Rigidbody
-    rb.MovePosition(position);
-    rb.MoveRotation(angle);
+    rigidBody.MovePosition(position);
+    rigidBody.MoveRotation(angle);
   }
-
   private void StopCar()
   {
     isStopped = true;
@@ -67,7 +80,7 @@ public class CarMovement : MonoBehaviour
 				currentTrafficLight = trafficLight;
 			}
 		}
-	}
+  }
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
@@ -79,7 +92,7 @@ public class CarMovement : MonoBehaviour
 				currentTrafficLight = null;
 			}
 		}
-	}
+  }
 
   // Check the current light state and act accordingly
   private void CheckTrafficLight()
@@ -100,4 +113,25 @@ public class CarMovement : MonoBehaviour
       }
     }
   }
+  public void SetNewRoad(SplineContainer newRoad)
+  {
+    road = newRoad;
+    splineDistance = 0f;
+  }
+
+  public void SetCarInFront(Car car)
+  {
+    carInFront = car;
+  }
+
+  public Car GetCarInFront()
+  {
+    return carInFront;
+  }
+
+  public void ClearCarInFront()
+  {
+    carInFront = null;
+  }
+
 }
