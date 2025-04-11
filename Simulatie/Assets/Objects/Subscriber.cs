@@ -13,21 +13,14 @@ public class Subscriber : MonoBehaviour
 
   private void Start()
   {
-    EventManager.Instance.onStartClient.AddListener(StartListening);
-    EventManager.Instance.onStopClient.AddListener(StopListening);
-  }
-
-  private void StartListening()
-  {
     if (_isListening) return;
 
     _isListening = true;
-    _listenerThread = new Thread(ListenerWork) { IsBackground = true };
+    _listenerThread = new Thread(Listen) { IsBackground = true };
     _listenerThread.Start();
-    EventManager.Instance.onClientStarted.Invoke();
   }
 
-  private void StopListening()
+  void OnApplicationQuit()
   {
     _isListening = false;
     _listenerThread?.Join();
@@ -37,11 +30,10 @@ public class Subscriber : MonoBehaviour
     _subSocket = null;
 
     NetMQConfig.Cleanup();
-    EventManager.Instance.onClientStopped.Invoke();
     Debug.Log("Subscriber stopped.");
   }
 
-  private void ListenerWork()
+  private void Listen()
   {
     AsyncIO.ForceDotNet.Force();
     _subSocket = new SubscriberSocket();
