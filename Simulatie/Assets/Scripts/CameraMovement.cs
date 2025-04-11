@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;  // Needed for checking UI interactions
 
 public class CameraMovement : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class CameraMovement : MonoBehaviour
   private void Update()
   {
     if (transform.parent == null) return;
+
+    // Don't move the camera if the mouse is over UI elements
+    if (EventSystem.current.IsPointerOverGameObject()) return;
 
     // Handle Zooming (Mouse Scroll)
     float scroll = Input.GetAxis("Mouse ScrollWheel");

@@ -16,6 +16,8 @@ public class ControlPanel : MonoBehaviour
 
   public Toggle minimapToggle;
 
+  public TMP_Text timeText;
+
   public GameObject minimap;
 
   private Color normalColor = Color.white;
@@ -40,8 +42,12 @@ public class ControlPanel : MonoBehaviour
     UpdateTimeScale(SimulationManager.Instance.GetTimeScale());
     ToggleMinimap(minimapToggle.isOn);
   }
+  void Update()
+  {
+    timeText.text = SimulationManager.Instance.GetFormattedSimTime();
+  }
 
-	private void UpdateTimeScale(float timescale)
+  private void UpdateTimeScale(float timescale)
 	{
 		SimulationManager.Instance.UpdateTimeScale(timescale);
 		timeScaleText.text = Mathf.RoundToInt(timescale) + "x";
@@ -58,23 +64,13 @@ public class ControlPanel : MonoBehaviour
 	}
   private void UpdateButtonVisuals()
   {
-    // Reset kleuren
-    easyButton.GetComponent<Image>().color = normalColor;
-    normalButton.GetComponent<Image>().color = normalColor;
-    hardButton.GetComponent<Image>().color = normalColor;
+    // Reset colors to normal and highlight active button
+    Button[] buttons = { easyButton, normalButton, hardButton };
+    SpawnMode currentMode = SimulationManager.Instance.GetSpawnMode();
 
-    // Highlight active button
-    switch (SimulationManager.Instance.GetSpawnMode())
+    for (int i = 0; i < buttons.Length; i++)
     {
-      case SpawnMode.Easy:
-        easyButton.GetComponent<Image>().color = selectedColor;
-        break;
-      case SpawnMode.Normal:
-        normalButton.GetComponent<Image>().color = selectedColor;
-        break;
-      case SpawnMode.Hard:
-        hardButton.GetComponent<Image>().color = selectedColor;
-        break;
+      buttons[i].GetComponent<Image>().color = (SpawnMode)i == currentMode ? selectedColor : normalColor;
     }
   }
 }
