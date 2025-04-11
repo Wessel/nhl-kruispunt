@@ -21,7 +21,7 @@ public class ControlPanel : MonoBehaviour
   public GameObject minimap;
 
   private Color normalColor = Color.white;
-  private Color selectedColor = new Color(0.6f, 0.9f, 1f);
+  private Color selectedColor = new Color(.8f, .75f, .75f);
 
   void Start()
   {
@@ -31,7 +31,7 @@ public class ControlPanel : MonoBehaviour
 
     timeSlider.onValueChanged.AddListener(UpdateTimeScale);
 
-    pauseButton.onClick.AddListener(SimulationManager.Instance.PauseSimulation);
+    pauseButton.onClick.AddListener(PauseSimulation);
     resetButton.onClick.AddListener(SimulationManager.Instance.ResetSimulation);
 
     minimapToggle.onValueChanged.AddListener(ToggleMinimap);
@@ -45,6 +45,13 @@ public class ControlPanel : MonoBehaviour
   void Update()
   {
     timeText.text = SimulationManager.Instance.GetFormattedSimTime();
+  }
+
+  private void PauseSimulation()
+  {
+    SimulationManager.Instance.PauseSimulation();
+    bool isPaused = SimulationManager.Instance.IsPaused();
+    pauseButton.GetComponentInChildren<TMP_Text>().text = isPaused ? "Play" : "Pause";
   }
 
   private void UpdateTimeScale(float timescale)

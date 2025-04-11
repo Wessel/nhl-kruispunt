@@ -4,69 +4,88 @@ using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
-  public static SimulationManager Instance;
-  public float simulationTime; // In seconds
+	public static SimulationManager Instance;
+	public float simulationTime; // In seconds
 
-  private float timeScale = 1f;
-  private bool isPaused = false;
-  private SpawnMode spawnMode = SpawnMode.Easy;
+	private float timeScale = 1f;
+	private bool isPaused = false;
+	private SpawnMode spawnMode = SpawnMode.Easy;
+	private float nextEventTime = 0f;
 
-  void Awake()
-  {
-    if (Instance == null) Instance = this;
-    else Destroy(gameObject);
-  }
+	void Awake()
+	{
+		if (Instance == null) Instance = this;
+		else Destroy(gameObject);
 
-  void Update()
-  {
-    Time.timeScale = isPaused ? 0f : timeScale;
-    simulationTime += Time.deltaTime * timeScale;
-  }
+		Config.LoadConfig();
+	}
 
-  public string GetFormattedSimTime()
-  {
-    int totalMilliseconds = Mathf.FloorToInt(simulationTime * 1000);
+	void Update()
+	{
+		Time.timeScale = isPaused ? 0f : timeScale;
 
-    int hours = totalMilliseconds / (3600 * 1000);
-    int minutes = (totalMilliseconds % (3600 * 1000)) / (60 * 1000);
-    int seconds = (totalMilliseconds % (60 * 1000)) / 1000;
-    int milliseconds = totalMilliseconds % 1000;
+		if (!isPaused)
+		{
+			simulationTime += Time.deltaTime * timeScale;
 
-    return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{milliseconds:D3}";
-  }
+			if (simulationTime >= nextEventTime)
+			{
+				nextEventTime += 0.1f; // Schedule the next event at 100ms intervals
+				EventManager.Instance.SendSimulationTime.Invoke(simulationTime);
+			}
+		}
+	}
 
-  public SpawnMode GetSpawnMode()
-  {
-    return spawnMode;
-  }
+	public string GetFormattedSimTime()
+	{
+		int totalMilliseconds = Mathf.FloorToInt(simulationTime * 1000);
 
-  public void SetSpawnMode(SpawnMode mode)
-  {
-    spawnMode = mode;
-  }
+		int hours = totalMilliseconds / (3600 * 1000);
+		int minutes = (totalMilliseconds % (3600 * 1000)) / (60 * 1000);
+		int seconds = (totalMilliseconds % (60 * 1000)) / 1000;
+		int milliseconds = totalMilliseconds % 1000;
 
-  public float GetCurrentSpawnRate()
-  {
-    return 0f;
-  }
+		return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{milliseconds:D3}";
+	}
 
-  public void UpdateTimeScale(float newTimeScale)
-  {
-    timeScale = newTimeScale;
-    Debug.Log("Time scale updated to: " + timeScale);
-  }
+	public SpawnMode GetSpawnMode()
+	{
+		return spawnMode;
+	}
 
-  public float GetTimeScale()
-  {
-    return timeScale;
-  }
+	public void SetSpawnMode(SpawnMode mode)
+	{
+		spawnMode = mode;
+	}
 
-  public void ResetSimulation()
-  {
-    simulationTime = 0f;
-  }
-  public void PauseSimulation()
-  {
-    isPaused = !isPaused;
-  }
+	public float GetCurrentSpawnRate()
+	{
+		return 0f;
+	}
+
+	public void UpdateTimeScale(float newTimeScale)
+	{
+		timeScale = newTimeScale;
+	}
+
+	public float GetTimeScale()
+	{
+		return timeScale;
+	}
+
+	public void ResetSimulation()
+	{
+		simulationTime = 0f;
+		nextEventTime = 0f;
+	}
+
+	public bool IsPaused()
+	{
+		return isPaused;
+	}
+
+	public void PauseSimulation()
+	{
+		isPaused = !isPaused;
+	}
 }

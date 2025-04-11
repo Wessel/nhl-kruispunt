@@ -1,57 +1,78 @@
-using NetMQ.Sockets;
-using NetMQ;
-using System.Threading;
-using System;
 using UnityEngine;
-using UnityEditor.Experimental.GraphView;
+using NetMQ;
+using NetMQ.Sockets;
+using System.Threading;
 
 public class Publisher : MonoBehaviour
 {
   private Thread _publisherThread;
+  private PublisherSocket _pubSocket;
   private bool _isRunning;
+  private bool _isSocketInitialized = false;
 
   private void Start()
   {
-    EventManager.Instance.onStartClient.AddListener(StartPublishing);
-    EventManager.Instance.onStopClient.AddListener(StopPublishing);
+    // Subscribe to events with the topic and message as parameters
+    EventManager.Instance.SendSimulationTime.AddListener(SendSimulationTime);
+
+    StartPublisherThread();
   }
 
-  private void StartPublishing()
+  private void OnApplicationQuit()
+  {
+    StopPublisherThread();
+  }
+
+  private void StartPublisherThread()
   {
     if (_isRunning) return;
 
-    Debug.Log("Starting Publisher...");
     _isRunning = true;
-    _publisherThread = new Thread(PublisherWork);
+    _publisherThread = new Thread(PublisherWork) { IsBackground = true };
     _publisherThread.Start();
   }
 
-  private void StopPublishing()
+  private void StopPublisherThread()
   {
     _isRunning = false;
     _publisherThread?.Join();
     _publisherThread = null;
-    Debug.Log("Publisher stopped.");
+
+    _pubSocket?.Close();
+    _pubSocket = null;
+    NetMQConfig.Cleanup();
   }
+
   private void PublisherWork()
   {
     AsyncIO.ForceDotNet.Force();
-    using (var pubSocket = new PublisherSocket())
-    {
-      pubSocket.Options.SendHighWatermark = 1000;
-      pubSocket.Bind($"{Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
-      Debug.Log($"Publisher bound to {Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
+    _pubSocket = new PublisherSocket();
+    _pubSocket.Options.SendHighWatermark = 1000;
+    _pubSocket.Bind($"{Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
+    _isSocketInitialized = true;
+    Debug.Log($"Publisher bound to {Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
 
-      while (_isRunning)
-      {
-        // Topics: sensoren_rijbanen, sensoren_bruggen, sensoren_speciaal, tijd (simulatietijd in msa, minimaal 1 keer per 100ms), voorrangsvoertuig
-        string topic = "";
-        string message = "";
-        pubSocket.SendMoreFrame(topic).SendFrame(message);
-        Debug.Log($"Published: ({topic}) {message}");
-        Thread.Sleep(1000);
-      }
+    // Continuous loop to listen for events and send messages when needed
+    while (_isRunning)
+    {
+      Thread.Sleep(10);  // Sleep to avoid tight looping
     }
-    NetMQConfig.Cleanup();
+  }
+
+  // Handle the simulation time update event and publish to the "tijd" topic
+  private void SendSimulationTime(float simulationTime)
+  {
+    string message = $"{{ \"simulatie_tijd_ms\": {Mathf.FloorToInt(simulationTime * 1000)} }}";
+    PublishMessage("tijd", message);  // Send to the "tijd" topic
+  }
+
+  // Generic method to handle the publishing of messages to the specified topic
+  private void PublishMessage(string topic, string message)
+  {
+    if (_isSocketInitialized)
+    {
+      _pubSocket.SendMoreFrame(topic).SendFrame(message);
+      Debug.Log($"Published: ({topic}) {message}");
+    }
   }
 }
