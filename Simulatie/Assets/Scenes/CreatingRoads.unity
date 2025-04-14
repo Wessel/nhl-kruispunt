@@ -529,16 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189fd78581bbea04f8d74541f8c4096b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onStartClient:
-    m_PersistentCalls:
-      m_Calls: []
-  onStopClient:
-    m_PersistentCalls:
-      m_Calls: []
-  onClientStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onClientStopped:
+  SendSimulationTime:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1004611580
@@ -1143,11 +1134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4855032348918960707, guid: 2e54a0b4aa93d024cb9f4de56380138b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -169.35843
+      value: -175.4
       objectReference: {fileID: 0}
     - target: {fileID: 4855032348918960707, guid: 2e54a0b4aa93d024cb9f4de56380138b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 89.679214
+      value: 91
       objectReference: {fileID: 0}
     - target: {fileID: 4855032348918960707, guid: 2e54a0b4aa93d024cb9f4de56380138b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
