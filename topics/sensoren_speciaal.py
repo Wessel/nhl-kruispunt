@@ -17,7 +17,8 @@ def handle_speciaal(message):
             raise ValueError(f"brug_file is not following the protocol: \n{data}")
         
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: {e}")
+        print(f"\033[31mError: {e}\033[0mE")
+        
         return
     
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ def handle_voorrangsvoertuig(message):
                     raise ValueError(f"Prioriteit is not following the protocol: \n{data}")
 
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: {e}")
+        print(f"\033[31mError: {e}\033[0mE")
 
 if __name__ == "__main__":
     # Test the function with a sample message

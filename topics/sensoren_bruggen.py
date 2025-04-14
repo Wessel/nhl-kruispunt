@@ -15,7 +15,7 @@ def handle_bruggen(message):
             
         
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: {e}")
+        print(f"\033[31mError: {e}\033[0mE")
         return
     
 if __name__ == "__main__":

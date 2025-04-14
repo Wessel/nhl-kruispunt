@@ -13,7 +13,7 @@ def handle_stoplichten(message):
             if not isinstance(v, str) or v not in possible_states:
                 raise ValueError(f'Value is not one of {possible_states}: {{ {k} : {v} }}')
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: {e}")
+        print(f"\033[31mError: {e}\033[0m")
 
 if __name__ == "__main__":
     test_message = '{"123.1": "rood", "456.2": "groen", "789.3": "geel"}'

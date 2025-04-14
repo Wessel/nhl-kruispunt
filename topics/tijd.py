@@ -16,7 +16,8 @@ def handle_tijd(message):
         
         
     except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: {e}")
+        print(f"\033[31mError: {e}\033[0mE")
+
         
 if __name__ == "__main__":
     # Test the function with a sample message
