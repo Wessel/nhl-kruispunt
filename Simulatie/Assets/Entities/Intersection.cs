@@ -13,7 +13,7 @@ public class Intersection : MonoBehaviour
         {
             if (roads.Count > 0)
             {
-				      List<Road> matchingRoads = roads.FindAll(road => road.getRoadType() == entity.GetRoadType());
+				      List<Road> matchingRoads = roads.FindAll(road => road.getRoadTypes().Contains(entity.GetRoadType()));
 
 				      if (matchingRoads.Count > 0)
 				      {
