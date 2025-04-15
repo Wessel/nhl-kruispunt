@@ -5,6 +5,7 @@ public class TrafficLight : MonoBehaviour
 {
   public LightState currentLight;
 
+  public string id;
   private SpriteRenderer spriteRenderer;
   public Sprite redLight;
   public Sprite yellowLight;
