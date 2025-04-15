@@ -5,12 +5,13 @@ public class EntitySpawner : MonoBehaviour
 {
   // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-  public GameObject carPrefab;
+  public GameObject entityPrefab;
   public Transform spawnPoint;
+  public Transform parentTransform;
 
   void Start()
   {
-    SpawnCar();
+    SpawnEntity();
   }
 
     // Update is called once per frame
@@ -19,8 +20,8 @@ public class EntitySpawner : MonoBehaviour
 
   }
 
-  void SpawnCar()
+  void SpawnEntity()
   {
-    Instantiate(carPrefab, spawnPoint.position, spawnPoint.rotation);
+    GameObject newEntity = Instantiate(entityPrefab, spawnPoint.position, spawnPoint.rotation, parentTransform);
   }
 }
