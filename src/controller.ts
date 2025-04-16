@@ -4,6 +4,8 @@ import { ZmqPublisher } from "./zeromq/publisher";
 import { ZmqSubscriber } from "./zeromq/subscriber";
 import { Stopwatch } from "./stopwatch";
 
+import {  PriorityQueue } from "./priorityQueue";
+
 interface LaneMap {
   [key: string]: Lane;
 }
@@ -13,10 +15,16 @@ export class Controller {
 
   private _clock: Stopwatch;
 
+  private _intersection: any  = null;
+
   private _publisher: ZmqPublisher;
   private _subscriber: ZmqSubscriber = new ZmqSubscriber();
 
   public lanes: LaneMap[] = [];
+
+  public priorityVehicleQueue: PriorityQueue = new PriorityQueue();
+  public laneQueue: PriorityQueue = new PriorityQueue();
+
 
   constructor(publisher_port: number = 5557, clock: Stopwatch) {
     this._clock = clock;
@@ -26,6 +34,12 @@ export class Controller {
     this._publisher
       .bind('tcp://*:' + publisher_port)
       .toggle_heartbeat_loop();
+  }
+
+  register_intersection(intersection: any): this {
+    this._intersection = intersection;
+
+    return this;
   }
 
   connect_to_simulator(address: string): this {
@@ -87,9 +101,59 @@ export class Controller {
     return state_map;
   }
 
-  handle_topic_sensoren_rijbaan(message: string) {}
+  handle_topic_sensoren_rijbaan(message: string) {
+    const data = JSON.parse(message);
+
+    Object.keys(data).forEach((key) => {
+      const [ group ] = key.split('.');
+      const sensorData = data[key];
+
+      let priority = 0;
+
+      // Both sensors triggered - highest lane priority (2)
+      if (sensorData.voor && sensorData.achter) {
+        priority = 1;
+      // Only front or back sensor triggered - medium priority (1)
+      } else if (sensorData.voor || sensorData.achter) {
+        priority = 2;
+      }
+
+      if (priority > 0) {
+        const existingEntry = this.laneQueue.get(group);
+        if (existingEntry) {
+          if (existingEntry.activeSince) {
+            priority -= 3;
+          }
+
+          this.laneQueue.updatePriority(group, priority);
+        } else {
+          this.laneQueue.enqueue(group, priority);
+        }
+
+        console.log(`Lane ${group} added to queue with priority ${priority}`);
+      }
+    });
+
+    this.exhaust_lane_queue();
+  }
+
+  exhaust_lane_queue(): void {
+    if (!this.laneQueue.isEmpty()) {
+      const nextLane = this.laneQueue.peek();
+
+      if (nextLane) {
+        console.log(`Processing lane ${nextLane.group} with priority ${nextLane.priority}`);
+        // Logic to handle the lane with highest priority
+        // This would likely change traffic light states based on the priority
+      }
+    }
+  }
+
   handle_topic_sensoren_speciaal(message: string) {}
   handle_topic_sensoren_bruggen(message: string) {}
   handle_topic_voorrangsvoertuig(message: string) {}
   handle_topic_tijd(message: string) {}
+
+  // start() {
+  // }
 }

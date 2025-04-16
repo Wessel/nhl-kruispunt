@@ -68,7 +68,7 @@ export class PriorityQueue {
     this.enqueue(group, newPriority);
   }
 
-  setActive(group: string, timestamp: number) {
+  setActive(group: string, timestamp: number = Date.now()) {
     const item = this.get(group);
 
     if (item) {

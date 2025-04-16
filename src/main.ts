@@ -3,6 +3,10 @@ import { Lane } from "./lane";
 import { TrafficLight, TrafficLightState } from "./trafficLight";
 import {  Stopwatch } from "./stopwatch";
 
+import { readFileSync } from "fs";
+
+const intersectionData = JSON.parse(readFileSync('./static/intersection/lanes.json', 'utf-8'));
+
 const clock = new Stopwatch();
 const transitionDurationMs = 250;
 
@@ -68,6 +72,7 @@ const  lane7: Lane = new Lane("7")
   .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs));
 
 const controller: Controller = new Controller(5555, clock)
+  .register_intersection(intersectionData)
   .bind_lane(lane1)
   .bind_lane(lane2)
   .bind_lane(lane3)
