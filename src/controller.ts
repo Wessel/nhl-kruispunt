@@ -22,7 +22,7 @@ export class Controller {
     this._clock = clock;
 
     this._publisher = new ZmqPublisher(this._heartbeatDelay, this._clock);
-``
+
     this._publisher
       .bind('tcp://*:' + publisher_port)
       .toggle_heartbeat_loop();
@@ -31,7 +31,7 @@ export class Controller {
   connect_to_simulator(address: string): this {
     this._subscriber
       .connect(address)
-      .subscribe('', console.log)
+      .subscribe('', (t, a) => { try { console.log(t, JSON.parse(a)) } catch (_) { console.log(t, a); } })
       .subscribe('sensoren_rijbaan',  (_, m) => this.handle_topic_sensoren_rijbaan(m))
       .subscribe('sensoren_speciaal', (_, m) => this.handle_topic_sensoren_speciaal(m))
       .subscribe('sensoren_bruggen',  (_, m) => this.handle_topic_sensoren_bruggen(m))
@@ -45,7 +45,23 @@ export class Controller {
   bind_lane(lane: Lane): this {
     this.lanes.push({ [lane.name]: lane });
 
+    lane.on('state_changed', () => this.handle_lane_state_change());
+
     return this;
+  }
+
+  handle_lane_state_change() {
+    this.transmit_state();
+  }
+
+  change_lane_state(lane_name: string, state: TrafficLightState) {
+    for (const lane of this.lanes) {
+      if (lane[lane_name]) {
+        lane[lane_name].set_state(state);
+        return;
+      }
+    }
+    throw new Error(`Lane ${lane_name} not found`);
   }
 
   transmit_state(): this {
@@ -63,7 +79,7 @@ export class Controller {
     for (const lane of this.lanes) {
       for (const lane_name in lane) {
         for (const l in lane[lane_name].get_state_map()) {
-          state_map[l] = lane[lane_name].get_state_map()[l];
+          state_map[`${lane_name}.${l}`] = lane[lane_name].get_state_map()[l];
         }
       }
     }

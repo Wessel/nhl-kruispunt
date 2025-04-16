@@ -1,3 +1,4 @@
+import { EventEmitter } from "stream";
 import { Stopwatch } from "./stopwatch";
 
 export enum TrafficLightState {
@@ -6,7 +7,7 @@ export enum TrafficLightState {
   YELLOW = 'geel',
 };
 
-export class TrafficLight {
+export class TrafficLight extends EventEmitter {
   static transitions: Record<TrafficLightState, Record<TrafficLightState, TrafficLightState | null>> = {
     [TrafficLightState.RED]: {
       [TrafficLightState.GREEN]: TrafficLightState.YELLOW,
@@ -33,6 +34,8 @@ export class TrafficLight {
 
 
   constructor(id: string, clock: Stopwatch, transitionDurationMs: number) {
+    super();
+
     this._transitionDurationMs = transitionDurationMs;
     this._clock = clock;
     this.id = id;
@@ -56,6 +59,7 @@ export class TrafficLight {
     if (nextState !== null) {
       setTimeout(() => {
         this.state = nextState;
+        this.emit('state_changed');
         this.transition_into(state);
       }, this.scaledTransitionDuration);
     }
