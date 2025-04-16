@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch build/main.js",
+    "start": "node --watch build/src/main.js",
     "build": "tsc -w"
   },
   "keywords": [],
@@ -15,6 +15,6 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "zeromq": "^6.3.0"
+    "zeromq": "^6.4.1"
   }
 }
