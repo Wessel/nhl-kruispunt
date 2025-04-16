@@ -100,7 +100,7 @@ public class MovingEntity : MonoBehaviour
   {
     if (currentTrafficLight != null)
     {
-      switch (currentTrafficLight.currentLight)
+      switch (currentTrafficLight.GetLight())
       {
         case LightState.Red:
           Stop();

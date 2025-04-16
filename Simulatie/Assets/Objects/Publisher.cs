@@ -14,6 +14,7 @@ public class Publisher : MonoBehaviour
   {
     // Subscribe to events with the topic and message as parameters
     EventManager.Instance.SendSimulationTime.AddListener(SendSimulationTime);
+    EventManager.Instance.PublishMessage.AddListener(PublishMessage);
 
     StartPublisherThread();
   }
@@ -63,7 +64,7 @@ public class Publisher : MonoBehaviour
   private void SendSimulationTime(float simulationTime)
   {
     string message = $"{{ \"simulatie_tijd_ms\": {Mathf.FloorToInt(simulationTime * 1000)} }}";
-    PublishMessage("tijd", message);  // Send to the "tijd" topic
+    PublishMessage("tijd", message);
   }
 
   // Generic method to handle the publishing of messages to the specified topic

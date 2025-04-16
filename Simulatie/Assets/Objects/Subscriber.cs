@@ -54,7 +54,7 @@ public class Subscriber : MonoBehaviour
 		while (!_messageQueue.IsEmpty)
 		{
 			if (_messageQueue.TryDequeue(out var topic) && _messageQueue.TryDequeue(out var message))
-				Debug.Log(message);
-		}
+				EventManager.Instance?.OnTrafficLightUpdate.Invoke(message);
+    }
 	}
 }

@@ -35,12 +35,21 @@ public class CameraMovement : MonoBehaviour
     camWidth = camHeight * cam.aspect;
   }
 
+  private bool IsPointerOverUI()
+  {
+    if (Input.mousePresent)
+    {
+      return EventSystem.current.IsPointerOverGameObject();
+    }
+    return false;
+  }
+
   private void Update()
   {
     if (transform.parent == null) return;
 
     // Don't move the camera if the mouse is over UI elements
-    if (EventSystem.current.IsPointerOverGameObject()) return;
+    if (IsPointerOverUI()) return;
 
     // Handle Zooming (Mouse Scroll)
     float scroll = Input.GetAxis("Mouse ScrollWheel");

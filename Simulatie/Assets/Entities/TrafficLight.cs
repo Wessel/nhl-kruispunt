@@ -1,19 +1,31 @@
 using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
-public class TrafficLight : MonoBehaviour
-{
-  public LightState currentLight;
-
-  public string id;
-  private SpriteRenderer spriteRenderer;
+public class TrafficLight : SensorController
+{  
   public Sprite redLight;
   public Sprite yellowLight;
   public Sprite greenLight;
 
-  private void Start()
+  private string id;
+  private LightState currentLight;
+  private SpriteRenderer spriteRenderer;
+
+  private TrafficLightController controller;
+
+  public void SetController(TrafficLightController controller)
   {
+    this.controller = controller;
+  }
+
+  protected override void Start()
+  {
+    base.Start();
     spriteRenderer = GetComponent<SpriteRenderer>();
+    id = gameObject.name;
   }
   public void SetLight(LightState newState)
   {
@@ -30,5 +42,36 @@ public class TrafficLight : MonoBehaviour
         spriteRenderer.sprite = greenLight;
         break;
     }
+  }
+  public LightState GetLight()
+  {
+    return currentLight;
+  }
+
+  public string GetID()
+  {
+    return id;
+  }
+
+  public override void HandleSensorStateChange()
+  {
+    controller?.OnTrafficLightSensorChanged();
+  }
+
+  public override string BuildJson()
+  {
+    var inner = new Dictionary<string, bool>();
+
+    foreach (var sensor in sensors)
+    {
+      inner[sensor.id] = sensor.IsActive();
+    }
+
+    var outer = new Dictionary<string, object>
+    {
+      [id] = inner
+    };
+
+    return JsonConvert.SerializeObject(outer, Formatting.Indented);
   }
 }
