@@ -94,6 +94,19 @@ export class Stopwatch {
   }
 
   /**
+   * Forwards the stopwatch by a specified time
+   *
+   * @param {number} time The time to forward in milliseconds
+   * @returns {this} The stopwatch instance
+   * @chainable
+   */
+  forward(time: number): Stopwatch {
+    this._start -= time * this.speed;
+
+    return this;
+  }
+
+  /**
    * Stops the Stopwatch, freezing the duration
    *
    * @returns {this} The stopwatch instance
