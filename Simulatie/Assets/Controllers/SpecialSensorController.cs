@@ -18,7 +18,7 @@ public class SpecialSensorController : SensorController
 
     foreach (var sensor in sensors)
     {
-      stateDict[sensor.id] = sensor.IsActive();
+      stateDict[sensor.GetID()] = sensor.IsActive();
     }
 
     return JsonConvert.SerializeObject(stateDict, Formatting.Indented);

@@ -66,7 +66,7 @@ public class TrafficLight : SensorController
 
     foreach (var sensor in sensors)
     {
-      inner[sensor.id] = sensor.IsActive();
+      inner[sensor.GetID()] = sensor.IsActive();
     }
 
     var outer = new Dictionary<string, object>

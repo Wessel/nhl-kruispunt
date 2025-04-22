@@ -18,7 +18,7 @@ public class BridgeController : SensorController
     {
       if (sensor is BridgeSensor bridgeSensor)
       {
-        bridgeData[sensor.id] = new
+        bridgeData[sensor.GetID()] = new
         {
           state = bridgeSensor.GetState()
         };

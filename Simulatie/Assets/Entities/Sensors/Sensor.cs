@@ -4,11 +4,25 @@ using UnityEngine.Events;
 
 public class Sensor : MonoBehaviour
 {
-  public string id;
+  private string id;
   private bool isActive = false;
   private HashSet<Collider2D> objectsInside = new HashSet<Collider2D>();
 
   public UnityEvent onStateChanged = new();
+
+  private void Start()
+  {
+    id = gameObject.name;
+  }
+
+  //Simulate fake traffic light changes
+  private void Update()
+  {
+    if (Random.Range(1, 8000) == 1)
+    {
+      ChangeState();
+    }
+  }
 
   private void ChangeState()
   {
@@ -41,4 +55,5 @@ public class Sensor : MonoBehaviour
   }
 
   public bool IsActive() => isActive;
+  public string GetID() => id;
 }
