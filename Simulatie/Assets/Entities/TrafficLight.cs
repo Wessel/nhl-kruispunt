@@ -8,7 +8,7 @@ using System.Linq;
 public class TrafficLight : SensorController
 {  
   public Sprite redLight;
-  public Sprite yellowLight;
+  public Sprite orangeLight;
   public Sprite greenLight;
 
   private string id;
@@ -37,8 +37,8 @@ public class TrafficLight : SensorController
       case LightState.Red:
         spriteRenderer.sprite = redLight;
         break;
-      case LightState.Yellow:
-        spriteRenderer.sprite = yellowLight;
+      case LightState.Orange:
+        spriteRenderer.sprite = orangeLight;
         break;
       case LightState.Green:
         spriteRenderer.sprite = greenLight;

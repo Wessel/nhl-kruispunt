@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
-  yellowLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  orangeLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
   greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
 --- !u!1 &6682635851764593009
 GameObject:
