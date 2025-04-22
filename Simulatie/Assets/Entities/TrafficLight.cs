@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class TrafficLight : SensorController
 {  
@@ -24,7 +25,8 @@ public class TrafficLight : SensorController
   protected override void Start()
   {
     base.Start();
-    spriteRenderer = GetComponent<SpriteRenderer>();
+    spriteRenderer = GetComponentsInChildren<SpriteRenderer>()
+                 .FirstOrDefault(sr => sr.CompareTag("Sprite"));
     id = gameObject.name;
   }
   public void SetLight(LightState newState)

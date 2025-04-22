@@ -182,8 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5c4b99c69ecb2498dc5163df3c733e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLight: 0
-  id: 
   redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
   yellowLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
   greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
@@ -199,7 +197,7 @@ GameObject:
   - component: {fileID: 6044417901289893922}
   m_Layer: 0
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
