@@ -16,35 +16,47 @@ TagManager:
   - 
   - Water
   - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Minimap
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4229979347
+    locked: 0
+  - name: Boats
+    uniqueID: 338212603
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Land
+    uniqueID: 3656819029
+    locked: 0
+  - name: TrafficLights
+    uniqueID: 4088439109
     locked: 0
   m_RenderingLayers:
   - Default

@@ -72,4 +72,6 @@ public class SimulationManager : MonoBehaviour
 	{
 		isPaused = !isPaused;
 	}
+
+  public float GetSimulationTime() => simulationTime;
 }
