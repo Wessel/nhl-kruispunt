@@ -7,8 +7,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class TrafficLightController : MonoBehaviour
 {
-	public List<TrafficLight> trafficLights = new();
-  public string topic = "sensoren_rijbaan";
+	private List<TrafficLight> trafficLights = new();
+  private string topic = "sensoren_rijbaan";
 
   private void Start()
 	{

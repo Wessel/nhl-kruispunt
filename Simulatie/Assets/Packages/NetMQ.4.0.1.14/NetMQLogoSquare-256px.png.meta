@@ -247,7 +247,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      NetMQLogoSquare-256px_0: -2663154072440138348
+      NetMQLogoSquare-256px_1: -6515907642237476142
+      NetMQLogoSquare-256px_2: -1904888394261020719
+      NetMQLogoSquare-256px_3: -7428636986508438503
+      NetMQLogoSquare-256px_4: -6693197890472109334
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

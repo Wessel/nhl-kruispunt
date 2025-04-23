@@ -8,6 +8,7 @@ public class EventManager : MonoBehaviour
   public UnityEvent<float> SendSimulationTime = new UnityEvent<float>();
   public UnityEvent<string, string> PublishMessage = new UnityEvent<string, string>();
   public UnityEvent<string> OnTrafficLightUpdate = new UnityEvent<string>();
+  public UnityEvent<BridgeState> SetBridgeState = new UnityEvent<BridgeState>();
 
   private void Awake()
   {

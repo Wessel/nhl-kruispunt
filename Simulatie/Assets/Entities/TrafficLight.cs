@@ -29,7 +29,7 @@ public class TrafficLight : SensorController
                  .FirstOrDefault(sr => sr.CompareTag("Sprite"));
     id = gameObject.name;
   }
-  public void SetLight(LightState newState)
+  public virtual void SetLight(LightState newState)
   {
     currentLight = newState;
     switch (newState)
