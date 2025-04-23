@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EventManager: MonoBehaviour
+public class EventManager : MonoBehaviour
 {
   public static EventManager Instance { get; private set; }
 

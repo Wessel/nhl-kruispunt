@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 public class SimulationManager : MonoBehaviour
 {
 	public static SimulationManager Instance;
@@ -12,7 +10,7 @@ public class SimulationManager : MonoBehaviour
 	private SpawnMode spawnMode = SpawnMode.Easy;
 	private float nextEventTime = 0f;
 
-	void Awake()
+  private void Awake()
 	{
 		if (Instance == null) Instance = this;
 		else Destroy(gameObject);
@@ -20,7 +18,7 @@ public class SimulationManager : MonoBehaviour
 		Config.LoadConfig();
 	}
 
-	void Update()
+	private void Update()
 	{
 		Time.timeScale = isPaused ? 0f : timeScale;
 

@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 17416aadb271a744aac16c0a448159c1
+guid: 61c047877027a4847a45a57c6ce5030d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2278566297644842510
-    second: Icon_0
+      213: -2663154072440138348
+    second: NetMQLogoSquare-256px_0
+  - first:
+      213: -6515907642237476142
+    second: NetMQLogoSquare-256px_1
+  - first:
+      213: -1904888394261020719
+    second: NetMQLogoSquare-256px_2
+  - first:
+      213: -7428636986508438503
+    second: NetMQLogoSquare-256px_3
+  - first:
+      213: -6693197890472109334
+    second: NetMQLogoSquare-256px_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon_0
+      name: NetMQLogoSquare-256px_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 512
-        height: 512
+        y: 133
+        width: 99
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f1c3bf4608e060e0800000000000000
-      internalID: -2278566297644842510
+      spriteID: 495121a2b739a0bd0800000000000000
+      internalID: -2663154072440138348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NetMQLogoSquare-256px_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 133
+        width: 84
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d2ae2ba588d295a0800000000000000
+      internalID: -6515907642237476142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NetMQLogoSquare-256px_2
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 133
+        width: 60
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dfbe43191a7095e0800000000000000
+      internalID: -1904888394261020719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NetMQLogoSquare-256px_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 122
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91416d5f40e28e890800000000000000
+      internalID: -7428636986508438503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NetMQLogoSquare-256px_4
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 0
+        width: 125
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aea140f0bfbfc13a0800000000000000
+      internalID: -6693197890472109334
       vertices: []
       indices: 
       edges: []

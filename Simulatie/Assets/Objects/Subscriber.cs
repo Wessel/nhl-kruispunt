@@ -14,22 +14,9 @@ public class Subscriber : MonoBehaviour
 
   private void Start()
   {
-    Application.wantsToQuit += HandleApplicationWantsToQuit;
-
     _isListening = true;
     _listenerThread = new Thread(Listen) { IsBackground = true };
     _listenerThread.Start();
-  }
-
-  private void OnDisable()
-  {
-    Application.wantsToQuit -= HandleApplicationWantsToQuit;
-  }
-
-  private bool HandleApplicationWantsToQuit()
-  {
-    Shutdown();
-    return true;
   }
 
   private void Listen()
@@ -60,8 +47,6 @@ public class Subscriber : MonoBehaviour
     {
       Debug.LogError($"Subscriber thread exception: {ex}");
     }
-
-    Debug.Log("Subscriber thread exiting.");
   }
 
   private void Update()
@@ -73,6 +58,11 @@ public class Subscriber : MonoBehaviour
         EventManager.Instance?.OnTrafficLightUpdate?.Invoke(msg.message);
       }
     }
+  }
+
+  private void OnDestroy()
+  {
+    Shutdown();
   }
 
   private void Shutdown()
