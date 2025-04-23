@@ -19,6 +19,7 @@ public class BridgeController : SensorController
   {
     base.Start();
     topic = "sensoren_bruggen";
+    EventManager.Instance.SetBridgeState.AddListener(SetBridgeState);
   }
 
   public void SetBridgeState(BridgeState state)
@@ -85,14 +86,6 @@ public class BridgeController : SensorController
   public override void HandleSensorStateChange()
   {
     EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
-
-    foreach (var sensor in sensors)
-    {
-      if (sensor is BridgeSensor bridgeSensor)
-      {
-        SetBridgeState(bridgeSensor.GetState());
-      }
-    }
   }
 
   [ContextMenu("Open Bridge")]

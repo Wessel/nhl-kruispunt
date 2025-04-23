@@ -53,10 +53,7 @@ public class Subscriber : MonoBehaviour
   {
     while (_messageQueue.TryDequeue(out var msg))
     {
-      if (msg.topic == "stoplichten")
-      {
-        EventManager.Instance?.OnTrafficLightUpdate?.Invoke(msg.message);
-      }
+       EventManager.Instance?.OnTrafficLightUpdate?.Invoke(msg.message);
     }
   }
 

@@ -1,39 +1,43 @@
 import zmq
 import time
+import json
+
+
+def generate_custom_json():
+    # Customize this dictionary however you like
+    data = {
+        "81.1": "rood"
+    }
+    return json.dumps(data, indent=2)
 
 
 def main():
-  # Create a ZeroMQ context
-  context = zmq.Context()
+    # Create a ZeroMQ context
+    context = zmq.Context()
 
+    # Create a PUB (Publisher) socket
+    publisher = context.socket(zmq.PUB)
 
-  # Create a PUB (Publisher) socket
-  publisher = context.socket(zmq.PUB)
+    # Bind the publisher to a test port
+    publisher.bind("tcp://localhost:5556")
 
-  # Bind the publisher to a test port
-  publisher.bind("tcp://10.121.17.133:5557")
-
-  # Give subscribers time to connect (important for PUB/SUB)
-  time.sleep(1)
-
-  # Define a topic and message
-  topic = "test"
-  message = "Hello from Python!"
-
-  # Send the message as two frames (topic + message)
-  while True:
-    publisher.send_multipart([topic.encode('utf-8'), message.encode('utf-8')])
-    print(f"📩 Message sent on topic '{topic}': {message}")
+    # Give subscribers time to connect (important for PUB/SUB)
     time.sleep(1)
 
-  # Allow some time for the message to be sent before shutting down
-  time.sleep(1)
+    topic = "stoplichten"
 
-  # Clean up
-  publisher.close()
-  context.term()
-  print("✅ Publisher closed.")
+    # Generate the latest message
+    message = generate_custom_json()
+
+    # Send topic + message
+    publisher.send_multipart([topic.encode('utf-8'), message.encode('utf-8')])
+    print(f"📩 Message sent on topic '{topic}':\n{message}\n")
+
+    # Clean up (unreachable in this infinite loop unless you add a break/exit)
+    publisher.close()
+    context.term()
+    print("✅ Publisher closed.")
 
 
 if __name__ == "__main__":
-  main()
+    main()
