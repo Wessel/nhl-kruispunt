@@ -8,6 +8,7 @@ TagManager:
   - StopLine
   - Minimap
   - Car
+  - Sprite
   layers:
   - Default
   - TransparentFX

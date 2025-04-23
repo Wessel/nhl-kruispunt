@@ -58,7 +58,8 @@ public class ControlPanel : MonoBehaviour
 	{
 		SimulationManager.Instance.UpdateTimeScale(timescale);
 		timeScaleText.text = Mathf.RoundToInt(timescale) + "x";
-	}
+	}
+
   private void SetSpawnMode(SpawnMode mode)
   {
     SimulationManager.Instance.SetSpawnMode(mode);
@@ -68,7 +69,8 @@ public class ControlPanel : MonoBehaviour
 	private void ToggleMinimap(bool show)
 	{
 		minimap.SetActive(show);
-	}
+	}
+
   private void UpdateButtonVisuals()
   {
     // Reset colors to normal and highlight active button

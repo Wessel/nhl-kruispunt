@@ -3,58 +3,85 @@ using NetMQ;
 using NetMQ.Sockets;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Collections.Generic;
 
 public class Subscriber : MonoBehaviour
 {
   private Thread _listenerThread;
   private bool _isListening;
-  private readonly ConcurrentQueue<string> _messageQueue = new();
   private SubscriberSocket _subSocket;
+  private readonly ConcurrentQueue<(string topic, string message)> _messageQueue = new();
 
   private void Start()
   {
-    if (_isListening) return;
-
     _isListening = true;
     _listenerThread = new Thread(Listen) { IsBackground = true };
     _listenerThread.Start();
   }
 
-  void OnApplicationQuit()
+  private void Listen()
+  {
+    try
+    {
+      AsyncIO.ForceDotNet.Force();
+
+      _subSocket = new SubscriberSocket();
+      _subSocket.Options.ReceiveHighWatermark = 1000;
+      _subSocket.Connect($"{Config.Instance.Method}://{Config.Instance.ListenIP}:{Config.Instance.ListenPort}");
+      _subSocket.Subscribe("stoplichten");
+
+      Debug.Log("Subscriber connected.");
+
+      while (_isListening)
+      {
+        List<string> messageParts = new List<string>();
+        if (_subSocket.TryReceiveMultipartStrings(ref messageParts) && messageParts.Count == 2)
+        {
+          _messageQueue.Enqueue((messageParts[0], messageParts[1]));
+        }
+
+        Thread.Sleep(5);
+      }
+    }
+    catch (System.Exception ex)
+    {
+      Debug.LogError($"Subscriber thread exception: {ex}");
+    }
+  }
+
+  private void Update()
+  {
+    while (_messageQueue.TryDequeue(out var msg))
+    {
+      if (msg.topic == "stoplichten")
+      {
+        EventManager.Instance?.OnTrafficLightUpdate?.Invoke(msg.message);
+      }
+    }
+  }
+
+  private void OnDestroy()
+  {
+    Shutdown();
+  }
+
+  private void Shutdown()
   {
     _isListening = false;
-    _listenerThread?.Join();
-    _listenerThread = null;
+
+    if (_listenerThread != null)
+    {
+      if (!_listenerThread.Join(2000))
+      {
+        Debug.LogWarning("Listener thread did not stop in time.");
+      }
+      _listenerThread = null;
+    }
 
     _subSocket?.Close();
     _subSocket = null;
 
     NetMQConfig.Cleanup();
-    Debug.Log("Subscriber stopped.");
+    Debug.Log("Subscriber shutdown complete.");
   }
-
-  private void Listen()
-  {
-    AsyncIO.ForceDotNet.Force();
-    _subSocket = new SubscriberSocket();
-    _subSocket.Options.ReceiveHighWatermark = 1000;
-    _subSocket.Connect($"{Config.Instance.Method}://{Config.Instance.ListenIP}:{Config.Instance.ListenPort}");
-    _subSocket.Subscribe("stoplichten");
-    Debug.Log("Subscriber connected.");
-
-    while (_isListening)
-    {
-      if (_subSocket.TryReceiveFrameString(out var message))
-        _messageQueue.Enqueue(message);
-    }
-  }
-
-	private void Update()
-	{
-		while (!_messageQueue.IsEmpty)
-		{
-			if (_messageQueue.TryDequeue(out var topic) && _messageQueue.TryDequeue(out var message))
-				Debug.Log(message);
-		}
-	}
 }

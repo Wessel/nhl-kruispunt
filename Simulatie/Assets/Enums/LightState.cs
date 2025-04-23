@@ -8,8 +8,8 @@ public enum LightState
   [EnumMember(Value = "rood")]
   Red,
 
-  [EnumMember(Value = "geel")]
-  Yellow,
+  [EnumMember(Value = "oranje")]
+  Orange,
 
   [EnumMember(Value = "groen")]
   Green

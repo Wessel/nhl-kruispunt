@@ -1,35 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class TrafficLightController : MonoBehaviour
 {
-	public float redTime = 5f;
-	public float yellowTime = 1f;
-	public float greenTime = 5f;
-
 	public List<TrafficLight> trafficLights = new();
+  public string topic = "sensoren_rijbaan";
 
-	private void Start()
+  private void Start()
 	{
 		FindTrafficLights();
-    StartCoroutine(TrafficCycle());
-	}
-
-	IEnumerator TrafficCycle()
-	{
-		while (true)
-		{
-			SetLights(LightState.Red);
-			yield return new WaitForSeconds(redTime);
-
-			SetLights(LightState.Yellow);
-			yield return new WaitForSeconds(yellowTime);
-
-			SetLights(LightState.Green);
-			yield return new WaitForSeconds(greenTime);
-		}
-	}
+    EventManager.Instance?.OnTrafficLightUpdate.AddListener(UpdateTrafficLights);
+  }
 
   private void FindTrafficLights()
   {
@@ -40,16 +25,43 @@ public class TrafficLightController : MonoBehaviour
         if (child.TryGetComponent<TrafficLight>(out var trafficLight))
         {
           trafficLights.Add(trafficLight);
+          trafficLight.SetController(this);
         }
       }
     }
   }
 
-	private void SetLights(LightState state)
-	{
-		foreach (var light in trafficLights)
-		{
-			light.SetLight(state);
-		}
-	}
+  private void UpdateTrafficLights(string data)
+  {
+    Dictionary<string, LightState> updates = JsonConvert.DeserializeObject<Dictionary<string, LightState>>(data);
+    foreach (var light in trafficLights)
+    {
+      if (updates.TryGetValue(light.GetID(), out var newState))
+      {
+        light.SetLight(newState);
+      }
+    }
+  }
+
+  private string BuildCombinedJson()
+  {
+    JObject combined = new JObject();
+
+    foreach (TrafficLight light in trafficLights)
+    {
+      string json = light.BuildJson();
+      JObject parsed = JObject.Parse(json);
+
+      combined.Merge(parsed, new JsonMergeSettings
+      {
+        MergeArrayHandling = MergeArrayHandling.Union
+      });
+    }
+
+    return combined.ToString(Formatting.Indented);
+  }
+  public void OnTrafficLightSensorChanged()
+  {
+    EventManager.Instance?.PublishMessage.Invoke(topic, BuildCombinedJson());
+  }
 }

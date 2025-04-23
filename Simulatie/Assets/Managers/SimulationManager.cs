@@ -1,18 +1,16 @@
 using UnityEngine;
 
-
-
 public class SimulationManager : MonoBehaviour
 {
 	public static SimulationManager Instance;
-	public float simulationTime; // In seconds
 
-	private float timeScale = 1f;
+	private float simulationTime; // In seconds
+  private float timeScale = 1f;
 	private bool isPaused = false;
 	private SpawnMode spawnMode = SpawnMode.Easy;
 	private float nextEventTime = 0f;
 
-	void Awake()
+  private void Awake()
 	{
 		if (Instance == null) Instance = this;
 		else Destroy(gameObject);
@@ -20,7 +18,7 @@ public class SimulationManager : MonoBehaviour
 		Config.LoadConfig();
 	}
 
-	void Update()
+	private void Update()
 	{
 		Time.timeScale = isPaused ? 0f : timeScale;
 
@@ -48,19 +46,11 @@ public class SimulationManager : MonoBehaviour
 		return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{milliseconds:D3}";
 	}
 
-	public SpawnMode GetSpawnMode()
-	{
-		return spawnMode;
-	}
+	public SpawnMode GetSpawnMode() => spawnMode;
 
 	public void SetSpawnMode(SpawnMode mode)
 	{
 		spawnMode = mode;
-	}
-
-	public float GetCurrentSpawnRate()
-	{
-		return 0f;
 	}
 
 	public void UpdateTimeScale(float newTimeScale)
@@ -68,10 +58,7 @@ public class SimulationManager : MonoBehaviour
 		timeScale = newTimeScale;
 	}
 
-	public float GetTimeScale()
-	{
-		return timeScale;
-	}
+	public float GetTimeScale() => timeScale;
 
 	public void ResetSimulation()
 	{
@@ -79,10 +66,7 @@ public class SimulationManager : MonoBehaviour
 		nextEventTime = 0f;
 	}
 
-	public bool IsPaused()
-	{
-		return isPaused;
-	}
+	public bool IsPaused() => isPaused;
 
 	public void PauseSimulation()
 	{
