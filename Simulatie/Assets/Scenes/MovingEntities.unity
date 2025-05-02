@@ -382,6 +382,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types: 
+--- !u!1 &376279752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 376279753}
+  - component: {fileID: 376279754}
+  m_Layer: 0
+  m_Name: EntityPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &376279753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376279752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.4716493, y: -0.069214284, z: 0.013603021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &376279754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376279752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
+  poolSize: 3
 --- !u!4 &576953999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
@@ -699,15 +745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityPrefabs:
-  - {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
-  - {fileID: 4288846041012694234, guid: faf3fdf078dc45e4e91b04f5ef928306, type: 3}
-  - {fileID: 7693187767944436776, guid: 4dae5219bc8435e44a5ee40157e7c5f3, type: 3}
   spawnPoint: {fileID: 1580916946}
-  spawnInterval: 2
-  numberOfEntitiesToSpawn: 6
+  entityPool: {fileID: 376279754}
   availableRoads:
-  - {fileID: 135539150}
   - {fileID: 999577843}
 --- !u!1 &1682311721
 GameObject:
@@ -1164,3 +1204,4 @@ SceneRoots:
   - {fileID: 875127349270155176}
   - {fileID: 1226209449}
   - {fileID: 1580916946}
+  - {fileID: 376279753}

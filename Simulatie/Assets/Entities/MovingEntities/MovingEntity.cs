@@ -17,6 +17,12 @@ public class MovingEntity : MonoBehaviour
   private TrafficLight currentTrafficLight;
   private Rigidbody2D rigidBody;
   private BoxCollider2D boxCollider;
+  private EntityPool entityPool;
+
+  public void Initialize(EntityPool pool) 
+  {
+    entityPool = pool;
+  }
 
   protected virtual void Awake()
   {
@@ -55,14 +61,27 @@ public class MovingEntity : MonoBehaviour
 
     splineDistance += (currentSpeed / currentRoad.getLength()) * Time.deltaTime;
 
-    Vector3 position = currentRoad.getNewPosition(splineDistance);
-    float3 tangent = currentRoad.getNewTangent(splineDistance);
+    if (splineDistance >= currentRoad.getLength() * 0.9f)
+    {
+      ResetPosition(); // Reset positie
+    }
+    else
+    {
+      Vector3 position = currentRoad.getNewPosition(splineDistance);
+      float3 tangent = currentRoad.getNewTangent(splineDistance);
 
-    float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
+      float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
 
-    rigidBody.MovePosition(position);
-    rigidBody.MoveRotation(angle);
+      rigidBody.MovePosition(position);
+      rigidBody.MoveRotation(angle);
+    } 
   }
+  private void ResetPosition()
+  {
+    splineDistance = 0f; // Reset splineDistance
+    entityPool.ReturnObject(gameObject); //entity terug naar pool
+  }
+
   protected void Stop()
   {
     isStopped = true;
