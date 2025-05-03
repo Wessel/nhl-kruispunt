@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
-  poolSize: 3
+  poolSize: 6
 --- !u!4 &576953999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
@@ -745,6 +745,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modeSettings:
+  - mode: 0
+    spawnInterval: 4
+    numberOfEntitiesToSpawn: 2
+  - mode: 1
+    spawnInterval: 3
+    numberOfEntitiesToSpawn: 4
+  - mode: 2
+    spawnInterval: 2
+    numberOfEntitiesToSpawn: 6
+  currentMode: 0
   spawnPoint: {fileID: 1580916946}
   entityPool: {fileID: 376279754}
   availableRoads:

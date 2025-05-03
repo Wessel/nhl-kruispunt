@@ -5,8 +5,6 @@ public class EntityPool : MonoBehaviour
 {
   public GameObject prefab;
   public int poolSize;
-  //public ModeSettings[] modeSettings; // Array van modusinstellingen
-  //public SimulationMode currentMode; // Huidige modus
 
   private Queue<GameObject> pool = new Queue<GameObject>();
 
@@ -15,6 +13,7 @@ public class EntityPool : MonoBehaviour
     for (int i = 0; i < poolSize; i++)
     {
       GameObject entity = Instantiate(prefab);
+      entity.transform.parent = this.transform; //objecten zijn kinderen van pool voor structuur
       entity.SetActive(false);
       pool.Enqueue(entity); // Voeg entity toe aan queue
     }
@@ -25,7 +24,7 @@ public class EntityPool : MonoBehaviour
     if (pool.Count > 0)
     {
       GameObject entity = pool.Dequeue();
-      entity.SetActive(true); // Zet het object actief
+      entity.SetActive(true);
       return entity;
     }
     else
