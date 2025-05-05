@@ -19,7 +19,6 @@ public class MovingEntity : MonoBehaviour
   private EntityPool entityPool;
 
   private Road currentRoad;
-  private Road pendingRoad;
 
   public void Initialize(EntityPool pool)
   {
@@ -33,13 +32,6 @@ public class MovingEntity : MonoBehaviour
 
   protected virtual void Update()
   {
-    if (currentRoad == null && pendingRoad != null)
-    {
-      currentRoad = pendingRoad;
-      pendingRoad = null;
-      splineDistance = 0f;
-    }
-
     if (currentRoad == null) return;
 
     CheckTrafficLight();
@@ -58,26 +50,18 @@ public class MovingEntity : MonoBehaviour
   {
     UpdateSpeedBasedOnEntityInFront();
 
-    float roadLength = currentRoad.getLength();
+    float roadLength = currentRoad.GetLength();
     float deltaProgress = (currentSpeed / roadLength) * Time.deltaTime;
     splineDistance += deltaProgress;
 
     if (splineDistance >= 1f)
     {
-      if (pendingRoad != null)
-      {
-        SwitchToPendingRoad();
-      }
-      else
-      {
         Despawn();
-      }
     }
     else
     {
       UpdateEntityPositionAndRotation();
     }
-
   }
 
   private void UpdateSpeedBasedOnEntityInFront()
@@ -97,39 +81,41 @@ public class MovingEntity : MonoBehaviour
 
   private void UpdateEntityPositionAndRotation()
   {
-    Vector3 position = currentRoad.getNewPosition(splineDistance);
-    float3 tangent = currentRoad.getNewTangent(splineDistance);
+    Vector3 position = currentRoad.GetNewPosition(splineDistance);
+    float3 tangent = currentRoad.GetNewTangent(splineDistance);
     float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
 
     rigidBody.MovePosition(position);
     rigidBody.MoveRotation(angle);
   }
 
-  private void SwitchToPendingRoad()
+  public void SwitchToRoad(Road newRoad, float startDistance = 0f)
   {
-    currentRoad = pendingRoad;
-    pendingRoad = null;
-    splineDistance = 0f;
+    currentRoad = newRoad;
+    splineDistance = startDistance;
+
+    Vector3 position = newRoad.GetNewPosition(splineDistance);
+    float3 tangent = newRoad.GetNewTangent(splineDistance);
+    float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
+
+    transform.position = position;
+    transform.rotation = Quaternion.Euler(0, 0, angle);
   }
 
   private void Despawn()
   {
-    // Reset movement state
     currentSpeed = 0f;
     splineDistance = 0f;
     isStopped = false;
 
-    // Clear road references
     currentRoad = null;
-    pendingRoad = null;
 
     ClearEntityInFront();
 
-    // Move offscreen or to a neutral reset position
+    // move offscreen
     transform.position = new Vector3(-1000f, -1000f, 0f);
     transform.rotation = Quaternion.identity;
 
-    // Return to pool
     entityPool.ReturnObject(this);
   }
 
@@ -174,23 +160,6 @@ public class MovingEntity : MonoBehaviour
           break;
       }
     }
-  }
-
-  public void SetNewRoad(Road newRoad)
-  {
-    currentRoad = newRoad;
-    pendingRoad = null;
-    splineDistance = 0f;
-  }
-
-  public void PrepareRoadSwitch(Road firstRoad)
-  {
-    SetNewRoad(firstRoad);
-  }
-
-  public void QueueRoadSwitch(Road nextRoad)
-  {
-    pendingRoad = nextRoad;
   }
 
   public VehicleType GetRoadType() => type;

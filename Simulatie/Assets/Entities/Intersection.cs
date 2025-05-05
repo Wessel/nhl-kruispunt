@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,14 +13,13 @@ public class Intersection : MonoBehaviour
 
     Road currentRoad = entity.GetCurrentRoad();
     List<Road> matchingRoads = roads.FindAll(road =>
-        road != currentRoad &&
-        road.getRoadTypes().Contains(entity.GetRoadType())
+        road.GetVehicleTypes().Contains(entity.GetRoadType())
     );
 
-    if (matchingRoads.Count > 0)
-    {
-      Road newRoad = matchingRoads[Random.Range(0, matchingRoads.Count)];
-      entity.PrepareRoadSwitch(newRoad);
-    }
+    Road newRoad = matchingRoads[Random.Range(0, matchingRoads.Count)];
+    if (newRoad == currentRoad) return;
+    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
+
+    entity.SwitchToRoad(newRoad, startDistance);
   }
 }

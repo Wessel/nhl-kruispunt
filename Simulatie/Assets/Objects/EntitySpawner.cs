@@ -39,7 +39,7 @@ public class EntitySpawner : MonoBehaviour
 
   private bool CanSpawnAtStart()
   {
-    Vector3 spawnPosition = road.getNewPosition(0f);
+    Vector3 spawnPosition = road.GetNewPosition(0f);
 
     Vector2 halfExtents = new Vector2(0.1f, 0.1f);
 
@@ -56,7 +56,7 @@ public class EntitySpawner : MonoBehaviour
     if (entity != null)
     {
       entity.Initialize(entityPool);
-      entity.PrepareRoadSwitch(road);
+      entity.SwitchToRoad(road);
     }
   }
 }
