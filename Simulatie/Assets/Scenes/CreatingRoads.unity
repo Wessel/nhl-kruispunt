@@ -1177,7 +1177,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1 &59265711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,7 +2569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   zoomSpeed: 2
-  minZoom: 2
+  minZoom: 5
 --- !u!1 &223535666
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,7 +5576,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1 &499083270
 GameObject:
   m_ObjectHideFlags: 0
@@ -6147,7 +6147,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1 &553865960
 GameObject:
   m_ObjectHideFlags: 0
@@ -10327,7 +10327,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1001 &1033743733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10680,7 +10680,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1001 &1069500333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14265,7 +14265,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1001 &1422873345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19091,7 +19091,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1 &1901568093
 GameObject:
   m_ObjectHideFlags: 0
@@ -20576,7 +20576,7 @@ MonoBehaviour:
   config:
     mode: 0
     spawnInterval: 0
-  entityPool: {fileID: 284244891}
+  entityPool: {fileID: 2035208069}
 --- !u!1 &2103552870
 GameObject:
   m_ObjectHideFlags: 0
@@ -21396,7 +21396,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2147483712
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 00766019e3960fb4598c62d195e61422, type: 2}
   m_TargetDisplay: 0
