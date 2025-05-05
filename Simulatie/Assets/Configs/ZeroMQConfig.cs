@@ -3,9 +3,9 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Config
+public class ZeroMQConfig
 {
-  private static Config _instance;
+  private static ZeroMQConfig _instance;
   private static readonly object _lock = new object();
 
   [JsonProperty("method")]
@@ -23,9 +23,9 @@ public class Config
   [JsonProperty("listen_port")]
   public int ListenPort { get; set; }
 
-  private Config() { }
+  private ZeroMQConfig() { }
 
-  public static Config Instance
+  public static ZeroMQConfig Instance
   {
     get
     {
@@ -47,11 +47,11 @@ public class Config
       TextAsset configText = Resources.Load<TextAsset>("config");
       if (configText != null)
       {
-        _instance = JsonConvert.DeserializeObject<Config>(configText.text);
+        _instance = JsonConvert.DeserializeObject<ZeroMQConfig>(configText.text);
       }
       else
       {
-        Debug.LogError("Config file not found in Resources.");
+        Debug.LogError("ZeroMQConfig file not found in Resources.");
       }
     }
     catch (Exception ex)

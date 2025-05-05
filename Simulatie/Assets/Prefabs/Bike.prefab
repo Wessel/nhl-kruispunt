@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4843225671678920346}
   - component: {fileID: 6217774382857858155}
   - component: {fileID: 5784282928804259689}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bike
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -176,10 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d9667a6576eb540b6b20253803fc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoad: {fileID: 0}
   maxSpeed: 0.6
-  splineDistance: 0
   followDistance: 0.2
+  splineDistance: 0
 --- !u!1 &8839797396025936047
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +190,7 @@ GameObject:
   - component: {fileID: 217150373566039739}
   - component: {fileID: 3397306030277036910}
   - component: {fileID: 3433932167899010765}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1972,6 +1972,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140993430}
   - component: {fileID: 140993429}
+  - component: {fileID: 140993431}
   m_Layer: 0
   m_Name: 28
   m_TagString: Untagged
@@ -2114,6 +2115,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &140993431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140993428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 01000000
 --- !u!1 &168907914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,6 +2264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 173853981}
   - component: {fileID: 173853980}
+  - component: {fileID: 173853982}
   m_Layer: 0
   m_Name: Bike-52
   m_TagString: Untagged
@@ -2372,6 +2387,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &173853982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173853979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 
 --- !u!1 &197402600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2488,7 @@ Transform:
   m_GameObject: {fileID: 197402600}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.95, y: -3.01, z: -10}
+  m_LocalPosition: {x: -11.01, y: -1.72, z: -10}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2486,7 +2514,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
@@ -2893,6 +2921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 321167222}
   - component: {fileID: 321167221}
+  - component: {fileID: 321167223}
   m_Layer: 0
   m_Name: Walk-51
   m_TagString: Untagged
@@ -2995,6 +3024,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &321167223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321167220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 02000000
 --- !u!1 &347136782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3006,6 +3048,7 @@ GameObject:
   - component: {fileID: 347136784}
   - component: {fileID: 347136783}
   - component: {fileID: 347136785}
+  - component: {fileID: 347136786}
   m_Layer: 0
   m_Name: 10.1
   m_TagString: Untagged
@@ -3141,6 +3184,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types: 00000000
+--- !u!114 &347136786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347136782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1 &350314446
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,6 +3212,7 @@ GameObject:
   - component: {fileID: 350314448}
   - component: {fileID: 350314447}
   - component: {fileID: 350314449}
+  - component: {fileID: 350314450}
   m_Layer: 0
   m_Name: 8.1
   m_TagString: Untagged
@@ -3467,6 +3528,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types: 00000000
+--- !u!114 &350314450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350314446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1 &386277128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3956,6 +4034,7 @@ GameObject:
   - component: {fileID: 428175007}
   - component: {fileID: 428175009}
   - component: {fileID: 428175008}
+  - component: {fileID: 428175010}
   m_Layer: 0
   m_Name: 5.1
   m_TagString: Untagged
@@ -4151,6 +4230,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &428175010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428175006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1 &431104446
 GameObject:
   m_ObjectHideFlags: 0
@@ -5559,6 +5655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526622260}
   - component: {fileID: 526622259}
+  - component: {fileID: 526622261}
   m_Layer: 0
   m_Name: Walk-52
   m_TagString: Untagged
@@ -5661,6 +5758,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &526622261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526622258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 02000000
 --- !u!1 &547274056
 GameObject:
   m_ObjectHideFlags: 0
@@ -6379,6 +6489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 596134402}
   - component: {fileID: 596134403}
+  - component: {fileID: 596134404}
   m_Layer: 0
   m_Name: 24
   m_TagString: Untagged
@@ -6579,8 +6690,173 @@ MonoBehaviour:
       m_Data: []
     m_ObjectData:
       m_Data: []
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.009763554
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.009763554
+      Rotation:
+        value:
+          x: -0.39642566
+          y: 0.5855311
+          z: -0.5855311
+          w: 0.39642566
+    - Position:
+        x: 0.090652466
+        y: -0.036260545
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.04120048
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.07274047
+      Rotation:
+        value:
+          x: 0.43377107
+          y: -0.5584288
+          z: 0.55842876
+          w: -0.43377107
+    - Position:
+        x: 0.39282227
+        y: -0.07252103
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.13671008
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.28521305
+      Rotation:
+        value:
+          x: 0.4901102
+          y: -0.5096979
+          z: 0.50969803
+          w: -0.49011007
+    - Position:
+        x: 1.7163315
+        y: -0.018130243
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.4221501
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.38678578
+      Rotation:
+        value:
+          x: -0.5051077
+          y: 0.4948396
+          z: -0.4948396
+          w: 0.50510764
+    - Position:
+        x: 2.8283205
+        y: -0.018130243
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.31013668
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.22441044
+      Rotation:
+        value:
+          x: 0.5204159
+          y: -0.4787142
+          z: 0.47871426
+          w: -0.52041584
+    - Position:
+        x: 3.4024458
+        y: 0.078564465
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.14220858
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.086458236
+      Rotation:
+        value:
+          x: 0.5925544
+          y: -0.38584885
+          z: 0.3858489
+          w: -0.59255433
+    - Position:
+        x: 3.571661
+        y: 0.21151966
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.02151996
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.02151996
+      Rotation:
+        value:
+          x: -0.63596827
+          y: 0.3091025
+          z: -0.30910245
+          w: 0.63596827
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &596134404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596134401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 01000000
 --- !u!1001 &646331042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8287,7 +8563,7 @@ Transform:
   - {fileID: 168907917}
   - {fileID: 223535669}
   - {fileID: 1948343141}
-  - {fileID: 173853981}
+  - {fileID: 596134402}
   - {fileID: 386277131}
   - {fileID: 560184095}
   - {fileID: 1691686627}
@@ -8323,7 +8599,7 @@ Transform:
   - {fileID: 321167222}
   - {fileID: 526622260}
   - {fileID: 1182332723}
-  - {fileID: 596134402}
+  - {fileID: 173853981}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &792033712
@@ -8985,7 +9261,7 @@ GameObject:
   - component: {fileID: 885306299}
   - component: {fileID: 885306298}
   - component: {fileID: 885306297}
-  m_Layer: 6
+  m_Layer: 31
   m_Name: Minimap background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10536,6 +10812,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1137955489}
   - component: {fileID: 1137955490}
+  - component: {fileID: 1137955491}
+  - component: {fileID: 1137955492}
   m_Layer: 0
   m_Name: 4.1
   m_TagString: Untagged
@@ -10738,6 +11016,36 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1137955491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137955488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
+--- !u!114 &1137955492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137955488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 00000000
 --- !u!1001 &1169066511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10963,6 +11271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1182332723}
   - component: {fileID: 1182332722}
+  - component: {fileID: 1182332724}
   m_Layer: 0
   m_Name: Bike-51
   m_TagString: Untagged
@@ -11065,6 +11374,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182332724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182332721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 01000000
 --- !u!1 &1187561881
 GameObject:
   m_ObjectHideFlags: 0
@@ -11500,6 +11822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1256476400}
   - component: {fileID: 1256476399}
+  - component: {fileID: 1256476401}
   m_Layer: 0
   m_Name: Bike-SW-South
   m_TagString: Untagged
@@ -11722,6 +12045,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1256476401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256476398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 01000000
 --- !u!1001 &1263072385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11867,6 +12203,7 @@ GameObject:
   - component: {fileID: 1264198854}
   - component: {fileID: 1264198856}
   - component: {fileID: 1264198855}
+  - component: {fileID: 1264198857}
   m_Layer: 0
   m_Name: 2.1
   m_TagString: Untagged
@@ -12182,6 +12519,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1264198857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264198853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1268682315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12481,6 +12835,7 @@ GameObject:
   - component: {fileID: 1300123176}
   - component: {fileID: 1300123178}
   - component: {fileID: 1300123177}
+  - component: {fileID: 1300123179}
   m_Layer: 0
   m_Name: 8.2
   m_TagString: Untagged
@@ -12716,6 +13071,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1300123179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300123175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1311184855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14095,6 +14467,7 @@ GameObject:
   - component: {fileID: 1511087251}
   - component: {fileID: 1511087253}
   - component: {fileID: 1511087252}
+  - component: {fileID: 1511087254}
   m_Layer: 0
   m_Name: 6.1
   m_TagString: Untagged
@@ -14310,6 +14683,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1511087254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511087250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1516237307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14451,6 +14841,7 @@ GameObject:
   - component: {fileID: 1533008804}
   - component: {fileID: 1533008803}
   - component: {fileID: 1533008802}
+  - component: {fileID: 1533008805}
   m_Layer: 0
   m_Name: 7.1
   m_TagString: Untagged
@@ -14606,6 +14997,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1533008805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533008801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1555542461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15010,6 +15418,7 @@ GameObject:
   - component: {fileID: 1571765037}
   - component: {fileID: 1571765036}
   - component: {fileID: 1571765038}
+  - component: {fileID: 1571765039}
   m_Layer: 0
   m_Name: 9.1
   m_TagString: Untagged
@@ -15165,6 +15574,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types: 00000000
+--- !u!114 &1571765039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571765035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1586379347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16273,6 +16699,7 @@ GameObject:
   - component: {fileID: 1733721489}
   - component: {fileID: 1733721491}
   - component: {fileID: 1733721490}
+  - component: {fileID: 1733721492}
   m_Layer: 0
   m_Name: 12.1
   m_TagString: Untagged
@@ -16448,6 +16875,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1733721492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733721488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1001 &1769158761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16617,6 +17061,7 @@ GameObject:
   - component: {fileID: 1775710258}
   - component: {fileID: 1775710260}
   - component: {fileID: 1775710259}
+  - component: {fileID: 1775710261}
   m_Layer: 0
   m_Name: 11.1
   m_TagString: Untagged
@@ -16732,6 +17177,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1775710261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775710257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config:
+    mode: 0
+    spawnInterval: 0
+    numberOfEntitiesToSpawn: 0
+  entityPool: {fileID: 1851155874}
 --- !u!1 &1786030554
 GameObject:
   m_ObjectHideFlags: 0
@@ -17605,6 +18067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834564691}
   - component: {fileID: 1834564690}
+  - component: {fileID: 1834564692}
   m_Layer: 0
   m_Name: Bike-SW-North
   m_TagString: Untagged
@@ -17807,6 +18270,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 788600607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1834564692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834564689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 01000000
 --- !u!1001 &1836665779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17897,6 +18373,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
   m_PrefabInstance: {fileID: 1836665779}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1851155873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851155875}
+  - component: {fileID: 1851155874}
+  m_Layer: 0
+  m_Name: CarPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1851155874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851155873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
+  poolSize: 50
+--- !u!4 &1851155875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851155873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.607916, y: 5.9765024, z: -0.0028345608}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1879847310
 GameObject:
   m_ObjectHideFlags: 0
@@ -18472,6 +18994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1948343141}
   - component: {fileID: 1948343142}
+  - component: {fileID: 1948343143}
   m_Layer: 0
   m_Name: 23
   m_TagString: Untagged
@@ -18674,6 +19197,19 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &1948343143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948343140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6371ec33ed4b4c82077c888515839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  types: 
 --- !u!1001 &1949894321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20689,3 +21225,4 @@ SceneRoots:
   - {fileID: 1901568095}
   - {fileID: 21871456}
   - {fileID: 779944306}
+  - {fileID: 1851155875}

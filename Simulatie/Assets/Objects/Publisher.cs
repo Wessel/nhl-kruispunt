@@ -43,7 +43,7 @@ public class Publisher : MonoBehaviour
       {
         _pubSocket = new PublisherSocket();
         _pubSocket.Options.SendHighWatermark = 1000;
-        _pubSocket.Bind($"{Config.Instance.Method}://{Config.Instance.PublishIP}:{Config.Instance.PublishPort}");
+        _pubSocket.Bind($"{ZeroMQConfig.Instance.Method}://{ZeroMQConfig.Instance.PublishIP}:{ZeroMQConfig.Instance.PublishPort}");
         _isSocketInitialized = true;
       }
 

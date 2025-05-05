@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6348453920523644616}
   - component: {fileID: 7078066540372744849}
   - component: {fileID: 7062973901566067441}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7687457318254295760}
   - component: {fileID: 6495876467165360089}
   - component: {fileID: 7108719673650108639}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EmergencyVehicle
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -268,7 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8408d87d4fe4441bf8c2adf839d0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoad: {fileID: 0}
   maxSpeed: 1.5
-  splineDistance: 0
   followDistance: 0.7
+  splineDistance: 0

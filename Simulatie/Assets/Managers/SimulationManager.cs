@@ -15,7 +15,7 @@ public class SimulationManager : MonoBehaviour
 		if (Instance == null) Instance = this;
 		else Destroy(gameObject);
 
-		Config.LoadConfig();
+		ZeroMQConfig.LoadConfig();
 	}
 
 	private void Update()
