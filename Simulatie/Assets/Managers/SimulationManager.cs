@@ -65,7 +65,8 @@ public class SimulationManager : MonoBehaviour
 	{
 		simulationTime = 0f;
 		nextEventTime = 0f;
-	}
+    EventManager.Instance.Reset.Invoke();
+  }
 
 	public bool IsPaused() => isPaused;
 

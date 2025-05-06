@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 
@@ -7,17 +6,17 @@ using System;
 public class SpawnModeValue
 {
   public SpawnMode mode;
-  public float spawntimer;
+  public float spawntimer; // in seconden simulatie-tijd
 }
 
 public class EntitySpawner : MonoBehaviour
 {
   public List<SpawnModeValue> spawnModeValues;
-  public EntityPool entityPool;          
+  public EntityPool entityPool;
 
-  private Road road;                   
+  private Road road;
   private Dictionary<SpawnMode, float> modeConfigs;
-  private float spawnDelay = 0f;
+  private float nextSpawnSimTime = 0f;
 
   private void Awake()
   {
@@ -46,41 +45,42 @@ public class EntitySpawner : MonoBehaviour
 
   void Start()
   {
-    road = GetComponent<Road>();      
-    StartCoroutine(SpawnLoop());
+    road = GetComponent<Road>();
     EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
+    ResetSpawnTimer();
+  }
+
+  void Update()
+  {
+    if (SimulationManager.Instance.IsPaused()) return;
+
+    float simTime = SimulationManager.Instance.GetSimulationTime();
+
+    if (simTime >= nextSpawnSimTime && CanSpawnAtStart())
+    {
+      SpawnEntity();
+      ResetSpawnTimer();
+    }
   }
 
   private void OnSpawnModeChanged(SpawnMode newMode)
   {
-    spawnDelay = modeConfigs.TryGetValue(SimulationManager.Instance.GetSpawnMode(), out float value) ? value : 10f;
+    ResetSpawnTimer();
   }
 
-  IEnumerator SpawnLoop()
+  private void ResetSpawnTimer()
   {
-    float spawnTimer = 0f;
-    while (!SimulationManager.Instance.IsPaused())
-    {
-      spawnTimer -= Time.deltaTime;
-      if (spawnTimer <= 0f && CanSpawnAtStart())
-      {
-        SpawnEntity();
-        spawnTimer = spawnDelay;
-      }
-
-      yield return null;
-    }
+    float simTime = SimulationManager.Instance.GetSimulationTime();
+    float delay = modeConfigs.TryGetValue(SimulationManager.Instance.GetSpawnMode(), out float val) ? val : 10f;
+    nextSpawnSimTime = simTime + delay;
   }
 
   private bool CanSpawnAtStart()
   {
     Vector3 spawnPosition = road.GetNewPosition(0f);
-
-    Vector2 halfExtents = new Vector2(0.1f, 0.1f);
-
+    Vector2 halfExtents = new Vector2(1f, 1f);
     LayerMask vehicleLayer = LayerMask.GetMask("Vehicles");
 
-    // Check if any collider overlaps the spawn area
     Collider2D hit = Physics2D.OverlapBox(spawnPosition, halfExtents, 0f, vehicleLayer);
     return hit == null;
   }

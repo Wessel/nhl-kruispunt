@@ -1,23 +1,24 @@
 using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
+using System;
 
 public class MovingEntity : MonoBehaviour
 {
-  public float maxSpeed = 5f;
-  public float followDistance = 1.5f;
-
-  public float splineDistance = 0f;
+  [SerializeField] private float maxSpeedKmh = 50f;
+  [SerializeField] private float followDistance = 1.5f;
 
   protected VehicleType type;
   protected float currentSpeed;
   protected bool isStopped = false;
 
+  private float maxSpeed;
+  private float splineDistance = 0f;
+
   private MovingEntity entityInFront;
   private TrafficLight currentTrafficLight;
   private Rigidbody2D rigidBody;
   private EntityPool entityPool;
-
   private Road currentRoad;
 
   public void Initialize(EntityPool pool)
@@ -28,6 +29,7 @@ public class MovingEntity : MonoBehaviour
   protected virtual void Awake()
   {
     rigidBody = GetComponent<Rigidbody2D>();
+    maxSpeed = ConvertKmHToUnityUnits(maxSpeedKmh);
   }
 
   protected virtual void Update()
@@ -56,7 +58,7 @@ public class MovingEntity : MonoBehaviour
 
     if (splineDistance >= 1f)
     {
-        Despawn();
+      Despawn();
     }
     else
     {
@@ -73,10 +75,7 @@ public class MovingEntity : MonoBehaviour
     }
 
     float distanceToFront = Vector3.Distance(transform.position, entityInFront.transform.position);
-
-    currentSpeed = (distanceToFront < followDistance)
-        ? 0f
-        : maxSpeed * 0.5f;
+    currentSpeed = (distanceToFront < followDistance) ? 0f : maxSpeed * 0.5f;
   }
 
   private void UpdateEntityPositionAndRotation()
@@ -107,65 +106,54 @@ public class MovingEntity : MonoBehaviour
     currentSpeed = 0f;
     splineDistance = 0f;
     isStopped = false;
-
     currentRoad = null;
-
     ClearEntityInFront();
 
-    // move offscreen
     transform.position = new Vector3(-1000f, -1000f, 0f);
     transform.rotation = Quaternion.identity;
 
     entityPool.ReturnObject(this);
   }
 
-  protected void Stop() => isStopped = true;
-  protected void Move() => isStopped = false;
+  public void Freeze() => isStopped = true;
+  public void Unfreeze() => isStopped = false;
 
   private void OnTriggerEnter2D(Collider2D other)
   {
     if (other.CompareTag("StopLine"))
     {
-      var light = other.GetComponentInParent<TrafficLight>();
-      if (light != null)
-      {
-        currentTrafficLight = light;
-      }
+      currentTrafficLight = other.GetComponentInParent<TrafficLight>();
     }
   }
 
   private void OnTriggerExit2D(Collider2D other)
   {
-    if (other.CompareTag("StopLine"))
+    if (other.CompareTag("StopLine") && currentTrafficLight == other.GetComponentInParent<TrafficLight>())
     {
-      var light = other.GetComponentInParent<TrafficLight>();
-      if (light != null && light == currentTrafficLight)
-      {
-        currentTrafficLight = null;
-      }
+      currentTrafficLight = null;
     }
   }
 
-  protected void CheckTrafficLight()
+  private void CheckTrafficLight()
   {
-    if (currentTrafficLight != null)
+    if (currentTrafficLight == null) return;
+
+    switch (currentTrafficLight.GetLight())
     {
-      switch (currentTrafficLight.GetLight())
-      {
-        case LightState.Red:
-          Stop();
-          break;
-        case LightState.Green:
-          Move();
-          break;
-      }
+      case LightState.Red: Freeze(); break;
+      case LightState.Green: Unfreeze(); break;
     }
   }
 
-  public VehicleType GetRoadType() => type;
+  private float ConvertKmHToUnityUnits(float kmh)
+  {
+    return (kmh * 1000f / 3600f) / 10f; // 1 Unity unit = 10 meters
+  }
 
   public void SetEntityInFront(MovingEntity front) => entityInFront = front;
   public void ClearEntityInFront() => entityInFront = null;
   public MovingEntity GetEntityInFront() => entityInFront;
   public Road GetCurrentRoad() => currentRoad;
+
+  internal VehicleType GetRoadType() => type;
 }

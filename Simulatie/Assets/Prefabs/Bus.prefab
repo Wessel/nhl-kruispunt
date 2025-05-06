@@ -176,10 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96fc94dbc77d6474cb7ed394ef917f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoad: {fileID: 0}
-  maxSpeed: 1
-  splineDistance: 0
-  followDistance: 0.7
+  maxSpeedKmh: 50
+  followDistance: 1.5
 --- !u!1 &4149658027982678366
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +245,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 15, y: 0}
+  m_Offset: {x: 10.380382, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -257,7 +255,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 6}
+  m_Size: {x: 4.2462063, y: 6}
   m_EdgeRadius: 0
 --- !u!114 &7604061352750203954
 MonoBehaviour:
