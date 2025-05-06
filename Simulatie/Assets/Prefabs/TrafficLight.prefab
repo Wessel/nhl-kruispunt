@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sensor_achter
       objectReference: {fileID: 0}
+    - target: {fileID: 5665874215215551340, guid: 83238112f1031e44baef23fdccf7c496, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8050266162481170500, guid: 83238112f1031e44baef23fdccf7c496, type: 3}
       propertyPath: m_Size.x
       value: 0.6
@@ -465,6 +469,10 @@ PrefabInstance:
     - target: {fileID: 5665874215215551340, guid: 83238112f1031e44baef23fdccf7c496, type: 3}
       propertyPath: m_Name
       value: sensor_voor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665874215215551340, guid: 83238112f1031e44baef23fdccf7c496, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8050266162481170500, guid: 83238112f1031e44baef23fdccf7c496, type: 3}
       propertyPath: m_Size.x
