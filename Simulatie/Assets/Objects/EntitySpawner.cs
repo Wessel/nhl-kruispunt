@@ -1,36 +1,71 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
+
+[Serializable]
+public class SpawnModeValue
+{
+  public SpawnMode mode;
+  public float spawntimer;
+}
 
 public class EntitySpawner : MonoBehaviour
 {
-  public RoadConfig config;             
+  public List<SpawnModeValue> spawnModeValues;
   public EntityPool entityPool;          
 
-  private Road road;                     
-  private float spawnTimer;              
+  private Road road;                   
+  private Dictionary<SpawnMode, float> modeConfigs;
+  private float spawnDelay = 0f;
+
+  private void Awake()
+  {
+    modeConfigs = new Dictionary<SpawnMode, float>();
+    foreach (SpawnModeValue entry in spawnModeValues)
+    {
+      modeConfigs[entry.mode] = entry.spawntimer;
+    }
+  }
+
+  private void OnValidate()
+  {
+    var enumValues = (SpawnMode[])Enum.GetValues(typeof(SpawnMode));
+
+    foreach (var mode in enumValues)
+    {
+      if (!spawnModeValues.Exists(x => x.mode == mode))
+      {
+        spawnModeValues.Add(new SpawnModeValue { mode = mode });
+      }
+    }
+
+    spawnModeValues.RemoveAll(x => Array.IndexOf(enumValues, x.mode) == -1);
+    spawnModeValues.Sort((a, b) => a.mode.CompareTo(b.mode));
+  }
 
   void Start()
   {
     road = GetComponent<Road>();      
-    spawnTimer = config.spawnInterval;
-    config = new RoadConfig()
-    {
-      mode = SpawnMode.Easy,
-      spawnInterval = 3.0f,
-    }; 
-
     StartCoroutine(SpawnLoop());
+    EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
+  }
+
+  private void OnSpawnModeChanged(SpawnMode newMode)
+  {
+    spawnDelay = modeConfigs.TryGetValue(SimulationManager.Instance.GetSpawnMode(), out float value) ? value : 10f;
   }
 
   IEnumerator SpawnLoop()
   {
+    float spawnTimer = 0f;
     while (!SimulationManager.Instance.IsPaused())
     {
       spawnTimer -= Time.deltaTime;
       if (spawnTimer <= 0f && CanSpawnAtStart())
       {
         SpawnEntity();
-        spawnTimer = config.spawnInterval;
+        spawnTimer = spawnDelay;
       }
 
       yield return null;

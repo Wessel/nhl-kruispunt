@@ -51,7 +51,8 @@ public class SimulationManager : MonoBehaviour
 	public void SetSpawnMode(SpawnMode mode)
 	{
 		spawnMode = mode;
-	}
+    EventManager.Instance.SetSpawnMode.Invoke(mode);
+  }
 
 	public void UpdateTimeScale(float newTimeScale)
 	{

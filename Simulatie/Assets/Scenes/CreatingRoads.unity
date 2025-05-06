@@ -1092,9 +1092,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1 &48402871
 GameObject:
@@ -2836,7 +2840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4288846041012694234, guid: faf3fdf078dc45e4e91b04f5ef928306, type: 3}
+  prefabs:
+  - prefab: {fileID: 4288846041012694234, guid: faf3fdf078dc45e4e91b04f5ef928306, type: 3}
+    chance: 1
   poolSize: 30
 --- !u!4 &284244892
 Transform:
@@ -3370,9 +3376,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1 &350314446
 GameObject:
@@ -3713,9 +3723,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1 &368051493
 GameObject:
@@ -4507,9 +4521,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1 &431104446
 GameObject:
@@ -5136,9 +5154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &458573394
 PrefabInstance:
@@ -5777,9 +5799,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1 &499083270
 GameObject:
@@ -6442,9 +6468,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1 &553865960
 GameObject:
@@ -6685,9 +6715,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1 &560184092
 GameObject:
@@ -8609,9 +8643,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1680746389}
 --- !u!1001 &772755332
 PrefabInstance:
@@ -9643,9 +9681,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &872695647
 PrefabInstance:
@@ -10644,9 +10686,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1001 &1033743733
 PrefabInstance:
@@ -10997,9 +11043,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1001 &1069500333
 PrefabInstance:
@@ -11561,9 +11611,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!114 &1137955492
 MonoBehaviour:
@@ -12695,9 +12749,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &1263072385
 PrefabInstance:
@@ -13172,9 +13230,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1268682315
 PrefabInstance:
@@ -13911,9 +13973,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1311184855
 PrefabInstance:
@@ -14955,9 +15021,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1001 &1422873345
 PrefabInstance:
@@ -15632,9 +15702,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1516237307
 PrefabInstance:
@@ -15945,9 +16019,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1555542461
 PrefabInstance:
@@ -16521,9 +16599,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1586379347
 PrefabInstance:
@@ -16926,9 +17008,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &1658094191
 PrefabInstance:
@@ -17041,7 +17127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7892543459899585692, guid: bbe0cf2364527014aaa4a1b4e72c3e4d, type: 3}
+  prefabs:
+  - prefab: {fileID: 7892543459899585692, guid: bbe0cf2364527014aaa4a1b4e72c3e4d, type: 3}
+    chance: 1
   poolSize: 5
 --- !u!4 &1680746390
 Transform:
@@ -17837,9 +17925,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1001 &1769158761
 PrefabInstance:
@@ -18138,9 +18230,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1851155874}
 --- !u!1 &1786030554
 GameObject:
@@ -18281,9 +18377,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 1680746389}
 --- !u!1 &1791257862
 GameObject:
@@ -18744,9 +18844,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1 &1802704558
 GameObject:
@@ -19278,9 +19382,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &1836665779
 PrefabInstance:
@@ -19401,7 +19509,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
+  prefabs:
+  - prefab: {fileID: 4410527478805258802, guid: 1e826c1980ba0f2488f67b838f014e51, type: 3}
+    chance: 95
+  - prefab: {fileID: 7693187767944436776, guid: 4dae5219bc8435e44a5ee40157e7c5f3, type: 3}
+    chance: 1
+  - prefab: {fileID: 344608866986159516, guid: dc73923ab4989a7499456cebe323a6cd, type: 3}
+    chance: 4
   poolSize: 40
 --- !u!4 &1851155875
 Transform:
@@ -19767,9 +19881,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1 &1901568093
 GameObject:
@@ -19810,6 +19928,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   SetBridgeState:
+    m_PersistentCalls:
+      m_Calls: []
+  SetSpawnMode:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1901568095
@@ -20605,7 +20726,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6dfd2e710a9ce448fa9723ad48dfac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3279458361815751430, guid: acf43fa2be195234f9945656f26f17dd, type: 3}
+  prefabs:
+  - prefab: {fileID: 3279458361815751430, guid: acf43fa2be195234f9945656f26f17dd, type: 3}
+    chance: 1
   poolSize: 20
 --- !u!4 &2035208070
 Transform:
@@ -21263,9 +21386,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 2035208069}
 --- !u!1 &2103552870
 GameObject:
@@ -21846,9 +21973,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e198dbc3e1b145041977ba68e54acc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    mode: 0
-    spawnInterval: 0
+  spawnModeValues:
+  - mode: 0
+    spawntimer: 0
+  - mode: 1
+    spawntimer: 0
+  - mode: 2
+    spawntimer: 0
   entityPool: {fileID: 284244891}
 --- !u!1001 &2128181299
 PrefabInstance:
