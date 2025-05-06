@@ -27,7 +27,7 @@ public class Subscriber : MonoBehaviour
 
       _subSocket = new SubscriberSocket();
       _subSocket.Options.ReceiveHighWatermark = 1000;
-      _subSocket.Connect($"{Config.Instance.Method}://{Config.Instance.ListenIP}:{Config.Instance.ListenPort}");
+      _subSocket.Connect($"{ZeroMQConfig.Instance.Method}://{ZeroMQConfig.Instance.ListenIP}:{ZeroMQConfig.Instance.ListenPort}");
       _subSocket.Subscribe("stoplichten");
 
       Debug.Log("Subscriber connected.");

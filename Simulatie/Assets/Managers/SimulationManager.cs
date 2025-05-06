@@ -15,7 +15,7 @@ public class SimulationManager : MonoBehaviour
 		if (Instance == null) Instance = this;
 		else Destroy(gameObject);
 
-		Config.LoadConfig();
+		ZeroMQConfig.LoadConfig();
 	}
 
 	private void Update()
@@ -51,7 +51,8 @@ public class SimulationManager : MonoBehaviour
 	public void SetSpawnMode(SpawnMode mode)
 	{
 		spawnMode = mode;
-	}
+    EventManager.Instance.SetSpawnMode.Invoke(mode);
+  }
 
 	public void UpdateTimeScale(float newTimeScale)
 	{

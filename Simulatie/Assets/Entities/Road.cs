@@ -1,32 +1,52 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
+using Unity.Mathematics;
+using System.Collections.Generic;
 
 public class Road : MonoBehaviour
 {
-  public List<VehicleType> types;
-  private SplineContainer spline;
-  void Awake()
+  private SplineContainer splineContainer;
+  [SerializeField] private List<VehicleType> supportedTypes;
+
+  private float cachedLength = -1f;
+
+  private void Awake()
   {
-    spline = GetComponent<SplineContainer>();
-  }
-  public float getLength()
-  {
-    return spline.Spline.GetLength();
+    if (splineContainer == null)
+    {
+      splineContainer = GetComponent<SplineContainer>();
+    }
   }
 
-  public Vector3 getNewPosition(float distance)
+  public Vector3 GetNewPosition(float t)
   {
-    return spline.EvaluatePosition(distance);
+    return splineContainer.EvaluatePosition(t);
   }
 
-  public Vector3 getNewTangent(float distance)
+  public float3 GetNewTangent(float t)
   {
-    return spline.EvaluateTangent(distance);
+    return splineContainer.EvaluateTangent(t);
   }
 
-  public List<VehicleType> getRoadTypes()
+  public float GetLength()
   {
-    return types;
+    if (cachedLength < 0f)
+    {
+      cachedLength = splineContainer.Spline.GetLength();
+    }
+    return cachedLength;
+  }
+
+  public List<VehicleType> GetVehicleTypes()
+  {
+    return supportedTypes;
+  }
+
+
+  public float GetClosestDistanceOnSpline(Vector3 worldPosition)
+  {
+    Vector3 localPosition = splineContainer.transform.InverseTransformPoint(worldPosition);
+    SplineUtility.GetNearestPoint(splineContainer.Spline, localPosition, out _, out float t);
+    return t;
   }
 }
