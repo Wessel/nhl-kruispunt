@@ -20,13 +20,14 @@ export class Controller {
   private _publisher: ZmqPublisher;
   private _subscriber: ZmqSubscriber = new ZmqSubscriber();
 
-  public lanes: LaneMap[] = [];
+  public lanes: LaneMap = {};
 
   public priorityVehicleQueue: PriorityQueue = new PriorityQueue();
   public laneQueue: PriorityQueue = new PriorityQueue();
 
+  public time: number = 0;
 
-  constructor(publisher_port: number = 5557, clock: Stopwatch) {
+  constructor(publisher_port: number = 5555, clock: Stopwatch) {
     this._clock = clock;
 
     this._publisher = new ZmqPublisher(this._heartbeatDelay, this._clock);
@@ -45,7 +46,7 @@ export class Controller {
   connect_to_simulator(address: string): this {
     this._subscriber
       .connect(address)
-      .subscribe('', (t, a) => { try { console.log(t, JSON.parse(a)) } catch (_) { console.log(t, a); } })
+      // .subscribe('', (t, a) => { try { console.log(t, JSON.parse(a)) } catch (_) { console.log(t, a); } })
       .subscribe('sensoren_rijbaan',  (_, m) => this.handle_topic_sensoren_rijbaan(m))
       .subscribe('sensoren_speciaal', (_, m) => this.handle_topic_sensoren_speciaal(m))
       .subscribe('sensoren_bruggen',  (_, m) => this.handle_topic_sensoren_bruggen(m))
@@ -57,7 +58,7 @@ export class Controller {
   }
 
   bind_lane(lane: Lane): this {
-    this.lanes.push({ [lane.name]: lane });
+    this.lanes[lane.name] = lane;
 
     lane.on('state_changed', () => this.handle_lane_state_change());
 
@@ -69,14 +70,11 @@ export class Controller {
   }
 
   change_lane_state(lane_name: string, state: TrafficLightState) {
-    for (const lane of this.lanes) {
-      if (lane[lane_name]) {
-        lane[lane_name].set_state(state);
+    for (const lane of Object.keys(this.lanes)) {
+        this.lanes[lane].set_state(state);
         return;
       }
     }
-    throw new Error(`Lane ${lane_name} not found`);
-  }
 
   transmit_state(): this {
     const state_map: { [key: string]: TrafficLightState } = this.get_state_map();
@@ -90,12 +88,10 @@ export class Controller {
   get_state_map(): { [key: string]: TrafficLightState } {
     const state_map: { [key: string]: TrafficLightState } = {};
 
-    for (const lane of this.lanes) {
-      for (const lane_name in lane) {
-        for (const l in lane[lane_name].get_state_map()) {
-          state_map[`${lane_name}.${l}`] = lane[lane_name].get_state_map()[l];
+    for (const lane of Object.keys(this.lanes)) {
+        for (const l in this.lanes[lane].get_state_map()) {
+          state_map[`${lane}.${l}`] = this.lanes[lane].get_state_map()[l];
         }
-      }
     }
 
     return state_map;
@@ -121,7 +117,7 @@ export class Controller {
       if (priority > 0) {
         const existingEntry = this.laneQueue.get(group);
         if (existingEntry) {
-          if (existingEntry.activeSince) {
+          if (existingEntry.activeSince > 0) {
             priority -= 3;
           }
 
@@ -130,7 +126,9 @@ export class Controller {
           this.laneQueue.enqueue(group, priority);
         }
 
-        console.log(`Lane ${group} added to queue with priority ${priority}`);
+        // console.log(`Lane ${group} added to queue with priority ${priority}`);
+      } else if (this.laneQueue.contains(group)) {
+        this.laneQueue.remove(group);
       }
     });
 
@@ -143,8 +141,30 @@ export class Controller {
 
       if (nextLane) {
         console.log(`Processing lane ${nextLane.group} with priority ${nextLane.priority}`);
-        // Logic to handle the lane with highest priority
-        // This would likely change traffic light states based on the priority
+        this.laneQueue.setActive(nextLane.group, this.time);
+
+        const lane = this.lanes[nextLane.group];
+
+        if (lane) {
+          const lanes = this.compatible_lanes(nextLane.group);
+
+          for (const group of Object.keys(this._intersection.groups)) {
+            if (/*lanes.includes(group)*/ group === nextLane.group) {
+              const laneInstance = this.lanes[group];
+              if (laneInstance) {
+                laneInstance.set_state(TrafficLightState.GREEN);
+                console.log(`Setting lane ${group} to GREEN`);
+              }
+            } else {
+              const laneInstance = this.lanes[group];
+              if (laneInstance) {
+                laneInstance.set_state(TrafficLightState.RED);
+                console.log(`Setting lane ${group} to RED`);
+              }
+            }
+          }
+          // this.laneQueue.shift();
+        }
       }
     }
   }
@@ -152,7 +172,30 @@ export class Controller {
   handle_topic_sensoren_speciaal(message: string) {}
   handle_topic_sensoren_bruggen(message: string) {}
   handle_topic_voorrangsvoertuig(message: string) {}
-  handle_topic_tijd(message: string) {}
+
+  handle_topic_tijd(message: string) {
+    const data = JSON.parse(message);
+    const time = data.simulatie_tijd_ms;
+
+    this.time = time;
+
+    for (const lane of Object.keys(this.lanes)) {
+      this.lanes[lane].update_time(time);
+    }
+  }
+
+  compatible_lanes(lane_name: string) {
+    const groups: string[] = [];
+    const lane = this._intersection.groups[lane_name];
+
+    for (const group of Object.keys(this._intersection.groups)) {
+      if (!lane.intersects_with.includes(group)) {
+        groups.push(group);
+      }
+    }
+
+    return groups;
+  }
 
   // start() {
   // }

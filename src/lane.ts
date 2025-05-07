@@ -25,6 +25,14 @@ export class Lane extends EventEmitter {
 
   // }
 
+  update_time(time: number): this {
+    this._trafficLights.forEach((trafficLight) => {
+      trafficLight.update_time(time);
+    });
+
+    return this;
+  }
+
   set_state(state: TrafficLightState) {
     this._trafficLights.forEach((trafficLight) => {
       trafficLight.transition_into(state);

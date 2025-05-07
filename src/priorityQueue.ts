@@ -5,7 +5,7 @@ interface QueueItem {
   group: string;
   priority: number;
   timestamp: number;
-  activeSince?: number;
+  activeSince: number;
 }
 
 export class PriorityQueue {
@@ -13,7 +13,7 @@ export class PriorityQueue {
 
   enqueue(group: string, priority: number, timestamp: number = Date.now()): void {
     let added = false;
-    const newItem: QueueItem = { group, priority, timestamp };
+    const newItem: QueueItem = { group, priority, timestamp, activeSince: 0 };
 
     if (this.isEmpty() || newItem.priority >= this._items[this._items.length - 1].priority) {
       this._items.push(newItem);
@@ -68,11 +68,19 @@ export class PriorityQueue {
     this.enqueue(group, newPriority);
   }
 
-  setActive(group: string, timestamp: number = Date.now()) {
-    const item = this.get(group);
+  remove(group: string): void {
+    const index = this._items.findIndex(item => item.group === group);
 
-    if (item) {
-      item.activeSince = timestamp;
+    if (index !== -1) {
+      this._items.splice(index, 1);
+    }
+  }
+
+  setActive(group: string, timestamp: number = Date.now()) {
+    const index = this._items.findIndex(item => item.group === group);
+
+    if (index !== -1) {
+      this._items[index].activeSince = timestamp;
     }
   }
 }
