@@ -1,28 +1,25 @@
+import { TrafficlightState } from "./types/TrafficlightState";
+
 import { EventEmitter } from "stream";
 import { Stopwatch } from "./stopwatch";
 
-export enum TrafficLightState {
-  RED = 'rood',
-  GREEN = 'groen',
-  YELLOW = 'geel',
-};
 
 export class TrafficLight extends EventEmitter {
-  static transitions: Record<TrafficLightState, Record<TrafficLightState, TrafficLightState | null>> = {
-    [TrafficLightState.RED]: {
-      [TrafficLightState.GREEN]: TrafficLightState.YELLOW,
-      [TrafficLightState.YELLOW]: TrafficLightState.RED,
-      [TrafficLightState.RED]: null,
+  static transitions: Record<TrafficlightState, Record<TrafficlightState, TrafficlightState | null>> = {
+    [TrafficlightState.RED]: {
+      [TrafficlightState.GREEN]: TrafficlightState.YELLOW,
+      [TrafficlightState.YELLOW]: TrafficlightState.RED,
+      [TrafficlightState.RED]: null,
     },
-    [TrafficLightState.GREEN]: {
-      [TrafficLightState.RED]: TrafficLightState.GREEN,
-      [TrafficLightState.YELLOW]: TrafficLightState.GREEN,
-      [TrafficLightState.GREEN]: null,
+    [TrafficlightState.GREEN]: {
+      [TrafficlightState.RED]: TrafficlightState.GREEN,
+      [TrafficlightState.YELLOW]: TrafficlightState.GREEN,
+      [TrafficlightState.GREEN]: null,
     },
-    [TrafficLightState.YELLOW]: {
-      [TrafficLightState.RED]: TrafficLightState.RED,
-      [TrafficLightState.GREEN]: TrafficLightState.YELLOW,
-      [TrafficLightState.YELLOW]: null,
+    [TrafficlightState.YELLOW]: {
+      [TrafficlightState.RED]: TrafficlightState.RED,
+      [TrafficlightState.GREEN]: TrafficlightState.YELLOW,
+      [TrafficlightState.YELLOW]: null,
     },
   };
 
@@ -30,7 +27,7 @@ export class TrafficLight extends EventEmitter {
   // private _clock: Stopwatch;
 
   public id: string = '';
-  public state: TrafficLightState = TrafficLightState.RED;
+  public state: TrafficlightState = TrafficlightState.RED;
   public time: number | null = null;
   public transitionedTime: number | null = null;
 
@@ -61,15 +58,11 @@ export class TrafficLight extends EventEmitter {
     return this;
   }
 
-  transition_into(state: TrafficLightState): this {
+  transition_into(state: TrafficlightState): this {
     const nextState = TrafficLight.transitions[state][this.state];
 
-    if (state === TrafficLightState.RED) {
-      console.log('red light');
-    }
-
     if (nextState !== null) {
-      if (this.state === TrafficLightState.YELLOW && nextState === TrafficLightState.RED) {
+      if (this.state === TrafficlightState.YELLOW && nextState === TrafficlightState.RED) {
         // while (this.time! - this.transitionedTime! < this._transitionDurationMs) {
         // } // todo: fix type
           // console.log('waiting for transition to finish...');

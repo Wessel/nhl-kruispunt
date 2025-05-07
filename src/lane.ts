@@ -1,5 +1,7 @@
+import type { TrafficlightState } from "./types/TrafficlightState";
+
 import { EventEmitter } from "stream";
-import { TrafficLight, TrafficLightState } from "./trafficLight";
+import { TrafficLight } from "./trafficLight";
 
 export class Lane extends EventEmitter {
   public name: string = '';
@@ -33,14 +35,14 @@ export class Lane extends EventEmitter {
     return this;
   }
 
-  set_state(state: TrafficLightState) {
+  set_state(state: TrafficlightState) {
     this._trafficLights.forEach((trafficLight) => {
       trafficLight.transition_into(state);
     });
   }
 
-  get_state_map(): { [key: string]: TrafficLightState } {
-    const stateMap: { [key: string]: TrafficLightState } = {};
+  get_state_map(): { [key: string]: TrafficlightState } {
+    const stateMap: { [key: string]: TrafficlightState } = {};
 
     this._trafficLights.forEach((trafficLight) => {
       stateMap[trafficLight.id] = trafficLight.state;

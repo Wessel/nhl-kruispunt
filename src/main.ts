@@ -1,6 +1,6 @@
 import { Controller } from "./controller";
 import { Lane } from "./lane";
-import { TrafficLight, TrafficLightState } from "./trafficLight";
+import { TrafficLight } from "./trafficLight";
 import {  Stopwatch } from "./stopwatch";
 
 import { readFileSync } from "fs";
