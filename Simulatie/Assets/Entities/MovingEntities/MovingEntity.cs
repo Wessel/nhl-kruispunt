@@ -154,6 +154,7 @@ public class MovingEntity : MonoBehaviour
   public void ClearEntityInFront() => entityInFront = null;
   public MovingEntity GetEntityInFront() => entityInFront;
   public Road GetCurrentRoad() => currentRoad;
+  public float GetCurrentSplineDistance() => splineDistance;
 
   internal VehicleType GetRoadType() => type;
 }
