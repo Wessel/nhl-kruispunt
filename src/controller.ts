@@ -12,6 +12,8 @@ export class Controller {
   private _heartbeatDelay: number = 1000;
 
   private _clock: Stopwatch;
+  private _in_cycle = false;
+  private _cycle_delay = 5000;
 
   private _intersection: any  = null;
 
@@ -65,6 +67,23 @@ export class Controller {
   }
 
   /* Helper functions */
+  delay_for(ms: number): Promise<void> {
+    const targetTime = this.time + ms;
+
+    return new Promise((resolve) => {
+      const checkTime = () => {
+        if (this.time >= targetTime) {
+          console.log(`Delay for ${ms}ms completed at time ${this.time}`);
+          resolve();
+        } else {
+          setTimeout(checkTime, 10);
+        }
+      };
+
+      checkTime();
+    });
+  }
+
   compatible_lanes(lane_name: string) {
     const groups: string[] = [];
     const lane = this._intersection.groups[lane_name];
@@ -91,8 +110,10 @@ export class Controller {
   }
 
   /* Priority Queue functions */
-  exhaust_lane_queue(): void {
-    if (this.laneQueue.isEmpty()) return;
+  async exhaust_lane_queue(): Promise<void> {
+    if (this.laneQueue.isEmpty() || this._in_cycle) return;
+
+    this._in_cycle = true;
 
     const nextLane = this.laneQueue.peek();
     if (!nextLane) return;
@@ -115,11 +136,14 @@ export class Controller {
           const laneInstance = this.lanes[group];
           if (laneInstance) {
             laneInstance.set_state(TrafficlightState.RED);
-            console.log(`Setting lane ${group} to RED`);
+            // console.log(`Setting lane ${group} to RED`);
           }
         }
       }
     }
+
+    await this.delay_for(this._cycle_delay);
+    this._in_cycle = false;
   }
 
   /* Incoming data functions */
@@ -138,10 +162,10 @@ export class Controller {
     const data = JSON.parse(message);
 
     Object.keys(data).forEach((key) => {
-      const [group] = key.split('.');
+      const [ group ] = key.split('.');
       const sensorData = data[key];
 
-      let priority = 0;
+      let priority;
 
       // Both sensors triggered - highest lane priority (2)
       if (sensorData.voor && sensorData.achter) {
@@ -151,7 +175,7 @@ export class Controller {
         priority = 2;
       }
 
-      if (priority > 0) {
+      if (priority) {
         const existingEntry = this.laneQueue.get(group);
         if (existingEntry) {
           if (existingEntry.activeSince > 0) {
@@ -164,7 +188,7 @@ export class Controller {
         }
 
         // console.log(`Lane ${group} added to queue with priority ${priority}`);
-      } else if (this.laneQueue.contains(group)) {
+      } else {
         this.laneQueue.remove(group);
       }
     });

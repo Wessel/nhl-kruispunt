@@ -8,7 +8,6 @@ import { readFileSync } from "fs";
 const intersectionData = JSON.parse(readFileSync('./static/intersection/lanes.json', 'utf-8'));
 
 const clock = new Stopwatch();
-const transitionDurationMs = 250;
 
 clock.set_speed(1);
 

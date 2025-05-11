@@ -3,7 +3,6 @@ import { TrafficlightState } from "./types/TrafficlightState";
 import { EventEmitter } from "stream";
 import { Stopwatch } from "./stopwatch";
 
-
 export class TrafficLight extends EventEmitter {
   static transitions: Record<TrafficlightState, Record<TrafficlightState, TrafficlightState | null>> = {
     [TrafficlightState.RED]: {
