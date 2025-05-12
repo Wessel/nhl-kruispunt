@@ -13,7 +13,8 @@ export class Controller {
 
   private _clock: Stopwatch;
   private _in_cycle = false;
-  private _cycle_delay = 5000;
+  private _cycle_delay = 15000;
+  private _is_removing = false;
 
   private _intersection: any  = null;
 
@@ -86,11 +87,18 @@ export class Controller {
 
   compatible_lanes(lane_name: string) {
     const groups: string[] = [];
+    const not_allowed: string[] = [];
     const lane = this._intersection.groups[lane_name];
 
     for (const group of Object.keys(this._intersection.groups)) {
-      if (!lane.intersects_with.includes(group)) {
-        groups.push(group);
+      if (!lane.intersects_with.includes(Number(group))) {
+        if (!not_allowed.includes(group)) {
+          for (const lane of this._intersection.groups[group].intersects_with) {
+
+            not_allowed.push(String(lane));
+          }
+          groups.push(group);
+        }
       }
     }
 
@@ -118,21 +126,22 @@ export class Controller {
     const nextLane = this.laneQueue.peek();
     if (!nextLane) return;
 
-    console.log(`Processing lane ${nextLane.group} with priority ${nextLane.priority}`);
+    console.log(`Processing lane ${nextLane.group} (${this.laneQueue.contains(nextLane.group)}) with priority ${nextLane.priority}`);
     this.laneQueue.setActive(nextLane.group, this.time);
 
     const lane = this.lanes[nextLane.group];
     if (lane) {
       const lanes = this.compatible_lanes(nextLane.group);
 
+        console.log(`Setting lane ${nextLane.group} to green and (${lanes.join(', ')})`);
       for (const group of Object.keys(this._intersection.groups)) {
-        if (/*lanes.includes(group)*/ group === nextLane.group) {
+        if (lanes.includes(group)) { //  group === nextLane.group
           const laneInstance = this.lanes[group];
           if (laneInstance) {
             laneInstance.set_state(TrafficlightState.GREEN);
-            console.log(`Setting lane ${group} to GREEN`);
+            // console.log(`Setting lane ${group} to GREEN`);
           }
-        } else {
+        } else if (this.laneQueue.contains(nextLane.group)) {
           const laneInstance = this.lanes[group];
           if (laneInstance) {
             laneInstance.set_state(TrafficlightState.RED);
@@ -142,7 +151,7 @@ export class Controller {
       }
     }
 
-    await this.delay_for(this._cycle_delay);
+    // await this.delay_for(this._cycle_delay);
     this._in_cycle = false;
   }
 
@@ -159,9 +168,10 @@ export class Controller {
   }
 
   handle_topic_sensoren_rijbaan(message: string) {
+    if (this._is_removing) return;
     const data = JSON.parse(message);
 
-    Object.keys(data).forEach((key) => {
+    Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
       const sensorData = data[key];
 
@@ -189,7 +199,10 @@ export class Controller {
 
         // console.log(`Lane ${group} added to queue with priority ${priority}`);
       } else {
+        this._is_removing = true;
         this.laneQueue.remove(group);
+        await this.delay_for(15000);
+        this._is_removing = false;
       }
     });
 

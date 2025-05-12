@@ -6,6 +6,8 @@
         5,
         9,
         21,
+        22,
+        27,
         28,
         31,
         38
@@ -29,6 +31,8 @@
         11,
         12,
         21,
+        22,
+        25,
         26,
         31,
         36
@@ -51,7 +55,10 @@
         7,
         8,
         11,
+        12,
         21,
+        22,
+        23,
         24,
         31,
         34
@@ -70,8 +77,10 @@
       "intersects_with": [
         8,
         12,
+        21,
         22,
         23,
+        24,
         32,
         33
       ],
@@ -120,6 +129,8 @@
         9,
         12,
         23,
+        24,
+        27,
         28,
         33,
         38
@@ -142,8 +153,9 @@
         9,
         10,
         11,
-        12,
         23,
+        24,
+        25,
         26,
         33,
         36
@@ -162,8 +174,10 @@
       "intersects_with": [
         3,
         11,
+        23,
         24,
         25,
+        26,
         34,
         35
       ],
@@ -185,8 +199,10 @@
         6,
         11,
         12,
+        21,
         22,
         25,
+        26,
         32,
         35
       ],
@@ -236,6 +252,8 @@
         11,
         12,
         25,
+        26,
+        27,
         28,
         35,
         38
@@ -254,8 +272,10 @@
       "intersects_with": [
         2,
         6,
+        25,
         26,
         27,
+        28,
         36,
         37
       ],
@@ -277,8 +297,10 @@
         7,
         8,
         9,
+        23,
         24,
         27,
+        28,
         34,
         37
       ],
@@ -295,13 +317,15 @@
     "12": {
       "intersects_with": [
         2,
+        3,
         4,
         5,
-        6,
         8,
         9,
+        21,
         22,
         27,
+        28,
         32,
         37
       ],
@@ -670,7 +694,8 @@
     "41": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": false,
       "extends_to": [
@@ -689,7 +714,8 @@
     "42": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": false,
       "extends_to": false,
@@ -704,7 +730,8 @@
     "51": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 54,
       "extends_to": false,
@@ -720,7 +747,8 @@
     "52": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 53,
       "extends_to": false,
@@ -736,7 +764,8 @@
     "53": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 52,
       "extends_to": false,
@@ -752,7 +781,8 @@
     "54": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 51,
       "extends_to": false,
@@ -800,7 +830,8 @@
     "62": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 63,
       "extends_to": false,
@@ -832,7 +863,8 @@
     "63": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 62,
       "extends_to": false,
@@ -864,7 +896,8 @@
     "64": {
       "intersects_with": [
         71,
-        72
+        72,
+        81
       ],
       "is_inverse_of": 61,
       "extends_to": false,
@@ -972,6 +1005,65 @@
           }
         ]
       }
+    },
+    "81": {
+      "intersects_with": [
+        41,
+        42,
+        51,
+        52,
+        53,
+        54,
+        61,
+        62,
+        63,
+        64,
+        71,
+        72
+      ],
+      "is_inverse_of": false,
+      "extends_to": false,
+      "vehicle_type": [],
+      "lanes": {
+        "1": {}
+      },
+      "is_physical_barrier": true,
+      "transition_requirements": {
+        "green": [
+          {
+            "type": "sensor",
+            "sensor": "brug_wegdek",
+            "sensor_state": false
+          },
+          {
+            "type": "other_traffic_light",
+            "group": 61,
+            "traffic_light_state": "red"
+          },
+          {
+            "type": "other_traffic_light",
+            "group": 62,
+            "traffic_light_state": "red"
+          },
+          {
+            "type": "other_traffic_light",
+            "group": 63,
+            "traffic_light_state": "red"
+          },
+          {
+            "type": "other_traffic_light",
+            "group": 64,
+            "traffic_light_state": "red"
+          }
+        ],
+        "red": [
+          {
+            "type": "sensor",
+            "sensor": "brug_water",
+            "sensor_state": false
+          }
+        ]
+      }
     }
   },
   "sensors": {
@@ -988,16 +1080,6 @@
       ]
     },
     "brug_file": {
-      "vehicles": [
-        "car"
-      ]
-    },
-    "brug_file_ver_A": {
-      "vehicles": [
-        "car"
-      ]
-    },
-    "brig_file_ver_B": {
       "vehicles": [
         "car"
       ]
