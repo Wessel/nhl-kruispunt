@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Intersection : MonoBehaviour
@@ -10,35 +11,50 @@ public class Intersection : MonoBehaviour
     MovingEntity entity = other.GetComponent<MovingEntity>();
     if (entity == null) return;
 
-    float currentDistance = entity.GetCurrentSplineDistance();
-    Road currentRoad = entity.GetCurrentRoad();
+    if (!IsEntityOnValidIncomingRoad(entity)) return;
 
-    List<Road> matchingRoads;
+    List<Road> candidateRoads = GetValidTargetRoads(entity);
+    if (candidateRoads.Count == 0) return;
 
-    if (currentDistance > 0.9f)
-    {
-      // Exclude the current road
-      matchingRoads = roads.FindAll(road =>
-        road != currentRoad &&
-        road.GetVehicleTypes().Contains(entity.GetRoadType())
-      );
-    }
-    else
-    {
-      // Include all matching roads
-      matchingRoads = roads.FindAll(road =>
-        road.GetVehicleTypes().Contains(entity.GetRoadType())
-      );
-    }
-
-    if (matchingRoads.Count == 0) return;
-
-    Road newRoad = matchingRoads[Random.Range(0, matchingRoads.Count)];
-
-    if (newRoad == currentRoad) return;
-
+    Road newRoad = ChooseNewRoad(candidateRoads);
     float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
 
     entity.SwitchToRoad(newRoad, startDistance);
+  }
+
+  private bool IsEntityOnValidIncomingRoad(MovingEntity entity)
+  {
+    Road currentRoad = entity.GetCurrentRoad();
+    return roads.Contains(currentRoad);
+  }
+
+  private List<Road> GetValidTargetRoads(MovingEntity entity)
+  {
+    Road currentRoad = entity.GetCurrentRoad();
+    float currentDistance = entity.GetCurrentSplineDistance();
+
+    return roads.FindAll(road =>
+        road != null &&
+        road.GetVehicleTypes().Contains(entity.GetRoadType()) &&
+        (currentDistance <= 0.9f || road != currentRoad) &&
+        IsOutgoingRoad(road)
+    );
+  }
+
+  private Road ChooseNewRoad(List<Road> roads)
+  {
+    return roads[Random.Range(0, roads.Count)];
+  }
+
+  private bool IsOutgoingRoad(Road road, float threshold = 1f)
+  {
+    Vector3 intersectionPos = transform.position;
+    Vector3 start = road.GetPointOnSpline(0f);
+    Vector3 end = road.GetPointOnSpline(1f);
+
+    float startDist = Vector3.Distance(start, intersectionPos);
+    float endDist = Vector3.Distance(end, intersectionPos);
+
+    return startDist + threshold < endDist;
   }
 }

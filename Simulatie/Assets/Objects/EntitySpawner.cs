@@ -6,7 +6,7 @@ using System;
 public class SpawnModeValue
 {
   public SpawnMode mode;
-  public float spawntimer; // in seconden simulatie-tijd
+  public float spawntimer; 
 }
 
 public class EntitySpawner : MonoBehaviour
@@ -29,9 +29,9 @@ public class EntitySpawner : MonoBehaviour
 
   private void OnValidate()
   {
-    var enumValues = (SpawnMode[])Enum.GetValues(typeof(SpawnMode));
+    Array enumValues = (SpawnMode[])Enum.GetValues(typeof(SpawnMode));
 
-    foreach (var mode in enumValues)
+    foreach (SpawnMode mode in enumValues)
     {
       if (!spawnModeValues.Exists(x => x.mode == mode))
       {
