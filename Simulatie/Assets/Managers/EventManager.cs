@@ -10,6 +10,7 @@ public class EventManager : MonoBehaviour
   public UnityEvent<string> OnTrafficLightUpdate = new UnityEvent<string>();
   public UnityEvent<BridgeState> SetBridgeState = new UnityEvent<BridgeState>();
   public UnityEvent<SpawnMode> SetSpawnMode = new UnityEvent<SpawnMode>();
+  public UnityEvent Reset = new UnityEvent();
 
   private void Awake()
   {
