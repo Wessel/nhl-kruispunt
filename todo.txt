@@ -1,0 +1,4 @@
+sensoren bruggen mag onbekend sturen X
+check of alle stoplichten meegestuurd worden
+error log
+unknown topic moet ook rood printen
