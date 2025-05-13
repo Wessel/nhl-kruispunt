@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeedKmh: 50
   followDistance: 1.5
+  priorityLevel: 2
 --- !u!1 &4149658027982678366
 GameObject:
   m_ObjectHideFlags: 0

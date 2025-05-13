@@ -4,7 +4,8 @@ public class SimulationManager : MonoBehaviour
 {
 	public static SimulationManager Instance;
 
-	private float simulationTime; // In seconds
+  private PriorityVehicleQueue priorityVehicleQueue = new PriorityVehicleQueue();
+  private float simulationTime; // In seconds
   private float timeScale = 1f;
 	private bool isPaused = false;
 	private SpawnMode spawnMode = SpawnMode.Easy;
@@ -16,9 +17,15 @@ public class SimulationManager : MonoBehaviour
 		else Destroy(gameObject);
 
 		ZeroMQConfig.LoadConfig();
-	}
+  }
 
-	private void Update()
+  private void Start()
+  {
+    EventManager.Instance.EnqueuePriorityVehicle.AddListener(priorityVehicleQueue.Enqueue);
+  }
+
+
+  private void Update()
 	{
 		Time.timeScale = isPaused ? 0f : timeScale;
 
