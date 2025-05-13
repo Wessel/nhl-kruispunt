@@ -12,7 +12,6 @@ public class PriorityVehicleQueue
     queue.Add(vehicle);
 
     string json = BuildJson();
-    Debug.Log($"Queue JSON: {json}");
     EventManager.Instance.PublishMessage.Invoke("voorrangsvoertuig", json);
   }
 
