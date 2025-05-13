@@ -7,6 +7,7 @@ from handlers.sensoren_rijbaan_handler import SensorenRijbaanHandler
 from handlers.sensoren_speciaal_handler import SensorenSpeciaalHandler
 from handlers.sensoren_bruggen_handler import SensorenBruggenHandler
 from config.settings import Settings
+from datetime import datetime
 
 class MainApp:
     def __init__(self):
@@ -43,6 +44,9 @@ class MainApp:
                         raise ValueError(f"Unknown topic: {message.topic}")
                 except Exception as e:
                         print(f"\033[31mError: {e}\033[0m")
+                        with open("error.log", "a") as log_file:
+                            log_file.write(f"{datetime.now()} - ")
+                            log_file.write(f"Error: {e}\n")
         except KeyboardInterrupt:
             print("\n🛑 Shutting down subscriber...")
         finally:

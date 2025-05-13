@@ -11,8 +11,7 @@ class StoplichtenHandler():
         bridge_car_lights = [41.1, 42.1]
         bridge_pedestrian_bike_lights = [51.1, 52.1, 53.1, 54.1]
         bridge_boat_lights = [71.1, 72.1, 81.1]
-        slagbooms = [61.1, 62.1, 63.1, 64.1]
-        all_lights = intersection_car_lights + interssection_pedestrian_lights + instersection_bike_lights + bridge_car_lights + bridge_pedestrian_bike_lights + bridge_boat_lights + slagbooms
+        all_lights = intersection_car_lights + interssection_pedestrian_lights + instersection_bike_lights + bridge_car_lights + bridge_pedestrian_bike_lights + bridge_boat_lights
         # print(all_lights) #debugging
         possible_keys = r'\b([1-9][0-9]{0,2})\.[1-9]\b'
         
@@ -33,7 +32,7 @@ class StoplichtenHandler():
                 raise ValueError(f'Value is not one of {possible_states}: {{ {k} : {v} }}')
             
         if len(all_lights) > 0:
-            raise ValueError(f'Not all lights are in the message')
+            raise ValueError(f'Not all lights are in the message {all_lights}')
             
 if __name__ == "__main__":
     handler = StoplichtenHandler()
