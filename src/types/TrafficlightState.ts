@@ -1,7 +1,7 @@
 export enum TrafficlightState {
   RED = 'rood',
   GREEN = 'groen',
-  YELLOW = 'geel',
+  YELLOW = 'oranje',
 };
 
 export interface TrafficlightStateMap {

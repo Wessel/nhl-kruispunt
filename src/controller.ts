@@ -13,7 +13,7 @@ export class Controller {
 
   private _clock: Stopwatch;
   private _in_cycle = false;
-  private _cycle_delay = 15000;
+  private _cycle_delay = 3500 * 2;
   private _is_removing = false;
 
   private _intersection: any  = null;
@@ -91,15 +91,14 @@ export class Controller {
     const lane = this._intersection.groups[lane_name];
 
     for (const group of Object.keys(this._intersection.groups)) {
-      if (!lane.intersects_with.includes(Number(group))) {
-        if (!not_allowed.includes(group)) {
-          for (const lane of this._intersection.groups[group].intersects_with) {
+      if (lane.intersects_with.includes(Number(group))) continue;
+      if (not_allowed.includes(group)) continue;
 
-            not_allowed.push(String(lane));
-          }
-          groups.push(group);
-        }
+      for (const lane of this._intersection.groups[group].intersects_with) {
+        not_allowed.push(String(lane));
       }
+
+      groups.push(group);
     }
 
     return groups;
@@ -201,7 +200,7 @@ export class Controller {
       } else {
         this._is_removing = true;
         this.laneQueue.remove(group);
-        await this.delay_for(15000);
+        await this.delay_for(this._cycle_delay);
         this._is_removing = false;
       }
     });
