@@ -56,4 +56,9 @@ public class Road : MonoBehaviour
     Vector3 localPoint = splineContainer.Spline.EvaluatePosition(t);
     return splineContainer.transform.TransformPoint(localPoint);
   }
+
+  public string GetName()
+  {
+    return gameObject.name;
+  }
 }

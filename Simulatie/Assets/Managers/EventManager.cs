@@ -11,6 +11,7 @@ public class EventManager : MonoBehaviour
   public UnityEvent<BridgeState> SetBridgeState = new UnityEvent<BridgeState>();
   public UnityEvent<SpawnMode> SetSpawnMode = new UnityEvent<SpawnMode>();
   public UnityEvent Reset = new UnityEvent();
+  public UnityEvent<PriorityVehicle> EnqueuePriorityVehicle = new UnityEvent<PriorityVehicle>();
 
   private void Awake()
   {

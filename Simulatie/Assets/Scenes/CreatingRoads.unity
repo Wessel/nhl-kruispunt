@@ -23892,7 +23892,7 @@ MonoBehaviour:
     chance: 1
   - prefab: {fileID: 344608866986159516, guid: dc73923ab4989a7499456cebe323a6cd, type: 3}
     chance: 4
-  poolSize: 0
+  poolSize: 40
 --- !u!4 &1851155875
 Transform:
   m_ObjectHideFlags: 0
@@ -24476,6 +24476,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Reset:
+    m_PersistentCalls:
+      m_Calls: []
+  EnqueuePriorityVehicle:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1901568095

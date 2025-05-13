@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 4903524661770359046}
   - component: {fileID: 7687457318254295760}
   - component: {fileID: 6495876467165360089}
-  - component: {fileID: 7108719673650108639}
+  - component: {fileID: 3038823876217394682}
   m_Layer: 3
   m_Name: EmergencyVehicle
   m_TagString: Car
@@ -256,7 +256,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 36.41374, y: 14.951422}
   m_EdgeRadius: 0
---- !u!114 &7108719673650108639
+--- !u!114 &3038823876217394682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,8 +265,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7693187767944436776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec8408d87d4fe4441bf8c2adf839d0c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8128836a1eddc8448978df40c4b0921a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeedKmh: 70
-  followDistance: 0.7
+  followDistance: 1.5
+  priorityLevel: 1

@@ -88,7 +88,7 @@ public class MovingEntity : MonoBehaviour
     rigidBody.MoveRotation(angle);
   }
 
-  public void SwitchToRoad(Road newRoad, float startDistance = 0f)
+  public virtual void SwitchToRoad(Road newRoad, float startDistance = 0f)
   {
     currentRoad = newRoad;
     splineDistance = startDistance;
