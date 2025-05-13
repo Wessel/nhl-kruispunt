@@ -2,6 +2,6 @@
   "method": "tcp",
   "publish_ip": "10.121.17.133",
   "publish_port": 5556,
-  "listen_ip": "10.121.17.2",
+  "listen_ip": "10.121.17.8",
   "listen_port": 5555
 }

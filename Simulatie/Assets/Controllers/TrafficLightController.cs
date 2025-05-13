@@ -1,9 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class TrafficLightController : MonoBehaviour
 {
@@ -14,10 +12,6 @@ public class TrafficLightController : MonoBehaviour
 	{
 		FindTrafficLights();
     EventManager.Instance?.OnTrafficLightUpdate.AddListener(UpdateTrafficLights);
-    foreach (var light in trafficLights)
-    {
-      light.SetLight(LightState.Green);
-    }
   }
 
   private void FindTrafficLights()

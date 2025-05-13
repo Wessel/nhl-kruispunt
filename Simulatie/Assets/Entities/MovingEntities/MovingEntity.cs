@@ -156,5 +156,5 @@ public class MovingEntity : MonoBehaviour
   public Road GetCurrentRoad() => currentRoad;
   public float GetCurrentSplineDistance() => splineDistance;
 
-  internal VehicleType GetRoadType() => type;
+  internal VehicleType GetVehicleType() => type;
 }

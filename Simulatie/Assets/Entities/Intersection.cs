@@ -35,7 +35,7 @@ public class Intersection : MonoBehaviour
 
     return roads.FindAll(road =>
         road != null &&
-        road.GetVehicleTypes().Contains(entity.GetRoadType()) &&
+        road.GetVehicleTypes().Contains(entity.GetVehicleType()) &&
         (currentDistance <= 0.9f || road != currentRoad) && (road.GetClosestDistanceOnSpline(transform.position) < 0.9f)
     );
   }
