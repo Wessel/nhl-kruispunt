@@ -7,6 +7,7 @@ import type { Lane } from "./lane";
 import { PriorityQueue } from "./priorityQueue";
 import { ZmqPublisher } from "./zeromq/publisher";
 import { ZmqSubscriber } from "./zeromq/subscriber";
+import { BridgeState } from "./types/Bridge";
 
 export class Controller {
   private _heartbeatDelay: number = 1000;
@@ -24,6 +25,13 @@ export class Controller {
   public time: number = 0;
 
   public lanes: LaneMap = {};
+  public voorrangsLane?;
+  public bridgeState: BridgeState = BridgeState.UNKNOWN;
+  public specialSensors: any = {
+    brug_wegdek: false,
+    brug_water: false,
+    brug_file: false
+  }
 
   public priorityVehicleQueue: PriorityQueue = new PriorityQueue();
   public laneQueue: PriorityQueue = new PriorityQueue();
@@ -91,14 +99,15 @@ export class Controller {
     const lane = this._intersection.groups[lane_name];
 
     for (const group of Object.keys(this._intersection.groups)) {
-      if (lane.intersects_with.includes(Number(group))) continue;
-      if (not_allowed.includes(group)) continue;
-
-      for (const lane of this._intersection.groups[group].intersects_with) {
-        not_allowed.push(String(lane));
+      if (!lane.intersects_with.includes(Number(group))) {
+        if (!not_allowed.includes(group)) {
+          for (const lane of this._intersection.groups[group].intersects_with) {
+            not_allowed.push(String(lane));
+          }
+          groups.push(group);
+        }
       }
 
-      groups.push(group);
     }
 
     return groups;
@@ -187,6 +196,7 @@ export class Controller {
       if (priority) {
         const existingEntry = this.laneQueue.get(group);
         if (existingEntry) {
+          if (existingEntry.priority < 0) return;
           if (existingEntry.activeSince > 0) {
             priority -= 3;
           }
@@ -197,7 +207,7 @@ export class Controller {
         }
 
         // console.log(`Lane ${group} added to queue with priority ${priority}`);
-      } else {
+      } else if (this.laneQueue.contains(group)) {
         this._is_removing = true;
         this.laneQueue.remove(group);
         await this.delay_for(this._cycle_delay);
@@ -208,9 +218,64 @@ export class Controller {
     this.exhaust_lane_queue();
   }
 
-  handle_topic_sensoren_speciaal(message: string) { }
-  handle_topic_sensoren_bruggen(message: string) { }
-  handle_topic_voorrangsvoertuig(message: string) { }
+  handle_topic_sensoren_speciaal(message: string) {
+    this.specialSensors = JSON.parse(message);
+  }
+
+  handle_topic_sensoren_bruggen(message: string) {
+    const data = JSON.parse(message);
+
+    for (const key of Object.keys(data)) {
+      const bridge = data[key];
+
+      this.bridgeState = bridge.state;
+      // console.log(`Bridge ${key} state: ${this.bridgeState}`);
+    }
+  }
+
+  handle_topic_voorrangsvoertuig(message: string) {
+    // todo: meer voorrangsvoertuigen werkentd
+    const data = JSON.parse(message);
+
+    if (this.voorrangsLane) {
+      // todo: check if emergency vehicle
+      if (!data.queue.map(v => v.baan).includes(this.voorrangsLane)) {
+        this._in_cycle = false;
+        this.voorrangsLane = undefined;
+      }
+    }
+
+      console.log(data);
+    for (const entry of data.queue) {
+      const [ group ] = entry.baan.split('.');
+
+      switch (entry.prioriteit) {
+        case 1: // hulpdiensten
+          this._in_cycle = true;
+          this.voorrangsLane = group;
+          for (const lane of Object.keys(this.lanes)) {
+            if (lane === group) {
+              this.lanes[lane].set_state(TrafficlightState.GREEN);
+            } else {
+              this.lanes[lane].set_state(TrafficlightState.RED);
+            }
+          }
+        case 2: // OV
+          let priority = -1;
+          const existingEntry = this.laneQueue.get(group);
+
+          if (existingEntry) {
+            if (existingEntry.activeSince > 0) {
+              priority -= 3;
+            }
+
+            this.laneQueue.updatePriority(group, priority);
+          } else {
+            this.laneQueue.enqueue(group, priority);
+          }
+      }
+    }
+  }
 
   /* Outgoing data functions */
   transmit_state_to_publisher(): this {
