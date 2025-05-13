@@ -36,25 +36,12 @@ public class Intersection : MonoBehaviour
     return roads.FindAll(road =>
         road != null &&
         road.GetVehicleTypes().Contains(entity.GetRoadType()) &&
-        (currentDistance <= 0.9f || road != currentRoad) &&
-        IsOutgoingRoad(road)
+        (currentDistance <= 0.9f || road != currentRoad) && (road.GetClosestDistanceOnSpline(transform.position) < 0.9f)
     );
   }
 
   private Road ChooseNewRoad(List<Road> roads)
   {
     return roads[Random.Range(0, roads.Count)];
-  }
-
-  private bool IsOutgoingRoad(Road road, float threshold = 1f)
-  {
-    Vector3 intersectionPos = transform.position;
-    Vector3 start = road.GetPointOnSpline(0f);
-    Vector3 end = road.GetPointOnSpline(1f);
-
-    float startDist = Vector3.Distance(start, intersectionPos);
-    float endDist = Vector3.Distance(end, intersectionPos);
-
-    return startDist + threshold < endDist;
   }
 }

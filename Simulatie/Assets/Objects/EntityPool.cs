@@ -73,6 +73,10 @@ public class EntityPool : MonoBehaviour
     entity.gameObject.SetActive(false);
     activeEntities.Remove(entity);
     pool.Enqueue(entity);
+    if (entity is PriorityVehicle priorityVehicle)
+    {
+      EventManager.Instance.DequeuePriorityVehicle.Invoke(priorityVehicle);
+    }
   }
 
   public void ResetPool()
