@@ -70,13 +70,13 @@ public class EntityPool : MonoBehaviour
 
   public void ReturnObject(MovingEntity entity)
   {
-    entity.gameObject.SetActive(false);
-    activeEntities.Remove(entity);
-    pool.Enqueue(entity);
     if (entity is PriorityVehicle priorityVehicle)
     {
       EventManager.Instance.DequeuePriorityVehicle.Invoke(priorityVehicle);
     }
+    entity.gameObject.SetActive(false);
+    activeEntities.Remove(entity);
+    pool.Enqueue(entity);
   }
 
   public void ResetPool()
