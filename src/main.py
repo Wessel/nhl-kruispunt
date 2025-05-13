@@ -34,11 +34,15 @@ class MainApp:
                     continue
                 
                 print(f"📩 Received - Topic: {message.topic}")
-                handler = self.handlers.get(message.topic)
-                if handler:
-                    handler.handle(message)
-                else:
-                    print(f"Unknown topic: {message.topic}")
+                
+                try:
+                    handler = self.handlers.get(message.topic)
+                    if handler:
+                        handler.handle(message)
+                    else:
+                        raise ValueError(f"Unknown topic: {message.topic}")
+                except Exception as e:
+                        print(f"\033[31mError: {e}\033[0m")
         except KeyboardInterrupt:
             print("\n🛑 Shutting down subscriber...")
         finally:

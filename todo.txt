@@ -1,4 +1,5 @@
 sensoren bruggen mag onbekend sturen X
-check of alle stoplichten meegestuurd worden
+check of alle stoplichten meegestuurd worden X
 error log
 unknown topic moet ook rood printen
+ctrl c mogelijk maken
