@@ -47,6 +47,7 @@ public class EntitySpawner : MonoBehaviour
   {
     road = GetComponent<Road>();
     EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
+    EventManager.Instance.Reset.AddListener(ResetSpawnTimer);
     ResetSpawnTimer();
   }
 
@@ -92,12 +93,6 @@ public class EntitySpawner : MonoBehaviour
     {
       entity.Initialize(entityPool);
       entity.SwitchToRoad(road);
-
-      if (entity is PriorityVehicle priorityVehicle)
-      {        
-        priorityVehicle.SimulationTimeMs = (int)(SimulationManager.Instance.GetSimulationTime() * 1000);
-        EventManager.Instance.EnqueuePriorityVehicle.Invoke(priorityVehicle);
-      }
     }
   }
 

@@ -59,7 +59,9 @@ public class TrafficLightController : MonoBehaviour
     return combined.ToString(Formatting.Indented);
   }
   public void OnTrafficLightSensorChanged()
-  {
-    EventManager.Instance?.PublishMessage.Invoke(topic, BuildCombinedJson());
+  { 
+    string json = BuildCombinedJson();
+    Debug.Log(json);
+    EventManager.Instance?.PublishMessage.Invoke(topic, json);
   }
 }

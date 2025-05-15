@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MovingEntity : MonoBehaviour
 {
@@ -101,7 +102,7 @@ public class MovingEntity : MonoBehaviour
     transform.rotation = Quaternion.Euler(0, 0, angle);
   }
 
-  private void Despawn()
+  public virtual void Despawn()
   {
     currentSpeed = 0f;
     splineDistance = 0f;

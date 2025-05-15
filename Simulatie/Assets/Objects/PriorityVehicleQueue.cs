@@ -7,7 +7,6 @@ public class PriorityVehicleQueue
   private List<PriorityVehicle> queue = new();
   public void Enqueue(PriorityVehicle vehicle)
   {
-    Debug.Log("Enqueue vehicle: " + vehicle.GetCurrentRoad().GetName());
     // Remove any existing instance of the vehicle
     queue.RemoveAll(v => v.Equals(vehicle));
     queue.Add(vehicle);
@@ -24,6 +23,7 @@ public class PriorityVehicleQueue
   private void SendOnTopic()
   {
     string json = BuildJson();
+    Debug.Log(json);
     EventManager.Instance.PublishMessage.Invoke("voorrangsvoertuig", json);
   }
 

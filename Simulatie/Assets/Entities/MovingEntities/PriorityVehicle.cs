@@ -24,4 +24,10 @@ public class PriorityVehicle: Vehicle
     simulationTimeMs = (int)(SimulationManager.Instance.GetSimulationTime() * 1000);
     EventManager.Instance.EnqueuePriorityVehicle.Invoke(this);
   }
+
+  public override void Despawn()
+  {
+    EventManager.Instance.DequeuePriorityVehicle.Invoke(this);
+    base.Despawn();
+  }
 }

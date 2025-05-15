@@ -70,10 +70,6 @@ public class EntityPool : MonoBehaviour
 
   public void ReturnObject(MovingEntity entity)
   {
-    if (entity is PriorityVehicle priorityVehicle)
-    {
-      EventManager.Instance.DequeuePriorityVehicle.Invoke(priorityVehicle);
-    }
     entity.gameObject.SetActive(false);
     activeEntities.Remove(entity);
     pool.Enqueue(entity);
@@ -83,7 +79,7 @@ public class EntityPool : MonoBehaviour
   {
     foreach (MovingEntity entity in activeEntities.ToArray())
     {
-      ReturnObject(entity);
+      entity.Despawn();
     }
   }
 }
