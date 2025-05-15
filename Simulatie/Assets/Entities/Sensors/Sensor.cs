@@ -37,8 +37,6 @@ public class Sensor : MonoBehaviour
     }
   }
 
-
-
   private void OnTriggerExit2D(Collider2D other)
   {
     if (objectsInside.Contains(other))
@@ -53,4 +51,9 @@ public class Sensor : MonoBehaviour
 
   public bool IsActive() => isActive;
   public string GetID() => id;
+
+  public List<VehicleType> GetAllowedVehicleTypes()
+  {
+    return allowedVehicleTypes;
+  }
 }

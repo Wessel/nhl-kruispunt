@@ -123,7 +123,11 @@ public class MovingEntity : MonoBehaviour
   {
     if (other.CompareTag("StopLine"))
     {
-      currentTrafficLight = other.GetComponentInParent<TrafficLight>();
+      TrafficLight trafficLight = other.GetComponentInParent<TrafficLight>();
+      if (trafficLight != null && trafficLight.GetVehicleTypes().Contains(type))
+      {
+        currentTrafficLight = trafficLight;
+      }
     }
   }
 
