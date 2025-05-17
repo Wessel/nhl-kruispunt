@@ -2,7 +2,7 @@ import json
 
 class SensorenRijbaanHandler():
     def handle(self, message):
-       
+    
         data = json.loads(message.content)
 
         for key, value in data.items():
