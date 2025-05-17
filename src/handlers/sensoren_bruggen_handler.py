@@ -2,7 +2,11 @@ import json
 
 class SensorenBruggenHandler():
     def handle(self, message):
-        data = json.loads(message.content)
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")
+        
         for _, value in data.items():
             # Ensure 'state' key exists in the item
             if 'state' not in value:

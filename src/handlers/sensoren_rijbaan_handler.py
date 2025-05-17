@@ -2,9 +2,12 @@ import json
 
 class SensorenRijbaanHandler():
     def handle(self, message):
-    
-        data = json.loads(message.content)
-
+        
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")
+        
         for key, value in data.items():
             if not isinstance(value, dict):
                 raise ValueError(f"Error: Value for key '{key}' is not a dictionary.")

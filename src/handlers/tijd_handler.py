@@ -3,7 +3,10 @@ import json
 class TijdHandler():
     def handle(self, message):
        
-        data = json.loads(message.content)
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")
 
         if "simulatie_tijd_ms" not in data:
             raise ValueError("Missing 'simulatie_tijd_ms' key")

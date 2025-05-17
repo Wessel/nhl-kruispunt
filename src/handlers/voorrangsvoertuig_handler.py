@@ -6,8 +6,11 @@ class VoorrangsvoertuigHandler():
     def handle(self, message):
         possible_lane_names = r'\b([1-9][0-9]{0,2})\.[1-9]\b'
         
-      
-        data = json.loads(message.content)
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")
+        
         if "queue" not in data:
             raise ValueError("Missing 'queue' key")
 

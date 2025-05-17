@@ -15,8 +15,11 @@ class StoplichtenHandler():
         # print(all_lights) #debugging
         possible_keys = r'\b([1-9][0-9]{0,2})\.[1-9]\b'
         
-
-        data = json.loads(message.content)
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")            
+            
         for k, v in data.items():
             if not isinstance(v, str) or v not in possible_states:
                 raise ValueError(f'Value is not one of {possible_states}: {{ {k} : {v} }}')

@@ -3,7 +3,10 @@ import json
 class SensorenSpeciaalHandler():
     def handle(self, message):
      
-        data = json.loads(message.content)
+        try:
+            data = json.loads(message.content)
+        except json.JSONDecodeError:
+            raise ValueError("Invalid JSON format")
         
         if data.get("brug_wegdek") is None \
         or type(data.get("brug_wegdek")) is not bool:
