@@ -4,7 +4,7 @@ class TijdHandler():
     def handle(self, message):
        
         try:
-            data = json.loads(message.content)
+            data = json.loads(message.get_content())
         except json.JSONDecodeError:
             raise ValueError("Invalid JSON format")
 

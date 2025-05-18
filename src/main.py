@@ -37,16 +37,16 @@ class MainApp:
                     continue
 
                 if self.gui:
-                    self.gui.add_message(f"📩 Received - Topic: {message.topic}")
+                    self.gui.add_message(f"📩 Received - Topic: {message.get_topic()}")
 
                 try:
-                    handler = self.handlers.get(message.topic)
+                    handler = self.handlers.get(message.get_topic())
                     if handler:
                         handler.handle(message)
                     else:
-                        raise ValueError(f"Unknown topic: {message.topic}")
+                        raise ValueError(f"Unknown topic: {message.get_topic()}")
                 except Exception as e:
-                    error_msg = f"Error on topic {message.topic}: {e}"
+                    error_msg = f"Error on topic {message.get_topic()}: {e}"
                     if self.gui:
                         self.gui.add_error(error_msg)
                     with open("error.log", "a") as log_file:

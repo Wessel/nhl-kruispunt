@@ -7,7 +7,7 @@ class VoorrangsvoertuigHandler():
         possible_lane_names = r'\b([1-9][0-9]{0,2})\.[1-9]\b'
         
         try:
-            data = json.loads(message.content)
+            data = json.loads(message.get_content())
         except json.JSONDecodeError:
             raise ValueError("Invalid JSON format")
         
