@@ -79,7 +79,7 @@ public class EntityPool : MonoBehaviour
   {
     foreach (MovingEntity entity in activeEntities.ToArray())
     {
-      ReturnObject(entity);
+      entity.Despawn();
     }
   }
 }

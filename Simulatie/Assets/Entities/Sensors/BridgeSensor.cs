@@ -8,4 +8,9 @@ public class BridgeSensor : Sensor
   {
     return state;
   }
+
+  public void SetState(BridgeState state) {
+    this.state = state;
+    
+  }
 }

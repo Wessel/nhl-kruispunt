@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|c:\\users\\marij\\documents\\github\\nhl-kruispunt\\simulatie\\assets\\objects\\priorityvehiclequeue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\objects\\priorityvehiclequeue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|c:\\users\\marij\\documents\\github\\nhl-kruispunt\\simulatie\\assets\\objects\\entitypool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\objects\\entitypool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PriorityVehicleQueue.cs",
+              "DocumentMoniker": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\PriorityVehicleQueue.cs",
+              "RelativeDocumentMoniker": "Assets\\Objects\\PriorityVehicleQueue.cs",
+              "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\PriorityVehicleQueue.cs",
+              "RelativeToolTip": "Assets\\Objects\\PriorityVehicleQueue.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:09:30.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EntityPool.cs",
+              "DocumentMoniker": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\EntityPool.cs",
+              "RelativeDocumentMoniker": "Assets\\Objects\\EntityPool.cs",
+              "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\EntityPool.cs",
+              "RelativeToolTip": "Assets\\Objects\\EntityPool.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAowEoAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:09:09.128Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

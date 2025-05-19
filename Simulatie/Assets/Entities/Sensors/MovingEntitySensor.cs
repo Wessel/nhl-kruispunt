@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MovingEntitySensor : MonoBehaviour
 {
-  public MovingEntity owner;
+  private MovingEntity owner;
 
   private void Awake()
   {

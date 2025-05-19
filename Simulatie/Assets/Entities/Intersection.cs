@@ -4,40 +4,40 @@ using UnityEngine;
 
 public class Intersection : MonoBehaviour
 {
-  public List<Road> roads;
+  public List<Road> incomingRoads;
+  public List<Road> outgoingRoads;
 
   private void OnTriggerEnter2D(Collider2D other)
   {
     MovingEntity entity = other.GetComponent<MovingEntity>();
     if (entity == null) return;
 
-    if (!IsEntityOnValidIncomingRoad(entity)) return;
+    Road currentRoad = entity.GetCurrentRoad();
+    if (!incomingRoads.Contains(currentRoad)) return;
 
-    List<Road> candidateRoads = GetValidTargetRoads(entity);
-    if (candidateRoads.Count == 0) return;
+    // If only one valid outgoing road exists, switch to it immediately
+    if (outgoingRoads.Count == 1)
+    {
+      if (outgoingRoads[0] == currentRoad) return;
+      SwitchEntityToRoad(entity, outgoingRoads[0]);
+      return;
+    }
 
-    Road newRoad = ChooseNewRoad(candidateRoads);
-    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
+    List<Road> validOutgoings = GetValidRoads(entity);
+    if (validOutgoings.Count == 0) return;
 
-    entity.SwitchToRoad(newRoad, startDistance);
+    Road newRoad = ChooseNewRoad(validOutgoings);
+    if (newRoad == currentRoad) return;
+    SwitchEntityToRoad(entity, newRoad);
   }
 
-  private bool IsEntityOnValidIncomingRoad(MovingEntity entity)
+  private List<Road> GetValidRoads(MovingEntity entity)
   {
-    Road currentRoad = entity.GetCurrentRoad();
-    return roads.Contains(currentRoad);
-  }
-
-  private List<Road> GetValidTargetRoads(MovingEntity entity)
-  {
-    Road currentRoad = entity.GetCurrentRoad();
     float currentDistance = entity.GetCurrentSplineDistance();
 
-    return roads.FindAll(road =>
+    return outgoingRoads.FindAll(road =>
         road != null &&
-        road.GetVehicleTypes().Contains(entity.GetRoadType()) &&
-        (currentDistance <= 0.9f || road != currentRoad) &&
-        IsOutgoingRoad(road)
+        road.GetVehicleTypes().Contains(entity.GetVehicleType())
     );
   }
 
@@ -46,15 +46,9 @@ public class Intersection : MonoBehaviour
     return roads[Random.Range(0, roads.Count)];
   }
 
-  private bool IsOutgoingRoad(Road road, float threshold = 1f)
+  private void SwitchEntityToRoad(MovingEntity entity, Road newRoad)
   {
-    Vector3 intersectionPos = transform.position;
-    Vector3 start = road.GetPointOnSpline(0f);
-    Vector3 end = road.GetPointOnSpline(1f);
-
-    float startDist = Vector3.Distance(start, intersectionPos);
-    float endDist = Vector3.Distance(end, intersectionPos);
-
-    return startDist + threshold < endDist;
+    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
+    entity.SwitchToRoad(newRoad, startDistance);
   }
 }

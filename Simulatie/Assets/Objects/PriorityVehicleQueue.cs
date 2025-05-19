@@ -11,8 +11,19 @@ public class PriorityVehicleQueue
     queue.RemoveAll(v => v.Equals(vehicle));
     queue.Add(vehicle);
 
+    SendOnTopic();
+  }
+
+  public void Dequeue(PriorityVehicle vehicle)
+  {
+    queue.Remove(vehicle);
+    SendOnTopic();
+  }
+
+  private void SendOnTopic()
+  {
     string json = BuildJson();
-    Debug.Log($"Queue JSON: {json}");
+    Debug.Log(json);
     EventManager.Instance.PublishMessage.Invoke("voorrangsvoertuig", json);
   }
 

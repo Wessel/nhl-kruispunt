@@ -22,6 +22,7 @@ public class SimulationManager : MonoBehaviour
   private void Start()
   {
     EventManager.Instance.EnqueuePriorityVehicle.AddListener(priorityVehicleQueue.Enqueue);
+    EventManager.Instance.DequeuePriorityVehicle.AddListener(priorityVehicleQueue.Dequeue);
   }
 
 
@@ -35,7 +36,7 @@ public class SimulationManager : MonoBehaviour
 
 			if (simulationTime >= nextEventTime)
 			{
-				nextEventTime += 0.1f; // Schedule the next event at 100ms intervals
+				nextEventTime += 0.08f; // Schedule the next event at 90ms intervals
 				EventManager.Instance.SendSimulationTime.Invoke(simulationTime);
 			}
 		}

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MovingEntity : MonoBehaviour
 {
@@ -101,7 +102,7 @@ public class MovingEntity : MonoBehaviour
     transform.rotation = Quaternion.Euler(0, 0, angle);
   }
 
-  private void Despawn()
+  public virtual void Despawn()
   {
     currentSpeed = 0f;
     splineDistance = 0f;
@@ -122,7 +123,11 @@ public class MovingEntity : MonoBehaviour
   {
     if (other.CompareTag("StopLine"))
     {
-      currentTrafficLight = other.GetComponentInParent<TrafficLight>();
+      TrafficLight trafficLight = other.GetComponentInParent<TrafficLight>();
+      if (trafficLight != null && trafficLight.GetVehicleTypes().Contains(type))
+      {
+        currentTrafficLight = trafficLight;
+      }
     }
   }
 
@@ -156,5 +161,5 @@ public class MovingEntity : MonoBehaviour
   public Road GetCurrentRoad() => currentRoad;
   public float GetCurrentSplineDistance() => splineDistance;
 
-  internal VehicleType GetRoadType() => type;
+  internal VehicleType GetVehicleType() => type;
 }
