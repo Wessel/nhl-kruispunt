@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeedKmh: 20
   followDistance: 0.2
+  strength: 2
 --- !u!1 &8839797396025936047
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,4 +270,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c188342f29eae7b4cbe31c346a8c4403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
