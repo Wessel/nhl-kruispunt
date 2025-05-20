@@ -14,36 +14,16 @@ public class MovingEntitySensor : MonoBehaviour
     MovingEntity otherEntity = other.GetComponentInParent<MovingEntity>();
     if (otherEntity == null || otherEntity == owner) return;
 
-    if (owner.GetInstanceID() > otherEntity.GetInstanceID()) return;
+    // Check if the other entity is roughly ahead
+    Vector2 toOther = otherEntity.transform.position - owner.transform.position;
+    float dot = Vector2.Dot(owner.transform.right, toOther.normalized);
 
-    int ownerStrength = owner.GetStrength();
-    int otherStrength = otherEntity.GetStrength();
-
-    if (otherStrength > ownerStrength)
+    if (dot > 0.5f) // Ensure it's in front, not side or behind
     {
-      owner.Freeze();
+      owner.ResolveEncounterWith(otherEntity);
     }
-    else if (otherStrength < ownerStrength)
-    {
-      owner.Unfreeze();
-    }
-    else
-    {
-      bool ownerIsRight = owner.IsToTheRightOf(otherEntity);
-      if (ownerIsRight)
-      {
-        owner.Unfreeze();
-        otherEntity.Freeze();
-      }
-      else
-      {
-        owner.Freeze();
-        otherEntity.Unfreeze();
-      }
-    }
-
-    owner.SetEntityInFront(otherEntity);
   }
+
 
   private void OnTriggerExit2D(Collider2D other)
   {
@@ -51,7 +31,11 @@ public class MovingEntitySensor : MonoBehaviour
     if (otherEntity != null && otherEntity == owner.GetEntityInFront())
     {
       owner.ClearEntityInFront();
-      owner.Unfreeze();
+      if (!owner.IsBlockedAhead())
+      {
+        owner.Unfreeze();
+      }
+
     }
   }
 }

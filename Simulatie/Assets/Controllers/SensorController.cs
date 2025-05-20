@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class SensorController : MonoBehaviour
 {
   protected string topic;
+  protected float noSendTime;
 
   protected List<Sensor> sensors = new();
 
@@ -22,4 +23,15 @@ public abstract class SensorController : MonoBehaviour
       }
     }
   }
+
+	protected virtual void Update()
+	{
+		if (noSendTime >= 10 && !string.IsNullOrEmpty(topic))
+		{
+			Debug.Log($"SensorController: {topic}");
+			EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
+			noSendTime = 0;
+		}
+		noSendTime += Time.deltaTime;
+	}
 }

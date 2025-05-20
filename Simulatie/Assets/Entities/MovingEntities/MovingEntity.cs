@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 using System;
+using UnityEngine.UIElements;
 
 public class MovingEntity : MonoBehaviour
 {
   [SerializeField] private float maxSpeedKmh = 50f;
-  [SerializeField] private float followDistance = 1.5f;
   [SerializeField] private int strength = 1;
 
   protected VehicleType type;
@@ -15,6 +15,7 @@ public class MovingEntity : MonoBehaviour
 
   private float maxSpeed;
   private float splineDistance = 0f;
+  private float length = 2f;
 
   private MovingEntity entityInFront;
   private TrafficLight currentTrafficLight;
@@ -33,13 +34,23 @@ public class MovingEntity : MonoBehaviour
     rigidBody = GetComponent<Rigidbody2D>();
     maxSpeed = ConvertKmHToUnityUnits(maxSpeedKmh);
     vehicleLayerMask = LayerMask.GetMask("Vehicles");
-  }
 
+    Collider2D col = GetComponentInChildren<Collider2D>();
+    if (col != null)
+    {
+      length = col.bounds.size.x; 
+    }
+  }
+  
   protected virtual void Update()
   {
     if (currentRoad == null) return;
 
     CheckTrafficLight();
+    if (isStopped && currentTrafficLight == null && entityInFront == null)
+    {
+      Unfreeze();
+    }
 
     if (isStopped)
     {
@@ -50,6 +61,15 @@ public class MovingEntity : MonoBehaviour
       MoveOnRoad();
     }
   }
+
+
+  private void OnGUI()
+  {
+    Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+    GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 400, 80),
+        $"Speed: {currentSpeed:F2} | Stopped: {(isStopped ? "Yes" : "No")}| Light: {(currentTrafficLight ? "Yes" : "No")}| Blocked: {(entityInFront ? "Yes" : "No")}");
+  }
+
 
   protected void MoveOnRoad()
   {
@@ -83,22 +103,31 @@ public class MovingEntity : MonoBehaviour
         ? Vector3.Distance(transform.position, entityInFront.transform.position)
         : float.MaxValue;
 
-    if (distanceToFront < followDistance || aheadBlocked)
+    if (entityInFront != null)
     {
-      currentSpeed = 0f;
+      float requiredSpacing = (GetLength() + entityInFront.GetLength()) * 0.5f;
+
+      if (distanceToFront < requiredSpacing || aheadBlocked)
+      {
+        currentSpeed = 0f;
+      }
+      else
+      {
+        currentSpeed = maxSpeed * 0.5f;
+      }
     }
-    else
-    {
-      currentSpeed = maxSpeed * 0.5f;
-    }
+
   }
 
-  private bool IsBlockedAhead()
+  public bool IsBlockedAhead()
   {
-    Vector2 direction = rigidBody.transform.right.normalized;
-    float checkDistance = followDistance * 0.9f;
+    Vector2 direction = transform.right;
+    float checkDistance = 0.3f * length;
+    Vector2 origin = (Vector2)transform.position + direction * (length * 0.5f);
 
-    RaycastHit2D hit = Physics2D.Raycast(rigidBody.position, direction, checkDistance, vehicleLayerMask);
+    Debug.DrawRay(origin, direction * checkDistance, Color.red);
+    
+    RaycastHit2D hit = Physics2D.Raycast(origin, direction, checkDistance, vehicleLayerMask);
 
     if (hit.collider != null)
     {
@@ -158,11 +187,6 @@ public class MovingEntity : MonoBehaviour
       {
         currentTrafficLight = trafficLight;
       }
-      MovingEntity entity = other.GetComponentInParent<MovingEntity>();
-      if (entity != null)
-      {
-        Freeze();
-      }
     }
   }
 
@@ -171,11 +195,6 @@ public class MovingEntity : MonoBehaviour
     if (other.CompareTag("StopLine") && currentTrafficLight == other.GetComponentInParent<TrafficLight>())
     {
       currentTrafficLight = null;
-    }
-    MovingEntity entity = other.GetComponentInParent<MovingEntity>();
-    if (entity != null)
-    {
-      Unfreeze();
     }
   }
 
@@ -186,6 +205,7 @@ public class MovingEntity : MonoBehaviour
     switch (currentTrafficLight.GetLight())
     {
       case LightState.Red: Freeze(); break;
+      case LightState.Orange: Freeze(); break;
       case LightState.Green: Unfreeze(); break;
     }
   }
@@ -202,6 +222,39 @@ public class MovingEntity : MonoBehaviour
     return cross < 0f;
   }
 
+  public void ResolveEncounterWith(MovingEntity other)
+  {
+    if (other == null || other == this) return;
+
+    int strengthComparison = GetStrength().CompareTo(other.GetStrength());
+
+    switch (strengthComparison)
+    {
+      case > 0:
+        other.Freeze();
+        Unfreeze();
+        break;
+
+      case < 0:
+        Freeze();
+        break;
+
+      default:
+        bool isRight = IsToTheRightOf(other);
+        if (isRight)
+        {
+          Unfreeze();
+          other.Freeze();
+        }
+        else
+        {
+          Freeze();
+          other.Unfreeze();
+        }
+        break;
+    }
+    SetEntityInFront(other);
+  }
   public void SetEntityInFront(MovingEntity front) => entityInFront = front;
   public void ClearEntityInFront() => entityInFront = null;
   public MovingEntity GetEntityInFront() => entityInFront;
@@ -209,4 +262,5 @@ public class MovingEntity : MonoBehaviour
   public float GetCurrentSplineDistance() => splineDistance;
   internal VehicleType GetVehicleType() => type;
   public int GetStrength() => strength;
+  public float GetLength() => length;
 }

@@ -32,7 +32,7 @@ public class TrafficLightController : MonoBehaviour
   private void UpdateTrafficLights(string data)
   {
     Dictionary<string, LightState> updates = JsonConvert.DeserializeObject<Dictionary<string, LightState>>(data);
-    foreach (var light in trafficLights)
+    foreach (TrafficLight light in trafficLights)
     {
       if (updates.TryGetValue(light.GetID(), out LightState newState))
       {

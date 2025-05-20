@@ -1,7 +1,7 @@
 {
   "method": "tcp",
-  "publish_ip": "10.121.17.133",
+  "publish_ip": "10.121.17.7",
   "publish_port": 5556,
-  "listen_ip": "10.121.17.45",
+  "listen_ip": "10.121.17.7",
   "listen_port": 5555
 }

@@ -32,7 +32,7 @@ public class SimulationManager : MonoBehaviour
 
 		if (!isPaused)
 		{
-			simulationTime += Time.deltaTime * timeScale;
+			simulationTime += Time.deltaTime;
 
 			if (simulationTime >= nextEventTime)
 			{

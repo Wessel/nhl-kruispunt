@@ -23,7 +23,6 @@ public class PriorityVehicleQueue
   private void SendOnTopic()
   {
     string json = BuildJson();
-    Debug.Log(json);
     EventManager.Instance.PublishMessage.Invoke("voorrangsvoertuig", json);
   }
 
