@@ -61,14 +61,12 @@ public class MovingEntity : MonoBehaviour
       MoveOnRoad();
     }
   }
-
-
-  private void OnGUI()
-  {
-    Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-    GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 400, 80),
-        $"Speed: {currentSpeed:F2} | Stopped: {(isStopped ? "Yes" : "No")}| Light: {(currentTrafficLight ? "Yes" : "No")}| Blocked: {(entityInFront ? "Yes" : "No")}");
-  }
+  //private void OnGUI()
+  //{
+  //  Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+  //  GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 400, 80),
+  //      $"Speed: {currentSpeed:F2} | Stopped: {(isStopped ? "Yes" : "No")}| Light: {(currentTrafficLight ? "Yes" : "No")}| Blocked: {(entityInFront ? "Yes" : "No")}");
+  //}
 
 
   protected void MoveOnRoad()
@@ -263,4 +261,5 @@ public class MovingEntity : MonoBehaviour
   internal VehicleType GetVehicleType() => type;
   public int GetStrength() => strength;
   public float GetLength() => length;
+  public float GetCurrentSpeed() => currentSpeed;
 }

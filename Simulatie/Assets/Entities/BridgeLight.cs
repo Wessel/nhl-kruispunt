@@ -7,6 +7,7 @@ public class BridgeLight : TrafficLight
 {
   public override void SetLight(LightState newState)
   {
+    Debug.Log($"BridgeLight state changed to {newState}");
     BridgeState bridgeState = newState switch
     {
       LightState.Red => BridgeState.Closed,

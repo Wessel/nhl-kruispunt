@@ -53,6 +53,7 @@ public class Subscriber : MonoBehaviour
   {
     while (_messageQueue.TryDequeue(out var msg))
     {
+      Debug.Log($"Received message: {msg.topic} - {msg.message}");
       EventManager.Instance?.OnTrafficLightUpdate?.Invoke(msg.message);
     }
   }
