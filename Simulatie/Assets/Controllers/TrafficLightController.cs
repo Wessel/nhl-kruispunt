@@ -12,10 +12,6 @@ public class TrafficLightController : MonoBehaviour
 	{
 		FindTrafficLights();
     EventManager.Instance?.OnTrafficLightUpdate.AddListener(UpdateTrafficLights);
-    foreach (var light in trafficLights)
-    {
-      light.SetLight(LightState.Green);
-    }
   }
 
   private void FindTrafficLights()
@@ -24,7 +20,7 @@ public class TrafficLightController : MonoBehaviour
     {
       if (child.CompareTag("TrafficLight"))
       {
-        if (child.TryGetComponent<TrafficLight>(out var trafficLight))
+        if (child.TryGetComponent<TrafficLight>(out TrafficLight trafficLight))
         {
           trafficLights.Add(trafficLight);
           trafficLight.SetController(this);
@@ -38,7 +34,7 @@ public class TrafficLightController : MonoBehaviour
     Dictionary<string, LightState> updates = JsonConvert.DeserializeObject<Dictionary<string, LightState>>(data);
     foreach (var light in trafficLights)
     {
-      if (updates.TryGetValue(light.GetID(), out var newState))
+      if (updates.TryGetValue(light.GetID(), out LightState newState))
       {
         light.SetLight(newState);
       }
