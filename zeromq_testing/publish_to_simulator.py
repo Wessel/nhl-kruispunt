@@ -6,7 +6,7 @@ import json
 def generate_custom_json():
     # Customize this dictionary however you like
     data = {
-        "81.1": "rood"
+        "81.1": "groen"
     }
     return json.dumps(data, indent=2)
 

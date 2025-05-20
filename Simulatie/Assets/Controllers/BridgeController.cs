@@ -98,16 +98,4 @@ public class BridgeController : SensorController
     Debug.Log("Bridge sensor state changed");
     EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
   }
-
-  [ContextMenu("Open Bridge")]
-  private void OpenBridge()
-  {
-    SetBridgeState(BridgeState.Open);
-  }
-
-  [ContextMenu("Close Bridge")]
-  private void CloseBridge()
-  {
-    SetBridgeState(BridgeState.Closed);
-  }
 }

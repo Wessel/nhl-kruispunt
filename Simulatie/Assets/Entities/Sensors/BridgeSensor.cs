@@ -11,6 +11,6 @@ public class BridgeSensor : Sensor
 
   public void SetState(BridgeState state) {
     this.state = state;
-    
+    this.onStateChanged.Invoke();
   }
 }
