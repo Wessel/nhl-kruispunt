@@ -6,7 +6,7 @@ import json
 def generate_custom_json():
     # Customize this dictionary however you like
     data = {
-        "52.1": "green"
+        "81.1": "red"
     }
     return json.dumps(data, indent=2)
 

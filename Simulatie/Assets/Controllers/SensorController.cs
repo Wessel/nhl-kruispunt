@@ -28,7 +28,6 @@ public abstract class SensorController : MonoBehaviour
 	{
 		if (noSendTime >= 10 && !string.IsNullOrEmpty(topic))
 		{
-			Debug.Log($"SensorController: {topic}");
 			EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
 			noSendTime = 0;
 		}

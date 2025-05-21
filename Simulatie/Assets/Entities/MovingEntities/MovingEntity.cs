@@ -217,9 +217,15 @@ protected virtual void Update()
 				Freeze();
 				break;
 			case LightState.Orange:
+				// Check if the current traffic light is a BridgeLight
+				if (currentTrafficLight is BridgeLight)
+				{
+					Freeze();
+					break;
+				}
 				Transform stopLineTransform = currentTrafficLight.transform.Find("Stop line");
 				float stopLineDistance = currentRoad.GetClosestDistanceOnSpline(stopLineTransform.position);
-        // If across stop line, continue else stop
+				// If across stop line, continue else stop
 				if (splineDistance < stopLineDistance)
 				{
 					Freeze();
