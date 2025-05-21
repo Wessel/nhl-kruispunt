@@ -24,8 +24,7 @@ for (const [key, value] of Object.entries(intersectionData.groups)) {
   controller.bind_lane(lane);
 }
 
-controller.connect_to_simulator('tcp://localhost:5556'); //5556
-
+controller.connect_to_simulator('tcp://localhost:5556'); // 10.121.17.8 5556
 
 // setInterval(() => {
 //   const state = controller.get_state_map();

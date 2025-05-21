@@ -161,6 +161,7 @@ export class Controller {
 
     // await this.delay_for(this._cycle_delay);
     this._in_cycle = false;
+    // todo!: Ontruimingstijd fiksen
   }
 
   /* Incoming data functions */
