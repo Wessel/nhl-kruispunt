@@ -12,7 +12,6 @@ public class MovingEntity : MonoBehaviour
   protected VehicleType type;
   protected float currentSpeed;
   protected bool isStopped = false;
-  protected bool CanSwitchRoad = true;
 
   private float maxSpeed;
   private float splineDistance = 0f;
@@ -51,7 +50,7 @@ public class MovingEntity : MonoBehaviour
     if (currentRoad == null) return;
 
     CheckTrafficLight();
-    if (isStopped && currentTrafficLight == null && entityInFront == null && CanSwitchRoad)
+    if (isStopped && currentTrafficLight == null && entityInFront == null)
     {
       Unfreeze();
     }
@@ -161,7 +160,6 @@ public class MovingEntity : MonoBehaviour
 
     transform.position = position;
     transform.rotation = Quaternion.Euler(0, 0, angle);
-    CanSwitchRoad = true;
   }
 
   public virtual void Despawn()
@@ -299,7 +297,5 @@ public class MovingEntity : MonoBehaviour
 
   public Vector2 GetSize() => size;
   public float GetRotation() => rigidBody.rotation;
-
-  public void SetCanSwitchRoad(bool canSwitch) => CanSwitchRoad = canSwitch;
   public Collider2D GetCollider() => collider2D;
 }
