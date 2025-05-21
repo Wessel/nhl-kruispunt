@@ -12,14 +12,19 @@ public class MovingEntity : MonoBehaviour
   protected VehicleType type;
   protected float currentSpeed;
   protected bool isStopped = false;
+  protected bool CanSwitchRoad = true;
 
   private float maxSpeed;
   private float splineDistance = 0f;
-  private float length = 2f;
+
+  Vector2 size;
+  private float length = 0f;
+  private float width = 0f;
 
   private MovingEntity entityInFront;
   private TrafficLight currentTrafficLight;
   private Rigidbody2D rigidBody;
+  private new Collider2D collider2D;
   private EntityPool entityPool;
   private Road currentRoad;
   private LayerMask vehicleLayerMask;
@@ -35,11 +40,10 @@ public class MovingEntity : MonoBehaviour
     maxSpeed = ConvertKmHToUnityUnits(maxSpeedKmh);
     vehicleLayerMask = LayerMask.GetMask("Vehicles");
 
-    Collider2D col = GetComponentInChildren<Collider2D>();
-    if (col != null)
-    {
-      length = col.bounds.size.x; 
-    }
+    collider2D = GetComponentInChildren<Collider2D>();
+    size = collider2D.bounds.size;
+    length = size.x;
+    width = size.y;
   }
   
   protected virtual void Update()
@@ -47,7 +51,7 @@ public class MovingEntity : MonoBehaviour
     if (currentRoad == null) return;
 
     CheckTrafficLight();
-    if (isStopped && currentTrafficLight == null && entityInFront == null)
+    if (isStopped && currentTrafficLight == null && entityInFront == null && CanSwitchRoad)
     {
       Unfreeze();
     }
@@ -157,6 +161,7 @@ public class MovingEntity : MonoBehaviour
 
     transform.position = position;
     transform.rotation = Quaternion.Euler(0, 0, angle);
+    CanSwitchRoad = true;
   }
 
   public virtual void Despawn()
@@ -196,18 +201,33 @@ public class MovingEntity : MonoBehaviour
     }
   }
 
-  private void CheckTrafficLight()
-  {
-    if (currentTrafficLight == null) return;
+	private void CheckTrafficLight()
+	{
+		if (currentTrafficLight == null) return;
 
-    switch (currentTrafficLight.GetLight())
-    {
-      case LightState.Red: Freeze(); break;
-      case LightState.Orange: Freeze(); break;
-      case LightState.Green: Unfreeze(); break;
-    }
-  }
-
+		switch (currentTrafficLight.GetLight())
+		{
+			case LightState.Red:
+				Freeze();
+				break;
+			case LightState.Orange:
+				Transform stopLineTransform = currentTrafficLight.transform.Find("Stop line");
+				float stopLineDistance = currentRoad.GetClosestDistanceOnSpline(stopLineTransform.position);
+        // If across stop line, continue else stop
+				if (splineDistance < stopLineDistance)
+				{
+					Freeze();
+				}
+				else
+				{
+					Unfreeze();
+				}
+				break;
+			case LightState.Green:
+				Unfreeze();
+				break;
+		}
+	}
   private float ConvertKmHToUnityUnits(float kmh)
   {
     return (kmh * 1000f / 3600f) / 10f; // 1 Unity unit = 10 meters
@@ -253,6 +273,20 @@ public class MovingEntity : MonoBehaviour
     }
     SetEntityInFront(other);
   }
+
+  public Vector3 PredictFuturePosition()
+  {
+    if (currentRoad == null) return transform.position;
+
+    float roadLength = currentRoad.GetLength();
+    float distanceToTravel = currentSpeed * Time.deltaTime;
+    float deltaT = distanceToTravel / roadLength;
+
+    float predictedSplineDistance = splineDistance + deltaT;
+    predictedSplineDistance = Mathf.Clamp01(predictedSplineDistance);
+
+    return currentRoad.GetPointOnSpline(predictedSplineDistance);
+  }
   public void SetEntityInFront(MovingEntity front) => entityInFront = front;
   public void ClearEntityInFront() => entityInFront = null;
   public MovingEntity GetEntityInFront() => entityInFront;
@@ -262,4 +296,10 @@ public class MovingEntity : MonoBehaviour
   public int GetStrength() => strength;
   public float GetLength() => length;
   public float GetCurrentSpeed() => currentSpeed;
+
+  public Vector2 GetSize() => size;
+  public float GetRotation() => rigidBody.rotation;
+
+  public void SetCanSwitchRoad(bool canSwitch) => CanSwitchRoad = canSwitch;
+  public Collider2D GetCollider() => collider2D;
 }

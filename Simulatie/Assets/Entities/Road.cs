@@ -43,9 +43,9 @@ public class Road : MonoBehaviour
   }
 
 
-  public float GetClosestDistanceOnSpline()
+  public float GetClosestDistanceOnSpline(Vector3 worldPosition)
   {
-    Vector3 localPosition = splineContainer.transform.InverseTransformPoint(transform.position);
+    Vector3 localPosition = splineContainer.transform.InverseTransformPoint(worldPosition);
     SplineUtility.GetNearestPoint(splineContainer.Spline, localPosition, out _, out float t);
     return t;
   }

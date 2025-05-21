@@ -1,37 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.Splines.ExtrusionShapes;
 
 public class Intersection : MonoBehaviour
 {
   public List<Road> incomingRoads;
   public List<Road> outgoingRoads;
 
-  private HashSet<MovingEntity> mergingEntities = new();
-
   private void OnTriggerEnter2D(Collider2D other)
   {
     MovingEntity entity = other.GetComponent<MovingEntity>();
-    if (entity == null || mergingEntities.Contains(entity)) return;
+    if (entity == null) return;
 
     Road currentRoad = entity.GetCurrentRoad();
     if (!incomingRoads.Contains(currentRoad)) return;
 
-    List<Road> validOutgoings = GetValidRoads(entity);
-    if (validOutgoings.Count == 0)
+    // If only one valid outgoing road exists, switch to it immediately
+    if (outgoingRoads.Count == 1)
     {
-      Debug.LogWarning($"No valid outgoing roads for {entity.name}");
+      if (outgoingRoads[0] == currentRoad) return;
+      SwitchEntityToRoad(entity, outgoingRoads[0]);
       return;
     }
 
-    Road chosenRoad = (validOutgoings.Count == 1) ? validOutgoings[0] : ChooseNewRoad(validOutgoings);
-    if (chosenRoad == currentRoad) return;
+    List<Road> validOutgoings = GetValidRoads(entity);
+    if (validOutgoings.Count == 0) return;
 
-    StartCoroutine(SwitchWhenSafe(entity, chosenRoad));
+    Road newRoad = ChooseNewRoad(validOutgoings);
+    if (newRoad == currentRoad) return;
+    SwitchEntityToRoad(entity, newRoad);
   }
 
   private List<Road> GetValidRoads(MovingEntity entity)
   {
+    float currentDistance = entity.GetCurrentSplineDistance();
+
     return outgoingRoads.FindAll(road =>
         road != null &&
         road.GetVehicleTypes().Contains(entity.GetVehicleType())
@@ -43,32 +48,9 @@ public class Intersection : MonoBehaviour
     return roads[Random.Range(0, roads.Count)];
   }
 
-  private IEnumerator SwitchWhenSafe(MovingEntity entity, Road newRoad)
+  private void SwitchEntityToRoad(MovingEntity entity, Road newRoad)
   {
-    mergingEntities.Add(entity);
-    entity.Freeze();
-
-    float entityLength = entity.GetLength();
-    float startDistance = newRoad.GetClosestDistanceOnSpline();
-
-    while (!IsRoadClearAt(newRoad, startDistance, entityLength))
-    {
-      yield return new WaitForSeconds(0.2f);
-    }
-
+    float startDistance = newRoad.GetClosestDistanceOnSpline(entity.PredictFuturePosition());
     entity.SwitchToRoad(newRoad, startDistance);
-    entity.Unfreeze();
-    mergingEntities.Remove(entity);
-  }
-
-  private bool IsRoadClearAt(Road road, float distance, float entityLength)
-  {
-    Vector2 position = road.GetNewPosition(distance);
-    Vector2 direction = new Vector2(road.GetNewTangent(distance).x, road.GetNewTangent(distance).y).normalized;
-    Vector2 checkPosition = position + direction * (entityLength / 2f);
-    Vector2 boxSize = new Vector2(entityLength * 1.1f, 0.8f); 
-
-    Collider2D hit = Physics2D.OverlapBox(checkPosition, boxSize, 0f, LayerMask.GetMask("Vehicles"));
-    return hit == null;
   }
 }

@@ -95,7 +95,6 @@ public class BridgeController : SensorController
 
   public override void HandleSensorStateChange()
   {
-    Debug.Log("Bridge sensor state changed");
     EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
   }
 }
