@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
-[Serializable]
+[System.Serializable]
 public class SpawnModeValue
 {
   public SpawnMode mode;
@@ -13,6 +14,7 @@ public class SpawnModeValue
 public class EntitySpawner : MonoBehaviour
 {
   public List<SpawnModeValue> spawnModeValues;
+
   public EntityPool entityPool;          
 
   private Road road;                   
@@ -30,17 +32,33 @@ public class EntitySpawner : MonoBehaviour
 
   private void OnValidate()
   {
-    var enumValues = (SpawnMode[])Enum.GetValues(typeof(SpawnMode));
+    // Zorg ervoor dat de spawnModeValues zijn ingesteld met standaardwaarden
+    if (spawnModeValues.Count == 0)
+    {
+      InitializeDefaultSpawnModes();
+    }
+
+    var enumValues = (SpawnMode[])System.Enum.GetValues(typeof(SpawnMode));
+    var existingModes = new HashSet<SpawnMode>(spawnModeValues.Select(x => x.mode));
 
     foreach (var mode in enumValues)
     {
-      if (!spawnModeValues.Exists(x => x.mode == mode))
+      if (!existingModes.Contains(mode))
       {
-        spawnModeValues.Add(new SpawnModeValue { mode = mode });
+        float defaultTimer = mode switch
+        {
+          SpawnMode.Easy => 11f,
+          SpawnMode.Normal => 7f,
+          SpawnMode.Hard => 4f,
+          _ => 10f // Standaardwaarde voor onbekende modi
+        };
+
+        spawnModeValues.Add(new SpawnModeValue { mode = mode, spawntimer = defaultTimer });
       }
     }
 
-    spawnModeValues.RemoveAll(x => Array.IndexOf(enumValues, x.mode) == -1);
+    // Verwijder alle spawnModeValues die niet meer in de enum staan
+    spawnModeValues.RemoveAll(x => !enumValues.Contains(x.mode));
     spawnModeValues.Sort((a, b) => a.mode.CompareTo(b.mode));
   }
 
@@ -51,9 +69,16 @@ public class EntitySpawner : MonoBehaviour
     EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
   }
 
+  private void InitializeDefaultSpawnModes()
+  {
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Easy, spawntimer = 11f });
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Normal, spawntimer = 7f });
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Hard, spawntimer = 4f });
+  }
+
   private void OnSpawnModeChanged(SpawnMode newMode)
   {
-    spawnDelay = modeConfigs.TryGetValue(SimulationManager.Instance.GetSpawnMode(), out float value) ? value : 10f;
+    spawnDelay = modeConfigs.GetValueOrDefault(newMode, 10f);
   }
 
   IEnumerator SpawnLoop()
