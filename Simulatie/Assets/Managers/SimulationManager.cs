@@ -17,6 +17,7 @@ public class SimulationManager : MonoBehaviour
 		else Destroy(gameObject);
 
 		ZeroMQConfig.LoadConfig();
+    Physics2D.queriesHitTriggers = true;
   }
 
   private void Start()
