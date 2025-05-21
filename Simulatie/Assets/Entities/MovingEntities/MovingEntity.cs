@@ -45,37 +45,29 @@ public class MovingEntity : MonoBehaviour
     width = size.y;
   }
   
-  protected virtual void Update()
-  {
-    if (currentRoad == null) return;
+protected virtual void Update()
+	{
+		if (currentRoad == null) return;
 
-    CheckTrafficLight();
-    if (isStopped && currentTrafficLight == null && entityInFront == null)
-    {
-      Unfreeze();
-    }
-
+		CheckTrafficLight();
+    UpdateSpeed();
     if (isStopped)
-    {
-      currentSpeed = 0f;
-    }
-    else
-    {
-      MoveOnRoad();
-    }
-  }
-  //private void OnGUI()
-  //{
-  //  Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-  //  GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 400, 80),
-  //      $"Speed: {currentSpeed:F2} | Stopped: {(isStopped ? "Yes" : "No")}| Light: {(currentTrafficLight ? "Yes" : "No")}| Blocked: {(entityInFront ? "Yes" : "No")}");
-  //}
-
+		{
+			if (currentTrafficLight == null && entityInFront == null)
+			{
+				Unfreeze();
+			}
+			else
+			{
+				currentSpeed = 0f;
+				return;
+			}
+		}
+    else MoveOnRoad();
+	}
 
   protected void MoveOnRoad()
   {
-    UpdateSpeedBasedOnEntityInFront();
-
     float roadLength = currentRoad.GetLength();
     float deltaProgress = (currentSpeed / roadLength) * Time.deltaTime;
     splineDistance += deltaProgress;
@@ -86,60 +78,60 @@ public class MovingEntity : MonoBehaviour
     }
     else
     {
-      UpdateEntityPositionAndRotation();
+      UpdateEntity();
     }
   }
 
-  private void UpdateSpeedBasedOnEntityInFront()
+  private void UpdateSpeed()
   {
-    bool aheadBlocked = IsBlockedAhead();
+    bool aheadBlocked = IsBlocked();
 
     if (entityInFront == null && !aheadBlocked)
     {
       currentSpeed = maxSpeed;
       return;
     }
-
-    float distanceToFront = entityInFront != null
-        ? Vector3.Distance(transform.position, entityInFront.transform.position)
-        : float.MaxValue;
-
-    if (entityInFront != null)
+    else
     {
-      float requiredSpacing = (GetLength() + entityInFront.GetLength()) * 0.5f;
-
-      if (distanceToFront < requiredSpacing || aheadBlocked)
+      if (entityInFront != null && entityInFront.GetCurrentSpeed() < currentSpeed)
       {
+        currentSpeed = entityInFront.GetCurrentSpeed();
+      }
+      else if (aheadBlocked)
+      {
+        Freeze();
         currentSpeed = 0f;
       }
-      else
-      {
-        currentSpeed = maxSpeed * 0.5f;
-      }
     }
-
   }
 
-  public bool IsBlockedAhead()
+  public bool IsBlocked()
   {
-    Vector2 direction = transform.right;
-    float checkDistance = 0.3f * length;
-    Vector2 origin = (Vector2)transform.position + direction * (length * 0.5f);
+    float distance = width;
+    Vector2 forward = transform.right;
 
-    Debug.DrawRay(origin, direction * checkDistance, Color.red);
-    
-    RaycastHit2D hit = Physics2D.Raycast(origin, direction, checkDistance, vehicleLayerMask);
+    Vector2 frontOrigin = (Vector2)transform.position + forward * (length * 0.5f);
+    Vector2 centerOrigin = (Vector2)transform.position;
 
-    if (hit.collider != null)
+    bool isBlocked = CheckRayCollision(frontOrigin, forward, distance, Color.red);
+
+    if (splineDistance > 0.8f && currentRoad.DoesMerge()) 
     {
-      MovingEntity hitEntity = hit.collider.GetComponentInParent<MovingEntity>();
-      return hitEntity != null && hitEntity != this;
-    }
+      // Directions for merging into other lane
+      Vector2 right45 = Quaternion.Euler(0, 0, -45f) * forward;
+			Vector2 right75 = Quaternion.Euler(0, 0, -45f) * forward;
+      Vector2 right90 = Quaternion.Euler(0, 0, -90f) * forward;
+      Vector2 right105 = Quaternion.Euler(0, 0, -135f) * forward;
 
-    return false;
+      isBlocked |= CheckRayCollision(frontOrigin, right45, distance, Color.yellow);
+      isBlocked |= CheckRayCollision(centerOrigin, right75, distance, Color.green);
+      isBlocked |= CheckRayCollision(centerOrigin, right90, distance, Color.cyan);
+      isBlocked |= CheckRayCollision(centerOrigin, right105, distance, Color.blue);
+    }
+    return isBlocked;
   }
 
-  private void UpdateEntityPositionAndRotation()
+  private void UpdateEntity()
   {
     Vector3 position = currentRoad.GetNewPosition(splineDistance);
     float3 tangent = currentRoad.GetNewTangent(splineDistance);
@@ -147,6 +139,22 @@ public class MovingEntity : MonoBehaviour
 
     rigidBody.MovePosition(position);
     rigidBody.MoveRotation(angle);
+  }
+
+  private bool CheckRayCollision(Vector2 origin, Vector2 direction, float distance, Color debugColor)
+  {
+    Debug.DrawRay(origin, direction * distance, debugColor);
+
+    RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, vehicleLayerMask);
+    if (hit.collider != null)
+    {
+      MovingEntity hitEntity = hit.collider.GetComponentInParent<MovingEntity>();
+      if (hitEntity != null && hitEntity != this && !(hitEntity.GetCurrentRoad() == currentRoad) && (hitEntity.GetStrength() >= strength))
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   public virtual void SwitchToRoad(Road newRoad, float startDistance = 0f)

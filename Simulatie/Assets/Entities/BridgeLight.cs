@@ -1,19 +1,38 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Collections;
 
 public class BridgeLight : TrafficLight
 {
   public override void SetLight(LightState newState)
   {
-    BridgeState bridgeState = newState switch
+    if (newState == LightState.Green && currentLight != LightState.Green)
     {
-      LightState.Red => BridgeState.Closed,
-      LightState.Green => BridgeState.Open,
-      LightState.Orange => BridgeState.Unknown,
-      _ => BridgeState.Unknown
-    };
-    EventManager.Instance?.SetBridgeState.Invoke(bridgeState);
+      StartCoroutine(ShowOrangeThenGreen());
+    }
+    else
+    {
+      currentLight = newState;
+      switch (newState)
+      {
+        case LightState.Red:
+          spriteRenderer.sprite = redLight;
+          break;
+        case LightState.Orange:
+          spriteRenderer.sprite = orangeLight;
+          break;
+        case LightState.Green:
+          spriteRenderer.sprite = greenLight;
+          break;
+      }
+    }
+  }
+
+  private IEnumerator ShowOrangeThenGreen()
+  {
+    currentLight = LightState.Orange;
+    spriteRenderer.sprite = orangeLight;
+    yield return new WaitForSeconds(3f);
+    currentLight = LightState.Green;
+    spriteRenderer.sprite = greenLight;
   }
 }

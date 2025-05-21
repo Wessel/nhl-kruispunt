@@ -9,10 +9,10 @@ public class TrafficLight : SensorController
   public Sprite orangeLight;
   public Sprite greenLight;
 
-  private string id;
-  private List<VehicleType> types;
-  private LightState currentLight;
-  private SpriteRenderer spriteRenderer;
+  protected string id;
+  protected List<VehicleType> types;
+  protected LightState currentLight;
+  protected SpriteRenderer spriteRenderer;
 
   private TrafficLightController controller;
 

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-using UnityEngine.Splines.ExtrusionShapes;
 
 public class Intersection : MonoBehaviour
 {

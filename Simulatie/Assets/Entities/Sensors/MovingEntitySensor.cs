@@ -31,11 +31,6 @@ public class MovingEntitySensor : MonoBehaviour
     if (otherEntity != null && otherEntity == owner.GetEntityInFront())
     {
       owner.ClearEntityInFront();
-      if (!owner.IsBlockedAhead())
-      {
-        owner.Unfreeze();
-      }
-
     }
   }
 }

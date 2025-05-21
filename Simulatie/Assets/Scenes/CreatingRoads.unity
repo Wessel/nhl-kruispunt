@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &3019368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &4458413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,6 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &46929897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,6 +1686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &59891509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,6 +2520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &111267519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,6 +2556,11 @@ Transform:
   - {fileID: 1851155875}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &113532968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+  m_PrefabInstance: {fileID: 664423242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &116082766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,6 +2862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &168907914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,6 +2894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &168907916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3184,6 +3196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &183604069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3561,6 +3574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &223535668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4566,6 +4580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!1 &347136782
 GameObject:
   m_ObjectHideFlags: 0
@@ -4793,6 +4808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &347136786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4940,6 +4956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &350314450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4954,7 +4971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 1
   - mode: 1
     spawntimer: 2
   - mode: 2
@@ -5088,6 +5105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &386277130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5572,6 +5590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &403044506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5910,6 +5929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &428175009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6181,6 +6201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &431104448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6863,6 +6884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &440371197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7810,6 +7832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &482341676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8230,6 +8253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &525247860
 GameObject:
   m_ObjectHideFlags: 0
@@ -8452,6 +8476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!1 &535683986
 GameObject:
   m_ObjectHideFlags: 0
@@ -8580,6 +8605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &547274058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8867,6 +8893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &553865962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9113,6 +9140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &560184094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9752,6 +9780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &627552058
 GameObject:
   m_ObjectHideFlags: 0
@@ -9798,6 +9827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &627552061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10359,6 +10389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &655538382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10698,16 +10729,35 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411001129128143289, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 664423245}
   m_SourcePrefab: {fileID: 100100000, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
 --- !u!4 &664423243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
   m_PrefabInstance: {fileID: 664423242}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &664423245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113532968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8185df31d13674fb7732d115160dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  orangeLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
 --- !u!1 &676291369
 GameObject:
   m_ObjectHideFlags: 0
@@ -10739,6 +10789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &676291371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11160,6 +11211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &745584622
 GameObject:
   m_ObjectHideFlags: 0
@@ -11606,6 +11658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &761661892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11907,6 +11960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 03000000
+  merges: 0
 --- !u!114 &772099858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12221,10 +12275,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411001129128143289, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 881505675}
   m_SourcePrefab: {fileID: 100100000, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
 --- !u!4 &774732436 stripped
 Transform:
@@ -12643,6 +12701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &788600606
 GameObject:
   m_ObjectHideFlags: 0
@@ -13419,6 +13478,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
+--- !u!1 &843204825 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+  m_PrefabInstance: {fileID: 1949894321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &872695647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13533,6 +13598,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
   m_PrefabInstance: {fileID: 872695647}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &881505673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+  m_PrefabInstance: {fileID: 774732435}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &881505675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881505673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8185df31d13674fb7732d115160dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  orangeLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
 --- !u!1 &885306296
 GameObject:
   m_ObjectHideFlags: 0
@@ -14341,6 +14426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &980135344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15000,6 +15086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &1000534978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15246,6 +15333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1010947900
 GameObject:
   m_ObjectHideFlags: 0
@@ -15568,6 +15656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 
+  merges: 0
 --- !u!1 &1023037579
 GameObject:
   m_ObjectHideFlags: 0
@@ -15754,6 +15843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &1033743733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16027,6 +16117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &1061723763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16871,6 +16962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!1 &1147688484
 GameObject:
   m_ObjectHideFlags: 0
@@ -17422,6 +17514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1187561881
 GameObject:
   m_ObjectHideFlags: 0
@@ -17453,6 +17546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &1187561883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18018,6 +18112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1256476398
 GameObject:
   m_ObjectHideFlags: 0
@@ -18265,6 +18360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &1256476402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18481,6 +18577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1264198856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19640,6 +19737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1300123175
 GameObject:
   m_ObjectHideFlags: 0
@@ -19687,6 +19785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1300123178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19781,7 +19880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 1
   - mode: 1
     spawntimer: 2
   - mode: 2
@@ -20111,6 +20210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &1318570914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21092,6 +21192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1409433576
 GameObject:
   m_ObjectHideFlags: 0
@@ -21124,6 +21225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &1409433578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21877,6 +21979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!1001 &1504254339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22098,6 +22201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1511087253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22592,6 +22696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1533008803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23033,6 +23138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &1555542461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23633,6 +23739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!1 &1571765035
 GameObject:
   m_ObjectHideFlags: 0
@@ -23860,6 +23967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1571765039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24342,6 +24450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &1657532297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24682,6 +24791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &1691686626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25650,6 +25760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1733721491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25876,6 +25987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 1
 --- !u!114 &1748363044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26037,125 +26149,125 @@ MonoBehaviour:
       TangentIn:
         x: -0
         y: -0
-        z: -0.74979836
+        z: -0.75494546
       TangentOut:
         x: 0
         y: 0
-        z: 0.68811184
+        z: 0.70178115
       Rotation:
         value:
-          x: 0.47861904
-          y: -0.52050346
-          z: 0.5205034
-          w: -0.47861904
+          x: 0.482033
+          y: -0.51734334
+          z: 0.5173433
+          w: -0.482033
     - Position:
-        x: 18.406254
-        y: -0.67792636
+        x: 18.462254
+        y: -0.63000494
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.7229864
+        z: -0.72551
       TangentOut:
         x: 0
         y: 0
-        z: 0.8759701
+        z: 0.83841336
       Rotation:
         value:
-          x: 0.46937227
-          y: -0.52885693
-          z: 0.528857
-          w: -0.46937227
+          x: -0.4710812
+          y: 0.52733535
+          z: -0.52733535
+          w: 0.4710812
     - Position:
-        x: 21.286253
-        y: -1.0680048
+        x: 21.145252
+        y: -1.030005
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.804945
+        z: -0.81381804
       TangentOut:
         x: 0
         y: 0
-        z: 0.5724933
+        z: 0.66705656
       Rotation:
         value:
-          x: -0.45750728
-          y: 0.53915405
-          z: -0.53915405
-          w: 0.45750728
+          x: 0.44978163
+          y: -0.54561573
+          z: 0.54561573
+          w: -0.44978157
     - Position:
-        x: 22.729252
-        y: -1.349005
+        x: 22.917253
+        y: -1.4560049
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -0.48281288
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.3629968
+      Rotation:
+        value:
+          x: 0.43896672
+          y: -0.5543543
+          z: 0.55435425
+          w: -0.43896586
+    - Position:
+        x: 24.430252
+        y: -1.897005
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.48728666
+        z: -0.49199873
       TangentOut:
         x: 0
         y: 0
-        z: 0.48291546
+        z: 0.43386585
       Rotation:
         value:
-          x: 0.43671432
-          y: -0.5561301
-          z: 0.55613035
-          w: -0.4367139
+          x: 0.41377667
+          y: -0.57340115
+          z: 0.57340115
+          w: -0.41377664
     - Position:
-        x: 24.114254
-        y: -1.757005
+        x: 25.578255
+        y: -2.326005
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.48075852
+        z: -0.39622536
       TangentOut:
         x: 0
         y: 0
-        z: 0.4817343
+        z: 0.37361863
       Rotation:
         value:
-          x: 0.40493196
-          y: -0.57968104
-          z: 0.5796811
-          w: -0.40493187
+          x: -0.4141773
+          y: 0.57311183
+          z: -0.5731117
+          w: 0.4141775
     - Position:
-        x: 25.440254
-        y: -2.343005
+        x: 26.625254
+        y: -2.628005
         z: 0
       TangentIn:
         x: -0
         y: -0
-        z: -0.44159225
+        z: -0.108968385
       TangentOut:
         x: 0
         y: 0
-        z: 0.37408006
+        z: 0.108968385
       Rotation:
         value:
-          x: -0.41112924
-          y: 0.5753023
-          z: -0.5753023
-          w: 0.4111293
-    - Position:
-        x: 26.449875
-        y: -2.593884
-        z: 0
-      TangentIn:
-        x: -0
-        y: -0
-        z: -0.104032405
-      TangentOut:
-        x: 0
-        y: 0
-        z: 0.104032405
-      Rotation:
-        value:
-          x: -0.4355586
-          y: 0.55703557
-          z: -0.5570356
-          w: 0.43555865
+          x: 0.42510456
+          y: -0.56505406
+          z: 0.5650541
+          w: -0.4251044
     m_MetaData:
     - Mode: 0
       Tension: 0.5
@@ -26177,7 +26289,7 @@ MonoBehaviour:
       Tension: 0.5
     - Mode: 0
       Tension: 0.5
-    - Mode: 0
+    - Mode: 3
       Tension: 0.5
     - Mode: 0
       Tension: 0.5
@@ -26513,6 +26625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1775710260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26960,6 +27073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 03000000
+  merges: 0
 --- !u!114 &1786030558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27012,6 +27126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &1791257864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27478,6 +27593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1802704560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28101,6 +28217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &1834564693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28404,6 +28521,11 @@ Transform:
   - {fileID: 21871456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1874919933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+  m_PrefabInstance: {fileID: 2130740848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1879847310
 GameObject:
   m_ObjectHideFlags: 0
@@ -28473,6 +28595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &1890971294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28990,6 +29113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1 &1901568093
 GameObject:
   m_ObjectHideFlags: 0
@@ -29201,6 +29325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1940596096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29408,6 +29533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 00000000
+  merges: 0
 --- !u!114 &1942599290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29934,6 +30060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!1001 &1949894321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30114,16 +30241,35 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411001129128143289, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1949894324}
   m_SourcePrefab: {fileID: 100100000, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
 --- !u!4 &1949894322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
   m_PrefabInstance: {fileID: 1949894321}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1949894324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843204825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8185df31d13674fb7732d115160dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  orangeLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
 --- !u!1001 &1988999521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31184,6 +31330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 02000000
+  merges: 0
 --- !u!114 &2091780609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31236,6 +31383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supportedTypes: 01000000
+  merges: 0
 --- !u!114 &2103552872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32242,16 +32390,35 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411001129128143289, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2365754147964864430, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2130740851}
   m_SourcePrefab: {fileID: 100100000, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
 --- !u!4 &2130740849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6791374109507899423, guid: b1903d1052de9284580b0f2d8e56c4fb, type: 3}
   m_PrefabInstance: {fileID: 2130740848}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2130740851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874919933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8185df31d13674fb7732d115160dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redLight: {fileID: 2568274851621527363, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  orangeLight: {fileID: -3850011946308055725, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
+  greenLight: {fileID: -3296075266921450765, guid: 973fbfa5e40871343ac48256227bde5b, type: 3}
 --- !u!4 &883289925751373497
 Transform:
   m_ObjectHideFlags: 0
