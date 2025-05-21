@@ -65,7 +65,7 @@ export class PriorityQueue {
       this._items.splice(index, 1);
     }
 
-    this.enqueue(group, newPriority);
+    this.enqueue(group, newPriority, item.timestamp);
   }
 
   remove(group: string): void {

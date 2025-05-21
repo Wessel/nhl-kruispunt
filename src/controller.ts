@@ -9,13 +9,20 @@ import { ZmqPublisher } from "./zeromq/publisher";
 import { ZmqSubscriber } from "./zeromq/subscriber";
 import { BridgeState } from "./types/Bridge";
 
+const PRIORITY_HIGH = 1;
+const PRIORITY_LOW = 2;
+
 export class Controller {
   private _heartbeatDelay: number = 1000;
+  private _bridgeTrafficlights: number[] = [ 71, 72, 81, 41, 42, 51, 52, 53, 54 ];
 
-  private _clock: Stopwatch;
   private _in_cycle = false;
-  private _cycle_delay = 3500 * 2;
   private _is_removing = false;
+
+  private _pedestrian_multiplier = 2;
+  private _cycle_delay = 3500;
+  private _removing_delay = this._cycle_delay * 2;
+  private _empty_delay = this._cycle_delay / 2;
 
   private _intersection: any  = null;
 
@@ -37,9 +44,7 @@ export class Controller {
   public laneQueue: PriorityQueue = new PriorityQueue();
 
   constructor(publisher_port: number = 5555, clock: Stopwatch) {
-    this._clock = clock;
-
-    this._publisher = new ZmqPublisher(this._heartbeatDelay, this._clock);
+    this._publisher = new ZmqPublisher(this._heartbeatDelay, clock);
 
     this._publisher
       .bind(`tcp://*:${publisher_port}`)
@@ -129,13 +134,16 @@ export class Controller {
   async exhaust_lane_queue(): Promise<void> {
     if (this.laneQueue.isEmpty() || this._in_cycle) return;
 
-    this._in_cycle = true;
 
     const nextLane = this.laneQueue.peek();
     if (!nextLane) return;
 
+    this._in_cycle = true;
+
+    this.cycle_intersection_red();
+    await this.delay_for(this._empty_delay);
+
     console.log(`Processing lane ${nextLane.group} (${this.laneQueue.contains(nextLane.group)}) with priority ${nextLane.priority}`);
-    this.laneQueue.setActive(nextLane.group, this.time);
 
     const lane = this.lanes[nextLane.group];
     if (lane) {
@@ -146,6 +154,8 @@ export class Controller {
         if (lanes.includes(group)) { //  group === nextLane.group
           const laneInstance = this.lanes[group];
           if (laneInstance) {
+            this.laneQueue.setActive(group, this.time);
+
             laneInstance.set_state(TrafficlightState.GREEN);
             // console.log(`Setting lane ${group} to GREEN`);
           }
@@ -162,6 +172,16 @@ export class Controller {
     // await this.delay_for(this._cycle_delay);
     this._in_cycle = false;
     // todo!: Ontruimingstijd fiksen
+  }
+
+  cycle_intersection_red(): void {
+    for (const lane of Object.keys(this.lanes)) {
+      if (lane === '41' || lane === '42') {
+        this.lanes[lane].set_state(TrafficlightState.GREEN);
+      } else {
+        this.lanes[lane].set_state(TrafficlightState.RED);
+      }
+    }
   }
 
   /* Incoming data functions */
@@ -182,36 +202,55 @@ export class Controller {
 
     Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
-      const sensorData = data[key];
+
+      // Skip all lanes related to bridges, due to them being handled by the bridge control
+      if (this._bridgeTrafficlights.includes(Number(group))) {
+        return;
+      }
 
       let priority;
+      const sensorData = data[key];
 
-      // Both sensors triggered - highest lane priority (2)
       if (sensorData.voor && sensorData.achter) {
-        priority = 1;
-        // Only front or back sensor triggered - medium priority (1)
+        priority = PRIORITY_HIGH;
       } else if (sensorData.voor || sensorData.achter) {
-        priority = 2;
+        priority = PRIORITY_LOW;
       }
 
       if (priority) {
         const existingEntry = this.laneQueue.get(group);
         if (existingEntry) {
-          if (existingEntry.priority < 0) return;
           if (existingEntry.activeSince > 0) {
-            priority -= 3;
+            if (this.time > existingEntry.activeSince + 5000) {
+              this.laneQueue.remove(group);
+              return;
+            }
+
+            if (existingEntry.priority < 0) {
+              return;
+            }
+
+            priority -= 4;
           }
 
           this.laneQueue.updatePriority(group, priority);
         } else {
           this.laneQueue.enqueue(group, priority);
         }
-
-        // console.log(`Lane ${group} added to queue with priority ${priority}`);
       } else if (this.laneQueue.contains(group)) {
         this._is_removing = true;
+
         this.laneQueue.remove(group);
-        await this.delay_for(this._cycle_delay);
+
+        if (
+          this._intersection.groups[group].vehicle_type.includes('walk')
+          || this._intersection.groups[group].vehicle_type.includes('bike')
+        ) {
+          await this.delay_for(this._removing_delay * this._pedestrian_multiplier);
+        } else {
+          await this.delay_for(this._removing_delay);
+        }
+
         this._is_removing = false;
       }
     });
