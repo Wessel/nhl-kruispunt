@@ -64,7 +64,7 @@ public class EntitySpawner : MonoBehaviour
   {
     road = GetComponent<Road>();
     EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
-    //EventManager.Instance.Reset.AddListener(ResetSpawnTimer);
+    EventManager.Instance.Reset.AddListener(ResetSpawnTimer);
     ResetSpawnTimer();
   }
 
