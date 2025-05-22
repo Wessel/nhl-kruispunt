@@ -49,4 +49,16 @@ public class Road : MonoBehaviour
     SplineUtility.GetNearestPoint(splineContainer.Spline, localPosition, out _, out float t);
     return t;
   }
+
+
+  public Vector3 GetPointOnSpline(float t)
+  {
+    Vector3 localPoint = splineContainer.Spline.EvaluatePosition(t);
+    return splineContainer.transform.TransformPoint(localPoint);
+  }
+
+  public string GetName()
+  {
+    return gameObject.name;
+  }
 }

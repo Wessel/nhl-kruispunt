@@ -15,16 +15,11 @@ public class EntityPool : MonoBehaviour
   public int poolSize;
 
   private Queue<MovingEntity> pool = new Queue<MovingEntity>();
+  private List<MovingEntity> activeEntities = new List<MovingEntity>();
 
   void Start()
   {
-    if (prefabs == null || prefabs.Count == 0)
-    {
-      Debug.LogError("No prefabs defined in the pool.");
-      return;
-    }
-
-    // Maak een lijst met cumulatieve kansen
+    EventManager.Instance.Reset.AddListener(ResetPool);
     int totalWeight = 0;
     foreach (SpawnChance entry in prefabs)
     {
@@ -33,7 +28,6 @@ public class EntityPool : MonoBehaviour
 
     for (int i = 0; i < poolSize; i++)
     {
-      // Genereer een willekeurig getal tussen 1 en totalWeight
       int rand = UnityEngine.Random.Range(1, totalWeight + 1);
       int cumulative = 0;
       GameObject selectedPrefab = null;
@@ -48,11 +42,7 @@ public class EntityPool : MonoBehaviour
         }
       }
 
-      if (selectedPrefab == null)
-      {
-        Debug.LogError("Failed to select a prefab.");
-        continue;
-      }
+      if (selectedPrefab == null) continue;
 
       GameObject obj = Instantiate(selectedPrefab, transform);
       obj.SetActive(false);
@@ -61,10 +51,6 @@ public class EntityPool : MonoBehaviour
       if (entity != null)
       {
         pool.Enqueue(entity);
-      }
-      else
-      {
-        Debug.LogError("Selected prefab does not have a MovingEntity component.");
       }
     }
   }
@@ -75,6 +61,7 @@ public class EntityPool : MonoBehaviour
     {
       MovingEntity entity = pool.Dequeue();
       entity.gameObject.SetActive(true);
+      activeEntities.Add(entity);
       return entity;
     }
 
@@ -84,6 +71,15 @@ public class EntityPool : MonoBehaviour
   public void ReturnObject(MovingEntity entity)
   {
     entity.gameObject.SetActive(false);
+    activeEntities.Remove(entity);
     pool.Enqueue(entity);
+  }
+
+  public void ResetPool()
+  {
+    foreach (MovingEntity entity in activeEntities.ToArray())
+    {
+      entity.Despawn();
+    }
   }
 }

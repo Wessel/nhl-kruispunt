@@ -7,33 +7,42 @@ public class BridgeController : SensorController
 {
   [SerializeField] private float openScaleX = 0.15f;
   [SerializeField] private float closedScaleX = 0.8f;
-  [SerializeField] private float animationDuration = 1.0f;
+  [SerializeField] private float animationDuration = 5.0f;
   [SerializeField] private Vector2 closedPosition =  new Vector2(15.95f, -2.5f);
   [SerializeField] private Vector2 openPosition = new Vector2(16.3f, -2.7f);
 
-
+  private BridgeSensor sensor;
   private bool isAnimating = false;
-  private BridgeState currentBridgeState = BridgeState.Unknown;
 
   protected override void Start()
   {
     base.Start();
     topic = "sensoren_bruggen";
     EventManager.Instance.SetBridgeState.AddListener(SetBridgeState);
+    foreach (Sensor sensor in sensors)
+    {
+      if (sensor is BridgeSensor bridgeSensor)
+      {
+        this.sensor = bridgeSensor;
+        SetBridgeState(bridgeSensor.GetState());
+        break;
+      }
+    }
   }
 
   public void SetBridgeState(BridgeState state)
   {
-    if (isAnimating || state == BridgeState.Unknown || state == currentBridgeState)
+    if (isAnimating || state == BridgeState.Unknown || state == sensor.GetState())
       return;
 
     StartCoroutine(AnimateBridge(state));
-    currentBridgeState = state;
+    sensor.SetState(state);
   }
 
   private IEnumerator AnimateBridge(BridgeState state)
   {
     isAnimating = true;
+    sensor.SetState(BridgeState.Unknown);
 
     float startScaleX = transform.localScale.x;
     float targetScaleX = state == BridgeState.Open ? openScaleX : closedScaleX;
@@ -61,15 +70,16 @@ public class BridgeController : SensorController
     transform.localScale = new Vector3(targetScaleX, transform.localScale.y, transform.localScale.z);
     transform.position = new Vector3(targetPos.x, targetPos.y, transform.position.z);
 
+    sensor.SetState(state);
     isAnimating = false;
   }
 
 
   public override string BuildJson()
   {
-    var bridgeData = new Dictionary<string, object>();
+    Dictionary<string, object> bridgeData = new ();
 
-    foreach (var sensor in sensors)
+    foreach (Sensor sensor in sensors)
     {
       if (sensor is BridgeSensor bridgeSensor)
       {
@@ -85,6 +95,7 @@ public class BridgeController : SensorController
 
   public override void HandleSensorStateChange()
   {
+    Debug.Log("Bridge sensor state changed");
     EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
   }
 

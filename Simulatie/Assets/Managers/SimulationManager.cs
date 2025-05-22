@@ -4,7 +4,8 @@ public class SimulationManager : MonoBehaviour
 {
 	public static SimulationManager Instance;
 
-	private float simulationTime; // In seconds
+  private PriorityVehicleQueue priorityVehicleQueue = new PriorityVehicleQueue();
+  private float simulationTime; // In seconds
   private float timeScale = 1f;
 	private bool isPaused = false;
 	private SpawnMode spawnMode = SpawnMode.Easy;
@@ -16,9 +17,16 @@ public class SimulationManager : MonoBehaviour
 		else Destroy(gameObject);
 
 		ZeroMQConfig.LoadConfig();
-	}
+  }
 
-	private void Update()
+  private void Start()
+  {
+    EventManager.Instance.EnqueuePriorityVehicle.AddListener(priorityVehicleQueue.Enqueue);
+    EventManager.Instance.DequeuePriorityVehicle.AddListener(priorityVehicleQueue.Dequeue);
+  }
+
+
+  private void Update()
 	{
 		Time.timeScale = isPaused ? 0f : timeScale;
 
@@ -28,7 +36,7 @@ public class SimulationManager : MonoBehaviour
 
 			if (simulationTime >= nextEventTime)
 			{
-				nextEventTime += 0.1f; // Schedule the next event at 100ms intervals
+				nextEventTime += 0.08f; // Schedule the next event at 90ms intervals
 				EventManager.Instance.SendSimulationTime.Invoke(simulationTime);
 			}
 		}
@@ -65,7 +73,8 @@ public class SimulationManager : MonoBehaviour
 	{
 		simulationTime = 0f;
 		nextEventTime = 0f;
-	}
+    EventManager.Instance.Reset.Invoke();
+  }
 
 	public bool IsPaused() => isPaused;
 

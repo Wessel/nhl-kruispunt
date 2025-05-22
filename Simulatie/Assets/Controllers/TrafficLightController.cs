@@ -1,9 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class TrafficLightController : MonoBehaviour
 {
@@ -61,7 +59,8 @@ public class TrafficLightController : MonoBehaviour
     return combined.ToString(Formatting.Indented);
   }
   public void OnTrafficLightSensorChanged()
-  {
-    EventManager.Instance?.PublishMessage.Invoke(topic, BuildCombinedJson());
+  { 
+    string json = BuildCombinedJson();
+    EventManager.Instance?.PublishMessage.Invoke(topic, json);
   }
 }

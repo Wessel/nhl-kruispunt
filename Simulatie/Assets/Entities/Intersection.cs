@@ -1,10 +1,11 @@
-
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Intersection : MonoBehaviour
 {
-  public List<Road> roads;
+  public List<Road> incomingRoads;
+  public List<Road> outgoingRoads;
 
   private void OnTriggerEnter2D(Collider2D other)
   {
@@ -12,14 +13,42 @@ public class Intersection : MonoBehaviour
     if (entity == null) return;
 
     Road currentRoad = entity.GetCurrentRoad();
-    List<Road> matchingRoads = roads.FindAll(road =>
-        road.GetVehicleTypes().Contains(entity.GetRoadType())
-    );
+    if (!incomingRoads.Contains(currentRoad)) return;
 
-    Road newRoad = matchingRoads[Random.Range(0, matchingRoads.Count)];
+    // If only one valid outgoing road exists, switch to it immediately
+    if (outgoingRoads.Count == 1)
+    {
+      if (outgoingRoads[0] == currentRoad) return;
+      SwitchEntityToRoad(entity, outgoingRoads[0]);
+      return;
+    }
+
+    List<Road> validOutgoings = GetValidRoads(entity);
+    if (validOutgoings.Count == 0) return;
+
+    Road newRoad = ChooseNewRoad(validOutgoings);
     if (newRoad == currentRoad) return;
-    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
+    SwitchEntityToRoad(entity, newRoad);
+  }
 
+  private List<Road> GetValidRoads(MovingEntity entity)
+  {
+    float currentDistance = entity.GetCurrentSplineDistance();
+
+    return outgoingRoads.FindAll(road =>
+        road != null &&
+        road.GetVehicleTypes().Contains(entity.GetVehicleType())
+    );
+  }
+
+  private Road ChooseNewRoad(List<Road> roads)
+  {
+    return roads[Random.Range(0, roads.Count)];
+  }
+
+  private void SwitchEntityToRoad(MovingEntity entity, Road newRoad)
+  {
+    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
     entity.SwitchToRoad(newRoad, startDistance);
   }
 }

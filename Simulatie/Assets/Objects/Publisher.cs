@@ -8,24 +8,24 @@ using UnityEditor;
 
 public class Publisher : MonoBehaviour
 {
-  private Thread _publisherThread;
-  private PublisherSocket _pubSocket;
-  private CancellationTokenSource _cancellationTokenSource;
-  private bool _isSocketInitialized;
-  private ConcurrentQueue<(string topic, string message)> _messageQueue = new();
-  private readonly object _socketLock = new();
+  private Thread publisherThread;
+  private PublisherSocket pubSocket;
+  private CancellationTokenSource cancellationTokenSource;
+  private bool isSocketInitialized;
+  private ConcurrentQueue<(string topic, string message)> messageQueue = new();
+  private readonly object socketLock = new();
 
   private void Start()
   {
     EventManager.Instance.SendSimulationTime.AddListener(SendSimulationTime);
     EventManager.Instance.PublishMessage.AddListener(PublishMessage);
 
-    _cancellationTokenSource = new CancellationTokenSource();
-    _publisherThread = new Thread(() => PublisherWork(_cancellationTokenSource.Token))
+    cancellationTokenSource = new CancellationTokenSource();
+    publisherThread = new Thread(() => PublisherWork(cancellationTokenSource.Token))
     {
       IsBackground = true
     };
-    _publisherThread.Start();
+    publisherThread.Start();
   }
 
   private void OnDestroy()
@@ -39,25 +39,25 @@ public class Publisher : MonoBehaviour
     {
       AsyncIO.ForceDotNet.Force();
 
-      lock (_socketLock)
+      lock (socketLock)
       {
-        _pubSocket = new PublisherSocket();
-        _pubSocket.Options.SendHighWatermark = 1000;
-        _pubSocket.Bind($"{ZeroMQConfig.Instance.Method}://{ZeroMQConfig.Instance.PublishIP}:{ZeroMQConfig.Instance.PublishPort}");
-        _isSocketInitialized = true;
+        pubSocket = new PublisherSocket();
+        pubSocket.Options.SendHighWatermark = 1000;
+        pubSocket.Bind($"{ZeroMQConfig.Instance.Method}://{ZeroMQConfig.Instance.PublishIP}:{ZeroMQConfig.Instance.PublishPort}");
+        isSocketInitialized = true;
       }
 
       Debug.Log("Publisher started.");
 
       while (!token.IsCancellationRequested)
       {
-        while (_messageQueue.TryDequeue(out var msg))
+        while (messageQueue.TryDequeue(out var msg))
         {
-          lock (_socketLock)
+          lock (socketLock)
           {
-            if (_pubSocket != null && _isSocketInitialized)
+            if (pubSocket != null && isSocketInitialized)
             {
-              _pubSocket.SendMoreFrame(msg.topic).SendFrame(msg.message);
+              pubSocket.SendMoreFrame(msg.topic).SendFrame(msg.message);
             }
           }
         }
@@ -70,12 +70,12 @@ public class Publisher : MonoBehaviour
     }
     finally
     {
-      lock (_socketLock)
+      lock (socketLock)
       {
-        _pubSocket?.Close();
-        _pubSocket?.Dispose();
-        _pubSocket = null;
-        _isSocketInitialized = false;
+        pubSocket?.Close();
+        pubSocket?.Dispose();
+        pubSocket = null;
+        isSocketInitialized = false;
       }
 
       NetMQConfig.Cleanup();
@@ -83,18 +83,18 @@ public class Publisher : MonoBehaviour
   }
   private void Shutdown()
   {
-    if (_cancellationTokenSource != null)
+    if (cancellationTokenSource != null)
     {
-      _cancellationTokenSource.Cancel();
+      cancellationTokenSource.Cancel();
     }
     Debug.Log("Publisher shutdown.");
   }
 
   private void PublishMessage(string topic, string message)
   {
-    if (_isSocketInitialized)
+    if (isSocketInitialized)
     {
-      _messageQueue.Enqueue((topic, message));
+      messageQueue.Enqueue((topic, message));
     }
   }
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Linq;
 public class SpawnModeValue
 {
   public SpawnMode mode;
-  public float spawntimer;
+  public float spawntimer; 
 }
 
 public class EntitySpawner : MonoBehaviour
