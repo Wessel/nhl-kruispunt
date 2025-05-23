@@ -9,6 +9,7 @@ public class EventManager : MonoBehaviour
   public UnityEvent<string, string> PublishMessage = new UnityEvent<string, string>();
   public UnityEvent<string> OnTrafficLightUpdate = new UnityEvent<string>();
   public UnityEvent<BridgeState> SetBridgeState = new UnityEvent<BridgeState>();
+  public UnityEvent<BridgeState> BridgeStateChanged = new UnityEvent<BridgeState>();
   public UnityEvent<SpawnMode> SetSpawnMode = new UnityEvent<SpawnMode>();
   public UnityEvent Reset = new UnityEvent();
   public UnityEvent<PriorityVehicle> EnqueuePriorityVehicle = new UnityEvent<PriorityVehicle>();

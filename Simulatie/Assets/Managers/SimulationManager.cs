@@ -17,6 +17,7 @@ public class SimulationManager : MonoBehaviour
 		else Destroy(gameObject);
 
 		ZeroMQConfig.LoadConfig();
+    Physics2D.queriesHitTriggers = true;
   }
 
   private void Start()
@@ -32,7 +33,7 @@ public class SimulationManager : MonoBehaviour
 
 		if (!isPaused)
 		{
-			simulationTime += Time.deltaTime * timeScale;
+			simulationTime += Time.deltaTime;
 
 			if (simulationTime >= nextEventTime)
 			{

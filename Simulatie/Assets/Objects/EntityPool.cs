@@ -82,4 +82,6 @@ public class EntityPool : MonoBehaviour
       entity.Despawn();
     }
   }
+
+  public Array GetActiveEntities() => activeEntities.ToArray();
 }

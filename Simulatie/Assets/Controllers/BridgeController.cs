@@ -7,7 +7,7 @@ public class BridgeController : SensorController
 {
   [SerializeField] private float openScaleX = 0.15f;
   [SerializeField] private float closedScaleX = 0.8f;
-  [SerializeField] private float animationDuration = 5.0f;
+  [SerializeField] private float animationDuration = 2000.0f;
   [SerializeField] private Vector2 closedPosition =  new Vector2(15.95f, -2.5f);
   [SerializeField] private Vector2 openPosition = new Vector2(16.3f, -2.7f);
 
@@ -36,7 +36,6 @@ public class BridgeController : SensorController
       return;
 
     StartCoroutine(AnimateBridge(state));
-    sensor.SetState(state);
   }
 
   private IEnumerator AnimateBridge(BridgeState state)
@@ -95,19 +94,6 @@ public class BridgeController : SensorController
 
   public override void HandleSensorStateChange()
   {
-    Debug.Log("Bridge sensor state changed");
     EventManager.Instance?.PublishMessage.Invoke(topic, BuildJson());
-  }
-
-  [ContextMenu("Open Bridge")]
-  private void OpenBridge()
-  {
-    SetBridgeState(BridgeState.Open);
-  }
-
-  [ContextMenu("Close Bridge")]
-  private void CloseBridge()
-  {
-    SetBridgeState(BridgeState.Closed);
   }
 }

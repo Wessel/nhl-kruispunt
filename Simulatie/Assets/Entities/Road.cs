@@ -7,6 +7,7 @@ public class Road : MonoBehaviour
 {
   private SplineContainer splineContainer;
   [SerializeField] private List<VehicleType> supportedTypes;
+  [SerializeField] private bool merges = false;
 
   private float cachedLength = -1f;
 
@@ -60,5 +61,10 @@ public class Road : MonoBehaviour
   public string GetName()
   {
     return gameObject.name;
+  }
+
+  public bool DoesMerge()
+  {
+    return merges;
   }
 }

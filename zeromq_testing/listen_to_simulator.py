@@ -7,11 +7,11 @@ context = zmq.Context()
 subscriber = context.socket(zmq.SUB)
 
 # Connect to the publisher
-unity_address = "tcp://192.168.56.24:5557"
+unity_address = "tcp://10.121.17.7:5556"
 subscriber.connect(unity_address)
 
 # Subscribe to all topics
-subscriber.setsockopt_string(zmq.SUBSCRIBE, "")
+subscriber.setsockopt_string(zmq.SUBSCRIBE, "sensoren_speciaal")
 
 print(f"🔄 Waiting for messages from {unity_address}...\n")
 

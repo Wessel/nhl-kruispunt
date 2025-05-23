@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Intersection : MonoBehaviour
@@ -48,7 +47,7 @@ public class Intersection : MonoBehaviour
 
   private void SwitchEntityToRoad(MovingEntity entity, Road newRoad)
   {
-    float startDistance = newRoad.GetClosestDistanceOnSpline(transform.position);
+    float startDistance = newRoad.GetClosestDistanceOnSpline(entity.PredictFuturePosition());
     entity.SwitchToRoad(newRoad, startDistance);
   }
 }

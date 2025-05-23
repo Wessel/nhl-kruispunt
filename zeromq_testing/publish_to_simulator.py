@@ -6,7 +6,9 @@ import json
 def generate_custom_json():
     # Customize this dictionary however you like
     data = {
-        "81.1": "rood"
+        "8.1": "green",
+        "8.2": "green",
+        "42.1": "green",
     }
     return json.dumps(data, indent=2)
 
@@ -19,7 +21,7 @@ def main():
     publisher = context.socket(zmq.PUB)
 
     # Bind the publisher to a test port
-    publisher.bind("tcp://localhost:5556")
+    publisher.bind("tcp://10.121.17.7:5555")
 
     # Give subscribers time to connect (important for PUB/SUB)
     time.sleep(1)

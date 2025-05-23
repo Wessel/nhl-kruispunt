@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|c:\\users\\marij\\documents\\github\\nhl-kruispunt\\simulatie\\assets\\objects\\priorityvehiclequeue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\objects\\priorityvehiclequeue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\assets\\entities\\movingentities\\movingentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\entities\\movingentities\\movingentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|c:\\users\\marij\\documents\\github\\nhl-kruispunt\\simulatie\\assets\\objects\\entitypool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\objects\\entitypool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|c:\\users\\marij\\documents\\github\\nhl-kruispunt\\simulatie\\assets\\managers\\simulationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37C1575D-0659-8042-ADBF-A9E9AB4D59E4}|Assembly-CSharp.csproj|solutionrelative:assets\\managers\\simulationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,21 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PriorityVehicleQueue.cs",
-              "DocumentMoniker": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\PriorityVehicleQueue.cs",
-              "RelativeDocumentMoniker": "Assets\\Objects\\PriorityVehicleQueue.cs",
-              "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\PriorityVehicleQueue.cs",
-              "RelativeToolTip": "Assets\\Objects\\PriorityVehicleQueue.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T09:09:30.261Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -41,9 +32,35 @@
               "RelativeDocumentMoniker": "Assets\\Objects\\EntityPool.cs",
               "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Objects\\EntityPool.cs",
               "RelativeToolTip": "Assets\\Objects\\EntityPool.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAowEoAAABLAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAawFcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T09:09:09.128Z",
+              "WhenOpened": "2025-05-21T17:16:20.504Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SimulationManager.cs",
+              "DocumentMoniker": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Managers\\SimulationManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Managers\\SimulationManager.cs",
+              "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Managers\\SimulationManager.cs",
+              "RelativeToolTip": "Assets\\Managers\\SimulationManager.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAMwBMAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T15:54:45.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MovingEntity.cs",
+              "DocumentMoniker": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Entities\\MovingEntities\\MovingEntity.cs",
+              "RelativeDocumentMoniker": "Assets\\Entities\\MovingEntities\\MovingEntity.cs",
+              "ToolTip": "C:\\Users\\marij\\Documents\\GitHub\\nhl-kruispunt\\Simulatie\\Assets\\Entities\\MovingEntities\\MovingEntity.cs",
+              "RelativeToolTip": "Assets\\Entities\\MovingEntities\\MovingEntity.cs",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAYwNcAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:23:35.91Z",
               "EditorCaption": ""
             }
           ]
