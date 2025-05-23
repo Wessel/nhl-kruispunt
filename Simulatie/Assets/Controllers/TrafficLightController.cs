@@ -11,7 +11,16 @@ public class TrafficLightController : MonoBehaviour
   private void Start()
 	{
 		FindTrafficLights();
-    EventManager.Instance?.OnTrafficLightUpdate.AddListener(UpdateTrafficLights);
+    EventManager.Instance.OnTrafficLightUpdate.AddListener(UpdateTrafficLights);
+    EventManager.Instance.Reset.AddListener(ResetTrafficLights);
+  }
+
+  private void ResetTrafficLights()
+  {
+    foreach(TrafficLight light in trafficLights)
+    {
+      light.SetLight(LightState.Red);
+    }
   }
 
   private void FindTrafficLights()
