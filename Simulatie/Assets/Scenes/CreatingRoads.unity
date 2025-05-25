@@ -1395,11 +1395,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &48402871
 GameObject:
@@ -4823,11 +4823,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!1 &350314446
 GameObject:
@@ -4971,7 +4971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 1
+    spawntimer: 3
   - mode: 1
     spawntimer: 2
   - mode: 2
@@ -6164,11 +6164,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!1 &431104446
 GameObject:
@@ -6899,11 +6899,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1001 &458573394
 PrefabInstance:
@@ -7847,11 +7847,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &499083270
 GameObject:
@@ -8855,11 +8855,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &553865960
 GameObject:
@@ -9103,11 +9103,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1 &560184092
 GameObject:
@@ -11975,11 +11975,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 50
   - mode: 1
-    spawntimer: 2
+    spawntimer: 900
   - mode: 2
-    spawntimer: 1
+    spawntimer: 12
   entityPool: {fileID: 1680746389}
 --- !u!1001 &772755332
 PrefabInstance:
@@ -15101,11 +15101,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &1010906631
 GameObject:
@@ -16327,11 +16327,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1001 &1069500333
 PrefabInstance:
@@ -16943,11 +16943,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!114 &1137955492
 MonoBehaviour:
@@ -18375,11 +18375,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1001 &1263072385
 PrefabInstance:
@@ -19880,7 +19880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 1
+    spawntimer: 3
   - mode: 1
     spawntimer: 2
   - mode: 2
@@ -21435,11 +21435,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1001 &1422873345
 PrefabInstance:
@@ -22416,11 +22416,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!1 &1514519226
 GameObject:
@@ -24620,11 +24620,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1001 &1658094191
 PrefabInstance:
@@ -25935,11 +25935,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!1 &1748363041
 GameObject:
@@ -26860,11 +26860,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 1851155874}
 --- !u!1 &1786030554
 GameObject:
@@ -27088,11 +27088,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 50
   - mode: 1
-    spawntimer: 2
+    spawntimer: 900
   - mode: 2
-    spawntimer: 1
+    spawntimer: 12
   entityPool: {fileID: 1680746389}
 --- !u!1 &1791257862
 GameObject:
@@ -27556,11 +27556,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1 &1802704558
 GameObject:
@@ -28232,11 +28232,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1001 &1836665779
 PrefabInstance:
@@ -28845,11 +28845,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 30
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &1891125804
 GameObject:
@@ -31348,11 +31348,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 30
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 2035208069}
 --- !u!1 &2103552870
 GameObject:
@@ -31936,11 +31936,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnModeValues:
   - mode: 0
-    spawntimer: 3
+    spawntimer: 11
   - mode: 1
-    spawntimer: 2
+    spawntimer: 7
   - mode: 2
-    spawntimer: 1
+    spawntimer: 4
   entityPool: {fileID: 284244891}
 --- !u!1001 &2128181299
 PrefabInstance:
