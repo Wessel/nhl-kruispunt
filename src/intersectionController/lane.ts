@@ -1,11 +1,11 @@
-import type { TrafficlightState } from "./types/TrafficlightState";
+import type { TrafficlightState, TrafficlightStateMap } from '../types';
+import type { Trafficlight } from '.';
 
-import { EventEmitter } from "stream";
-import { TrafficLight } from "./trafficLight";
+import { EventEmitter } from 'stream';
 
 export class Lane extends EventEmitter {
   public name: string = '';
-  private _trafficLights: TrafficLight[] = [];
+  private _trafficLights: Trafficlight[] = [];
 
   constructor(name: string) {
     super();
@@ -15,17 +15,13 @@ export class Lane extends EventEmitter {
     return this;
   }
 
-  bind_trafficlight(trafficlight: TrafficLight): this {
+  bind_trafficlight(trafficlight: Trafficlight): this {
     this._trafficLights.push(trafficlight);
 
     trafficlight.on('state_changed', () => this.emit('state_changed'));
 
     return this;
   }
-
-  // handle_state_changed() {
-
-  // }
 
   update_time(time: number): this {
     this._trafficLights.forEach((trafficLight) => {
@@ -41,8 +37,8 @@ export class Lane extends EventEmitter {
     });
   }
 
-  get_state_map(): { [key: string]: TrafficlightState } {
-    const stateMap: { [key: string]: TrafficlightState } = {};
+  get_state_map(): TrafficlightStateMap {
+    const stateMap: TrafficlightStateMap = {};
 
     this._trafficLights.forEach((trafficLight) => {
       stateMap[trafficLight.id] = trafficLight.state;
@@ -50,5 +46,4 @@ export class Lane extends EventEmitter {
 
     return stateMap;
   }
-
 }

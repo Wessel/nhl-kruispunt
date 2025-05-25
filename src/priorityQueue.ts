@@ -1,5 +1,3 @@
-import { Stopwatch } from "./stopwatch";
-
 interface QueueItem {
   // Group equals to laneId in the spec
   group: string;

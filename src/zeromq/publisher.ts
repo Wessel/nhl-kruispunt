@@ -1,10 +1,8 @@
-import { Publisher } from "zeromq";
-import { Stopwatch } from "../stopwatch";
+import type { QueuedMessage } from '../types'
 
-interface QueuedMessage {
-  topic: string;
-  message: string;
-}
+import { Stopwatch } from '.';
+
+import { Publisher } from 'zeromq';
 
 export class ZmqPublisher {
   private _socket: Publisher;

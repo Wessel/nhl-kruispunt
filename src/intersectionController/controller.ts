@@ -1,20 +1,19 @@
-import type { LaneMap } from "./types/LaneMap";
-import { TrafficlightState, TrafficlightStateMap } from "./types/TrafficlightState";
+// Not imported as type due to it being unusable in the Record.
+import type { Lane } from '.';
+import {
+  type LaneMap, type TrafficlightStateMap, type PriorityVehicleQueue,
+  BridgeState, TrafficlightState
+} from '../types';
 
-import type { Stopwatch } from "./stopwatch";
-import type { Lane } from "./lane";
+import { PRIORITY_HIGH, PRIORITY_LOW, BRIDGE_LANES } from '../constants';
 
-import { PriorityQueue } from "./priorityQueue";
-import { ZmqPublisher } from "./zeromq/publisher";
-import { ZmqSubscriber } from "./zeromq/subscriber";
-import { BridgeState } from "./types/Bridge";
-
-const PRIORITY_HIGH = 1;
-const PRIORITY_LOW = 2;
+import { PriorityQueue } from '../priorityQueue';
+import { ZmqPublisher, ZmqSubscriber } from '../zeromq';
 
 export class Controller {
   private _heartbeatDelay: number = 1000;
-  private _bridgeTrafficlights: number[] = [ 71, 72, 81, 41, 42, 51, 52, 53, 54 ];
+  private _bridgeSensors: { [sensor: string]: { voor: boolean, achter: boolean }} = {};
+  private _bridge_cycle = false;
 
   private _in_cycle = false;
   private _is_removing = false;
@@ -32,7 +31,7 @@ export class Controller {
   public time: number = 0;
 
   public lanes: LaneMap = {};
-  public voorrangsLane?;
+  public voorrangsLane?: string;
   public bridgeState: BridgeState = BridgeState.UNKNOWN;
   public specialSensors: any = {
     brug_wegdek: false,
@@ -43,8 +42,8 @@ export class Controller {
   public priorityVehicleQueue: PriorityQueue = new PriorityQueue();
   public laneQueue: PriorityQueue = new PriorityQueue();
 
-  constructor(publisher_port: number = 5555, clock: Stopwatch) {
-    this._publisher = new ZmqPublisher(this._heartbeatDelay, clock);
+  constructor(publisher_port: number = 5555) {
+    this._publisher = new ZmqPublisher(this._heartbeatDelay);
 
     this._publisher
       .bind(`tcp://*:${publisher_port}`)
@@ -87,7 +86,7 @@ export class Controller {
     return new Promise((resolve) => {
       const checkTime = () => {
         if (this.time >= targetTime) {
-          console.log(`Delay for ${ms}ms completed at time ${this.time}`);
+          // console.log(`Delay for ${ms}ms completed at time ${this.time}`);
           resolve();
         } else {
           setTimeout(checkTime, 10);
@@ -150,12 +149,15 @@ export class Controller {
       const lanes = this.compatible_lanes(nextLane.group);
 
         console.log(`Setting lane ${nextLane.group} to green and (${lanes.join(', ')})`);
+
+      this.laneQueue.setActive(nextLane.group, this.time);
+
       for (const group of Object.keys(this._intersection.groups)) {
+        if (BRIDGE_LANES.includes(Number(group))) continue;
+
         if (lanes.includes(group)) { //  group === nextLane.group
           const laneInstance = this.lanes[group];
           if (laneInstance) {
-            this.laneQueue.setActive(group, this.time);
-
             laneInstance.set_state(TrafficlightState.GREEN);
             // console.log(`Setting lane ${group} to GREEN`);
           }
@@ -171,17 +173,117 @@ export class Controller {
 
     // await this.delay_for(this._cycle_delay);
     this._in_cycle = false;
-    // todo!: Ontruimingstijd fiksen
   }
 
   cycle_intersection_red(): void {
     for (const lane of Object.keys(this.lanes)) {
-      if (lane === '41' || lane === '42') {
-        this.lanes[lane].set_state(TrafficlightState.GREEN);
-      } else {
+      if (!BRIDGE_LANES.includes(Number(lane))) {
         this.lanes[lane].set_state(TrafficlightState.RED);
       }
     }
+  }
+
+  async wait_for_empty_bridge(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const check_road = () => {
+        console.log(`Checking if bridge road is clear: ${this.specialSensors.brug_wegdek}`);
+        if (!this.specialSensors.brug_wegdek) {
+          resolve();
+        } else {
+          setTimeout(check_road, 100);
+        }
+      };
+      check_road();
+    });
+  }
+
+  async wait_for_empty_bridge_water(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const check_water = () => {
+          console.log(`Checking if bridge water is clear: ${this.specialSensors.brug_water}`);
+        if (!this.specialSensors.brug_water) {
+          resolve();
+        } else {
+          setTimeout(check_water, 100);
+        }
+      };
+      check_water();
+    });
+  }
+
+  async wait_for_bridge_closed(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const check_bridge = () => {
+        console.log(`Checking if bridge is closed: ${this.bridgeState}`);
+        if (this.bridgeState === BridgeState.CLOSED) {
+          resolve();
+        } else {
+          setTimeout(check_bridge, 100);
+        }
+      };
+      check_bridge();
+    });
+  }
+
+  toggle_bridge_lights(state: TrafficlightState): void {
+    for (const lane of BRIDGE_LANES) {
+      if (lane !== 71 && lane !== 72 && lane !== 81) {
+        this.lanes[String(lane)].set_state(state);
+      }
+    }
+  }
+
+  async wait_for_bridge_opened(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const check_bridge = () => {
+        console.log(`Checking if bridge is opened: ${this.bridgeState}`);
+        if (this.bridgeState === BridgeState.OPEN) {
+          resolve();
+        } else {
+          setTimeout(check_bridge, 100);
+        }
+      };
+      check_bridge();
+    });
+  }
+
+  async handle_bridge(): Promise<void> {
+    if (this._bridge_cycle) return;
+    // todo: allow multiple boats to pass, also first do 71 and if any at 72 do 72
+    if (this._bridgeSensors[71]?.voor || this._bridgeSensors[72]?.voor) {
+      this._bridge_cycle = true;
+
+      this.toggle_bridge_lights(TrafficlightState.RED);
+
+      await this.wait_for_empty_bridge();
+
+      this.lanes['81'].set_state(TrafficlightState.GREEN);
+
+      await this.wait_for_bridge_opened();
+
+      this.lanes['71'].set_state(TrafficlightState.GREEN);
+      this.lanes['72'].set_state(TrafficlightState.GREEN);
+
+      await this.delay_for(10000);
+
+      this.lanes['71'].set_state(TrafficlightState.RED);
+      this.lanes['72'].set_state(TrafficlightState.RED);
+
+      await this.wait_for_empty_bridge_water();
+
+      this.lanes['81'].set_state(TrafficlightState.RED);
+
+      await this.wait_for_bridge_closed();
+
+      this.toggle_bridge_lights(TrafficlightState.GREEN);
+
+      this._bridge_cycle = false;
+
+    } else {
+      this.lanes['41'].set_state(TrafficlightState.GREEN);
+      this.toggle_bridge_lights(TrafficlightState.GREEN);
+    }
+
   }
 
   /* Incoming data functions */
@@ -200,12 +302,19 @@ export class Controller {
     if (this._is_removing) return;
     const data = JSON.parse(message);
 
+    let bridge = 0;
     Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
+      const groupAsNumber = Number(group);
 
       // Skip all lanes related to bridges, due to them being handled by the bridge control
-      if (this._bridgeTrafficlights.includes(Number(group))) {
-        return;
+      if (BRIDGE_LANES.includes(groupAsNumber)) {
+        this._bridgeSensors[groupAsNumber] = data[key];
+        bridge++;
+
+        if (bridge > 1) {
+          this.handle_bridge();
+        }
       }
 
       let priority;
@@ -271,48 +380,63 @@ export class Controller {
       this.bridgeState = bridge.state;
       // console.log(`Bridge ${key} state: ${this.bridgeState}`);
     }
-  }
+    }
 
   handle_topic_voorrangsvoertuig(message: string) {
-    // todo: meer voorrangsvoertuigen werkentd
-    const data = JSON.parse(message);
+    const queue: PriorityVehicleQueue = JSON.parse(message)?.queue;
 
+    // Check if any emergency vehicles are no longer in the queue
     if (this.voorrangsLane) {
-      // todo: check if emergency vehicle
-      if (!data.queue.map(v => v.baan).includes(this.voorrangsLane)) {
+      const emergency_vehicles = queue
+        .filter(v => v.prioriteit === 1)
+        .map(v => v.baan.split('.')[0]);
+
+      if (!emergency_vehicles.includes(this.voorrangsLane)) {
         this._in_cycle = false;
         this.voorrangsLane = undefined;
       }
     }
 
-      console.log(data);
-    for (const entry of data.queue) {
+    // Process all priority vehicles
+    const emergencyVehicles = queue.filter(v => v.prioriteit === 1 && v.baan.split('.')[0] !== '41' && v.baan.split('.')[0] !== '42');
+    const publicTransport = queue.filter(v => v.prioriteit === 2);
+
+    // Handle emergency vehicles (priority 1) - multiple can be active
+    if (emergencyVehicles.length > 0) {
+      this._in_cycle = true;
+      const emergencyLanes = emergencyVehicles.map(v => v.baan.split('.')[0]);
+      this.voorrangsLane = emergencyLanes[0]; // Keep track of first emergency lane for compatibility
+
+      for (const lane of Object.keys(this.lanes)) {
+      if (BRIDGE_LANES.includes(Number(lane))) continue;
+
+      if (emergencyLanes.includes(lane)) {
+        this.lanes[lane].set_state(TrafficlightState.GREEN);
+      } else {
+        if (BRIDGE_LANES.includes(Number(lane))) continue;
+        this.lanes[lane].set_state(TrafficlightState.RED);
+      }
+      }
+    }
+
+    // Handle public transport (priority 2)
+    for (const entry of publicTransport) {
       const [ group ] = entry.baan.split('.');
 
-      switch (entry.prioriteit) {
-        case 1: // hulpdiensten
-          this._in_cycle = true;
-          this.voorrangsLane = group;
-          for (const lane of Object.keys(this.lanes)) {
-            if (lane === group) {
-              this.lanes[lane].set_state(TrafficlightState.GREEN);
-            } else {
-              this.lanes[lane].set_state(TrafficlightState.RED);
-            }
-          }
-        case 2: // OV
-          let priority = -1;
-          const existingEntry = this.laneQueue.get(group);
+      // Skip lanes 41 and 42
+      if (group === '41' || group === '42') continue;
 
-          if (existingEntry) {
-            if (existingEntry.activeSince > 0) {
-              priority -= 3;
-            }
+      let priority = -1;
+      const existingEntry = this.laneQueue.get(group);
 
-            this.laneQueue.updatePriority(group, priority);
-          } else {
-            this.laneQueue.enqueue(group, priority);
-          }
+    if (existingEntry) {
+      if (existingEntry.activeSince > 0) {
+        priority -= 3;
+      }
+
+      this.laneQueue.updatePriority(group, priority);
+    } else {
+        this.laneQueue.enqueue(group, priority);
       }
     }
   }

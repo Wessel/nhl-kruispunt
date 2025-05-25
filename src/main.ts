@@ -1,45 +1,59 @@
-import { Controller } from "./controller";
-import { Lane } from "./lane";
-import { TrafficLight } from "./trafficLight";
-import {  Stopwatch } from "./stopwatch";
+// Wessel T <contact@wessel.gg> (https://wessel.gg/)
+//
+// 'Build your own tower.
+// A kingdom freed from malice.
+// Create a world of bounty, peace and beauty.'
+// ⠀⣠⣶⣶⣤⣁
+// ⢰⣷⡟⠻⣏⠻⣧⣀⠐⠈⠀⡈⠠⠀⠂⠀⢁⠈⠀⠄⠀⠁⣠⣴⣤⡈
+// ⠀⣿⢿⡀⠘⢦⡈⢻⣦⠐⠀⠀⠄⠀⠁⠈⠀⡀⠠⠀⣠⡿⣿⣯⣽⡇
+// ⠀⢻⣿⠛⢦⣄⣹⠦⣌⣳⡀⠀⣠⠈⠀⢾⠀⠀⢀⣼⢯⠞⢡⣿⣿⠁
+// ⠄⠘⣿⣷⣤⡀⠙⣆⠈⠻⣿⡄⠘⣇⠀⣾⠀⣴⠿⢲⣋⣤⣿⡿⠃⠀
+// ⠀⡀⠹⣿⣦⡉⠛⠚⣆⠀⠈⠻⣆⢻⢠⣇⡾⠃⢠⣟⣠⣾⡞⠃⠀
+// ⠂⡀⠄⠹⣿⣏⠛⠒⠾⠷⣄⠀⠙⣞⣿⠋⣀⣴⣋⣽⡿⠋
+// ⠂⠠⠀⠀⣨⣿⢿⣶⣒⠲⢮⣿⣶⣼⣧⣾⣭⣿⠟⠉
+// ⠐⠀⠁⣰⣿⠓⠒⣛⣻⠟⠛⣩⣿⣯⠙⡯⣿⡆
+// ⠐⠀⠄⠸⣿⡟⢉⡽⢛⣿⡿⠉⠀⢸⣧⡷⣾⡇
+// ⠀⢂⠀⠄⠹⢿⣿⣴⣯⠏⠀⠀⠀⣼⢸⣽⣷⠇
+// ⠠⠀⠂⢀⠀⢀⠈⠉⠀⠀⠀⠂⡀⠹⠿⠛⠁⠀⠀
+import type { IntersectionConfig } from './types';
 
-import { readFileSync } from "fs";
+import { HELP_STRING } from './constants';
 
-const intersectionData = JSON.parse(readFileSync('./static/intersection/lanes.json', 'utf-8'));
+import larg from './lib/larg'
+import { Controller, Lane, Trafficlight } from './intersectionController';
 
-const clock = new Stopwatch();
+import { readFileSync } from 'fs';
 
-clock.set_speed(1);
+const args = larg(process.argv);
 
-const controller: Controller = new Controller(5555, clock)
+if (args.help) {
+  console.log(HELP_STRING);
+  process.exit(0)
+}
+
+const intersectionFilePath = args.intersection ? String(args.intersection) : './static/intersection/lanes.json';
+const intersectionFile = readFileSync(intersectionFilePath, 'utf-8');
+const intersectionData: IntersectionConfig = JSON.parse(intersectionFile);
+
+const controller: Controller = new Controller(5555)
   .register_intersection(intersectionData);
 
 for (const [key, value] of Object.entries(intersectionData.groups)) {
   const lane: Lane = new Lane(key);
 
   for (const trafficlight of Object.keys(value.lanes)) {
-    lane.bind_trafficlight(new TrafficLight(trafficlight));
+    lane.bind_trafficlight(new Trafficlight(trafficlight));
   }
 
   controller.bind_lane(lane);
 }
 
-controller.connect_to_simulator('tcp://localhost:5556'); // 10.121.17.8 5556
+let connection_string = `tcp://localhost:5556`;
 
-// setInterval(() => {
-//   const state = controller.get_state_map();
-//   const passedLanes: string[] = [];
+if (args.ip) connection_string = connection_string.replace(/localhost/, String(args.ip));
+if (args.port) connection_string = connection_string.replace(/5556/, String(args.port));
+if (args.cstr) connection_string = String(args.cstr);
 
-//   Object.keys(state).forEach((key) => {
-//     const laneKey = key.split('.')[0];
-//     if (!passedLanes.includes(laneKey)) {
-//       passedLanes.push(laneKey);
-//       const lane = state[key];
+console.log(`Simulator connection string:\t ${connection_string}`)
 
-//       controller.change_lane_state(laneKey, lane === TrafficLightState.GREEN ? TrafficLightState.RED : TrafficLightState.GREEN);
-//     }
-//   });
-
-
-//   // controller.transmit_state();
-// }, 10000);
+controller.connect_to_simulator(connection_string);

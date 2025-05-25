@@ -1,9 +1,9 @@
-import { TrafficlightState } from "./types/TrafficlightState";
+// Not imported as type due to it being unusable in the Record.
+import { TrafficlightState } from '../types';
 
-import { EventEmitter } from "stream";
-import { Stopwatch } from "./stopwatch";
+import { EventEmitter } from 'stream';
 
-export class TrafficLight extends EventEmitter {
+export class Trafficlight extends EventEmitter {
   static transitions: Record<TrafficlightState, Record<TrafficlightState, TrafficlightState | null>> = {
     [TrafficlightState.RED]: {
       [TrafficlightState.GREEN]: TrafficlightState.YELLOW,
@@ -22,9 +22,6 @@ export class TrafficLight extends EventEmitter {
     },
   };
 
-  private _transitionDurationMs = 3500;
-  // private _clock: Stopwatch;
-
   public id: string = '';
   public state: TrafficlightState = TrafficlightState.RED;
   public time: number | null = null;
@@ -32,21 +29,7 @@ export class TrafficLight extends EventEmitter {
 
   constructor(id: string) {
     super();
-
-    // this._transitionDurationMs = transitionDurationMs;
-    // this._clock = clock;
     this.id = id;
-
-    return this;
-  }
-
-  get scaledTransitionDuration(): number {
-    return 0;
-    // return Math.round(this._transitionDurationMs / this._clock.speed);
-  }
-
-  update_transition_duration(transitionDurationMs: number): this {
-    this._transitionDurationMs = transitionDurationMs;
 
     return this;
   }
@@ -58,7 +41,7 @@ export class TrafficLight extends EventEmitter {
   }
 
   transition_into(state: TrafficlightState): this {
-    const nextState = TrafficLight.transitions[state][this.state];
+    const nextState = Trafficlight.transitions[state][this.state];
 
     if (nextState !== null) {
       if (this.state === TrafficlightState.YELLOW && nextState === TrafficlightState.RED) {

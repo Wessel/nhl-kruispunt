@@ -1,5 +1,5 @@
 import { PriorityQueue } from '../src/priorityQueue';
-import { Stopwatch } from '../src/stopwatch';
+import { Stopwatch } from '../src/zeromq/stopwatch';
 
 describe('PriorityQueue', () => {
   test('enqueue adds items correctly', () => {
@@ -54,7 +54,7 @@ describe('PriorityQueue', () => {
     queue.enqueue('lane2', 3);
 
     // Increase priority
-    queue.updatePriority("lane2", 1);
+    queue.updatePriority('lane2', 1);
 
     expect(queue.peek()?.group).toBe('lane2');
     expect(queue.peek()?.priority).toBe(1);
@@ -89,6 +89,6 @@ describe('PriorityQueue', () => {
     expect(queue.get('lane1')?.activeSince).toBe(clock.duration);
 
     clock.forward(2000);
-    expect(queue.get("lane1")?.activeSince).toBe(clock.duration - 2000);
+    expect(queue.get('lane1')?.activeSince).toBe(clock.duration - 2000);
   });
 });

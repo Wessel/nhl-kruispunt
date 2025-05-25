@@ -1,8 +1,10 @@
-import { Subscriber } from "zeromq";
+import { Subscriber } from 'zeromq';
+
+import type { TopicMap } from '../types';
 
 export class ZmqSubscriber {
   private _socket: Subscriber;
-  private _topics: [string, (topic: string, message: string) => void][] = [];
+  private _topics: TopicMap = [];
 
   constructor() {
     this._socket = new Subscriber();
@@ -28,19 +30,17 @@ export class ZmqSubscriber {
     return this;
   }
 
-  bind() {
-    void (async () => {
-      for await (const [topic, message] of this._socket) {
-        const topicStr = topic.toString();
-        const messageStr = message.toString();
+  async bind() {
+    for await (const [topic, message] of this._socket) {
+      const topicStr = topic.toString();
+      const messageStr = message.toString();
 
-        const topicFunc = this._topics.find(([topic]) => topic === topicStr || topic === "");
+      const topicFunc = this._topics.find(([topic]) => topic === topicStr || topic === '');
 
-        if (topicFunc) {
-          topicFunc[1](topicStr, messageStr);
-        }
+      if (topicFunc) {
+        topicFunc[1](topicStr, messageStr);
       }
-    })();
+    }
 
     return this;
   }
