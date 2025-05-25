@@ -1,24 +1,22 @@
-import { Publisher } from "zeromq";
-import { Stopwatch } from "../stopwatch";
+import type { QueuedMessage } from '../types'
 
-interface QueuedMessage {
-  topic: string;
-  message: string;
-}
+import { Stopwatch } from '.';
+
+import { Publisher } from 'zeromq';
 
 export class ZmqPublisher {
   private _socket: Publisher;
   private _clock: Stopwatch;
   private _heartbeat: NodeJS.Timeout | null = null;
-  private _heartbeatDelay: number = 1000;
+  private _heartbeat_delay: number = 1000;
 
-  private _messageQueue: QueuedMessage[] = [];
-  private _isSending: boolean = false;
+  private _message_queue: QueuedMessage[] = [];
+  private _is_sending: boolean = false;
 
   constructor(heartbeatDelay: number = 1000, clock?: Stopwatch) {
     this._socket = new Publisher();
     this._clock = clock || new Stopwatch();
-    this._heartbeatDelay = heartbeatDelay;
+    this._heartbeat_delay = heartbeatDelay;
 
     return this;
   }
@@ -34,45 +32,45 @@ export class ZmqPublisher {
   }
 
   async send(topic: string, message: string) {
-    this._messageQueue.push({ topic, message });
+    this._message_queue.push({ topic, message });
 
-    if (!this._isSending) {
-      await this._processQueue();
+    if (!this._is_sending) {
+      await this._process_queue();
     }
 
     return this;
   }
 
-  private async _processQueue(): Promise<void> {
-    if (this._messageQueue.length === 0 || this._isSending) {
+  private async _process_queue(): Promise<void> {
+    if (this._message_queue.length === 0 || this._is_sending) {
       return;
     }
 
-    this._isSending = true;
+    this._is_sending = true;
 
     try {
-      while (this._messageQueue.length > 0) {
-        const { topic, message } = this._messageQueue[0];
+      while (this._message_queue.length > 0) {
+        const { topic, message } = this._message_queue[0];
 
         await this._socket.send([topic, message]);
 
-        this._messageQueue.shift();
+        this._message_queue.shift();
       }
     } catch (error) {
       console.error('Error sending message:', error);
     } finally {
-      this._isSending = false;
+      this._is_sending = false;
 
       // If new messages were added during processing, process them
-      if (this._messageQueue.length > 0) {
+      if (this._message_queue.length > 0) {
         // Use setTimeout to avoid deep recursion
-        setTimeout(() => this._processQueue(), 0);
+        setTimeout(() => this._process_queue(), 0);
       }
     }
   }
 
   get heartbeatDelay(): number {
-    return Math.round(this._heartbeatDelay / this._clock.speed);
+    return Math.round(this._heartbeat_delay / this._clock.speed);
   }
 
 

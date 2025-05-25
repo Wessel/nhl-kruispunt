@@ -1,98 +1,58 @@
-import { Controller } from "./controller";
-import { Lane } from "./lane";
-import { TrafficLight, TrafficLightState } from "./trafficLight";
-import {  Stopwatch } from "./stopwatch";
+// Wessel T <contact@wessel.gg> (https://wessel.gg/)
+//
+// 'Build your own tower.
+// A kingdom freed from malice.
+// Create a world of bounty, peace and beauty.'
+// ⠀⣠⣶⣶⣤⣁
+// ⢰⣷⡟⠻⣏⠻⣧⣀⠐⠈⠀⡈⠠⠀⠂⠀⢁⠈⠀⠄⠀⠁⣠⣴⣤⡈
+// ⠀⣿⢿⡀⠘⢦⡈⢻⣦⠐⠀⠀⠄⠀⠁⠈⠀⡀⠠⠀⣠⡿⣿⣯⣽⡇
+// ⠀⢻⣿⠛⢦⣄⣹⠦⣌⣳⡀⠀⣠⠈⠀⢾⠀⠀⢀⣼⢯⠞⢡⣿⣿⠁
+// ⠄⠘⣿⣷⣤⡀⠙⣆⠈⠻⣿⡄⠘⣇⠀⣾⠀⣴⠿⢲⣋⣤⣿⡿⠃⠀
+// ⠀⡀⠹⣿⣦⡉⠛⠚⣆⠀⠈⠻⣆⢻⢠⣇⡾⠃⢠⣟⣠⣾⡞⠃⠀
+// ⠂⡀⠄⠹⣿⣏⠛⠒⠾⠷⣄⠀⠙⣞⣿⠋⣀⣴⣋⣽⡿⠋
+// ⠂⠠⠀⠀⣨⣿⢿⣶⣒⠲⢮⣿⣶⣼⣧⣾⣭⣿⠟⠉
+// ⠐⠀⠁⣰⣿⠓⠒⣛⣻⠟⠛⣩⣿⣯⠙⡯⣿⡆
+// ⠐⠀⠄⠸⣿⡟⢉⡽⢛⣿⡿⠉⠀⢸⣧⡷⣾⡇
+// ⠀⢂⠀⠄⠹⢿⣿⣴⣯⠏⠀⠀⠀⣼⢸⣽⣷⠇
+// ⠠⠀⠂⢀⠀⢀⠈⠉⠀⠀⠀⠂⡀⠹⠿⠛⠁⠀⠀
+import type { IntersectionConfig } from './types';
 
-const clock = new Stopwatch();
-const transitionDurationMs = 250;
+import { HELP_STRING } from './constants';
 
-clock.set_speed(1);
+import larg from './lib/larg'
+import { Controller, Lane, Trafficlight } from './intersectionController';
 
-const lane0: Lane = new Lane("0")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('5', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('6', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('7', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('8', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('9', clock, transitionDurationMs));
+import { readFileSync } from 'fs';
 
+const args = larg(process.argv);
 
-const lane1: Lane = new Lane("1")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs));
+if (args.help) {
+  console.log(HELP_STRING);
+  process.exit(0)
+}
 
-const lane2: Lane = new Lane("2")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('5', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('6', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('7', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('8', clock, transitionDurationMs))
+const intersectionFilePath = args.intersection ? String(args.intersection) : './static/intersection/lanes.json';
+const intersectionFile = readFileSync(intersectionFilePath, 'utf-8');
+const intersectionData: IntersectionConfig = JSON.parse(intersectionFile);
 
-const lane3: Lane = new Lane("3")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('5', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('6', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('7', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('8', clock, transitionDurationMs));
+const controller: Controller = new Controller(5555, intersectionData);
 
-const lane4 = new Lane("4")
-  .bind_trafficlight(new TrafficLight('4.1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4.2', clock, transitionDurationMs))
+for (const [key, value] of Object.entries(intersectionData.groups)) {
+  const lane: Lane = new Lane(key);
 
+  for (const trafficlight of Object.keys(value.lanes)) {
+    lane.bind_trafficlight(new Trafficlight(trafficlight));
+  }
 
-const lane5 = new Lane("5")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4', clock, transitionDurationMs))
+  controller.bind_lane(lane);
+}
 
-const lane6: Lane = new Lane("6")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('3', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('4', clock, transitionDurationMs))
+let connection_string = `tcp://localhost:5556`;
 
+if (args.ip) connection_string = connection_string.replace(/localhost/, String(args.ip));
+if (args.port) connection_string = connection_string.replace(/5556/, String(args.port));
+if (args.cstr) connection_string = String(args.cstr);
 
-const  lane7: Lane = new Lane("7")
-  .bind_trafficlight(new TrafficLight('1', clock, transitionDurationMs))
-  .bind_trafficlight(new TrafficLight('2', clock, transitionDurationMs));
+console.log(`[cstr=${connection_string}]`)
 
-const controller: Controller = new Controller(5555, clock)
-  .bind_lane(lane1)
-  .bind_lane(lane2)
-  .bind_lane(lane3)
-  .bind_lane(lane4)
-  .bind_lane(lane5)
-  .bind_lane(lane6)
-  .bind_lane(lane7)
-  .bind_lane(lane0)
-  .connect_to_simulator('tcp://localhost:5555'); //5556
-
-
-setInterval(() => {
-  const state = controller.get_state_map();
-  const passedLanes: string[] = [];
-
-  Object.keys(state).forEach((key) => {
-    const laneKey = key.split('.')[0];
-    if (!passedLanes.includes(laneKey)) {
-      passedLanes.push(laneKey);
-      const lane = state[key];
-
-      controller.change_lane_state(laneKey, lane === TrafficLightState.GREEN ? TrafficLightState.RED : TrafficLightState.GREEN);
-    }
-  });
-
-
-  // controller.transmit_state();
-}, Math.round(1000 / clock.speed));
+controller.connect_to_simulator(connection_string);
