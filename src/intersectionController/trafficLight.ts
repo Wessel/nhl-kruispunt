@@ -23,9 +23,9 @@ export class Trafficlight extends EventEmitter {
   };
 
   public id: string = '';
-  public state: TrafficlightState = TrafficlightState.RED;
   public time: number | null = null;
-  public transitionedTime: number | null = null;
+  public state: TrafficlightState = TrafficlightState.RED;
+  public transitioned_time: number | null = null;
 
   constructor(id: string) {
     super();
@@ -50,11 +50,11 @@ export class Trafficlight extends EventEmitter {
           // console.log('waiting for transition to finish...');
 
         this.state = nextState;
-        this.transitionedTime = this.time;
+        this.transitioned_time = this.time;
         this.emit('state_changed');
         this.transition_into(state);
       } else {
-        this.transitionedTime = this.time;
+        this.transitioned_time = this.time;
         this.state = nextState;
         this.emit('state_changed');
         this.transition_into(state);

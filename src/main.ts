@@ -35,8 +35,7 @@ const intersectionFilePath = args.intersection ? String(args.intersection) : './
 const intersectionFile = readFileSync(intersectionFilePath, 'utf-8');
 const intersectionData: IntersectionConfig = JSON.parse(intersectionFile);
 
-const controller: Controller = new Controller(5555)
-  .register_intersection(intersectionData);
+const controller: Controller = new Controller(5555, intersectionData);
 
 for (const [key, value] of Object.entries(intersectionData.groups)) {
   const lane: Lane = new Lane(key);

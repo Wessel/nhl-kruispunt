@@ -55,7 +55,7 @@ export class PriorityQueue {
     return this._items.find(item => item.group === group);
   }
 
-  updatePriority(group: string, newPriority: number): void {
+  update_priority(group: string, newPriority: number): void {
     const index = this._items.findIndex(item => item.group === group);
     const item = this._items[index];
 
@@ -74,7 +74,7 @@ export class PriorityQueue {
     }
   }
 
-  setActive(group: string, timestamp: number = Date.now()) {
+  set_active(group: string, timestamp: number = Date.now()) {
     const index = this._items.findIndex(item => item.group === group);
 
     if (index !== -1) {

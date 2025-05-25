@@ -1,7 +1,14 @@
 export const PRIORITY_HIGH = 1;
 export const PRIORITY_LOW = 2;
 
-export const BRIDGE_LANES = [ 71, 72, 81, 41, 42, 51, 52, 53, 54 ];
+export const PEDESTRIAN_MULTIPLIER = 2;
+
+export const DELAY_CYCLE = 3500;
+export const DELAY_REMOVING = DELAY_CYCLE * 2;
+export const DELAY_EMPTY = DELAY_CYCLE / 2;
+
+
+export const BRIDGE_LANES = [ '71', '72', '81', '41', '42', '51', '52', '53', '54' ];
 
 export const HELP_STRING = `
 +------------------------------------------------------+

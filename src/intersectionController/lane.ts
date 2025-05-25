@@ -5,7 +5,7 @@ import { EventEmitter } from 'stream';
 
 export class Lane extends EventEmitter {
   public name: string = '';
-  private _trafficLights: Trafficlight[] = [];
+  private _trafficlights: Trafficlight[] = [];
 
   constructor(name: string) {
     super();
@@ -16,7 +16,7 @@ export class Lane extends EventEmitter {
   }
 
   bind_trafficlight(trafficlight: Trafficlight): this {
-    this._trafficLights.push(trafficlight);
+    this._trafficlights.push(trafficlight);
 
     trafficlight.on('state_changed', () => this.emit('state_changed'));
 
@@ -24,7 +24,7 @@ export class Lane extends EventEmitter {
   }
 
   update_time(time: number): this {
-    this._trafficLights.forEach((trafficLight) => {
+    this._trafficlights.forEach((trafficLight) => {
       trafficLight.update_time(time);
     });
 
@@ -32,7 +32,7 @@ export class Lane extends EventEmitter {
   }
 
   set_state(state: TrafficlightState) {
-    this._trafficLights.forEach((trafficLight) => {
+    this._trafficlights.forEach((trafficLight) => {
       trafficLight.transition_into(state);
     });
   }
@@ -40,7 +40,7 @@ export class Lane extends EventEmitter {
   get_state_map(): TrafficlightStateMap {
     const stateMap: TrafficlightStateMap = {};
 
-    this._trafficLights.forEach((trafficLight) => {
+    this._trafficlights.forEach((trafficLight) => {
       stateMap[trafficLight.id] = trafficLight.state;
     });
 

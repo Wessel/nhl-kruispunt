@@ -48,13 +48,13 @@ describe('PriorityQueue', () => {
     expect(queue.contains('lane2')).toBe(false);
   });
 
-  test('updatePriority changes priority', () => {
+  test('update_priority changes priority', () => {
     const queue = new PriorityQueue();
     queue.enqueue('lane1', 2);
     queue.enqueue('lane2', 3);
 
     // Increase priority
-    queue.updatePriority('lane2', 1);
+    queue.update_priority('lane2', 1);
 
     expect(queue.peek()?.group).toBe('lane2');
     expect(queue.peek()?.priority).toBe(1);
@@ -85,7 +85,7 @@ describe('PriorityQueue', () => {
     expect(item).toBeDefined();
     expect(item?.activeSince).toBeUndefined();
 
-    queue.setActive('lane1', clock.duration);
+    queue.set_active('lane1', clock.duration);
     expect(queue.get('lane1')?.activeSince).toBe(clock.duration);
 
     clock.forward(2000);
