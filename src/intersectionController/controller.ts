@@ -105,6 +105,19 @@ export class Controller {
         continue;
       }
 
+      if (
+        this._intersection.groups[lane].transition_blockers?.green?.some(
+          blocker =>
+            blocker.type === "sensor" &&
+            blocker.sensor === "brug_file" &&
+            blocker.sensor_state === true &&
+            this._sensors_special.brug_file === true
+        )
+      ) {
+        notAllowed.push(lane);
+        continue;
+      }
+
       for (const nestedLane of this._intersection.groups[lane].intersects_with) {
         notAllowed.push(String(nestedLane));
       }
@@ -185,7 +198,6 @@ export class Controller {
   async wait_for_bridge_opened(): Promise<void> {
     return new Promise<void>((resolve) => {
       const check_bridge = () => {
-        console.log(`Checking if bridge is opened: ${this._bridge_state}`);
         if (this._bridge_state === BridgeState.OPEN) {
           resolve();
         } else {
@@ -258,7 +270,7 @@ export class Controller {
     }
 
     this._in_bridge_cycle = true;
-    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]`);
+    console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]`);
 
     this.toggle_bridge_lights(TrafficlightState.RED);
 
@@ -296,7 +308,7 @@ export class Controller {
       boatsRemaining = this._bridge_sensors['71']?.voor || this._bridge_sensors['72']?.voor;
 
       if (boatsRemaining && cycle < MAX_BOATS_PER_PASSING) {
-        console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}]`);
+        console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]\t[cycle=${cycle}]`);
       }
     }
 
@@ -307,7 +319,7 @@ export class Controller {
 
     this.toggle_bridge_lights(TrafficlightState.GREEN);
 
-    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}] closed`);
+    console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]\t[cycle=${cycle}] closed`);
 
     this._in_bridge_cycle = false;
   }
@@ -343,7 +355,7 @@ export class Controller {
     let bridge = 0;
     Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
-      const isPedestrian = this._intersection && (
+      const isPedestrian = this._intersection && this._intersection.groups[group].vehicle_type && (
         this._intersection.groups[group].vehicle_type.includes(VehicleType.PEDESTRIAN)
         || this._intersection.groups[group].vehicle_type.includes(VehicleType.BIKE));
 
