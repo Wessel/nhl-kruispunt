@@ -9,7 +9,8 @@ import {
 
 import {
   PRIORITY_HIGH, PRIORITY_LOW, BRIDGE_LANES,
-  PEDESTRIAN_MULTIPLIER, DELAY_REMOVING, DELAY_EMPTY
+  PEDESTRIAN_MULTIPLIER, DELAY_REMOVING, DELAY_EMPTY,
+  MAX_BOATS_PER_PASSING, MAX_TIME_GREEN
 } from '../constants';
 
 import { PriorityQueue } from '../priorityQueue';
@@ -218,7 +219,9 @@ export class Controller {
 
       console.log(`[time=${this._time}]\t[active=${JSON.stringify(nextLane)}]\t[green=(${lanes.join(',')})]`);
 
-      this._lane_queue.set_active(nextLane.group, this._time);
+      if (nextLane.activeSince === 0) {
+        this._lane_queue.set_active(nextLane.group, this._time);
+      }
 
       for (const group of Object.keys(this._intersection.groups)) {
         if (BRIDGE_LANES.includes(group)) {
@@ -244,41 +247,65 @@ export class Controller {
 
   async handle_bridge(): Promise<void> {
     if (this._in_bridge_cycle) return;
-    // todo: allow multiple boats to pass, also first do 71 and if any at 72 do 72
-    if (this._bridge_sensors['71']?.voor || this._bridge_sensors['72']?.voor) {
-      this._in_bridge_cycle = true;
 
-      this.toggle_bridge_lights(TrafficlightState.RED);
-
-      await this.wait_for_empty_bridge();
-
-      this._lanes['81'].set_state(TrafficlightState.GREEN);
-
-      await this.wait_for_bridge_opened();
-
-      this._lanes['71'].set_state(TrafficlightState.GREEN);
-      this._lanes['72'].set_state(TrafficlightState.GREEN);
-
-      await this.delay_for(10000);
-
-      this._lanes['71'].set_state(TrafficlightState.RED);
-      this._lanes['72'].set_state(TrafficlightState.RED);
-
-      await this.wait_for_empty_bridge_water();
-
-      this._lanes['81'].set_state(TrafficlightState.RED);
-
-      await this.wait_for_bridge_closed();
-
+    if (!this._bridge_sensors['71']?.voor && !this._bridge_sensors['72']?.voor) {
       this.toggle_bridge_lights(TrafficlightState.GREEN);
-
-      this._in_bridge_cycle = false;
-
-    } else {
-      this._lanes['41'].set_state(TrafficlightState.GREEN);
-      this.toggle_bridge_lights(TrafficlightState.GREEN);
+      return;
     }
 
+    this._in_bridge_cycle = true;
+    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]`);
+
+    this.toggle_bridge_lights(TrafficlightState.RED);
+
+    await this.delay_for(3000);
+    await this.wait_for_empty_bridge();
+
+    this._lanes['81'].set_state(TrafficlightState.GREEN);
+    await this.wait_for_bridge_opened();
+
+    let cycle = 0;
+    let boatsRemaining = true;
+
+    // Continue allowing boats to pass until no more are detected or max cycles reached
+    while (boatsRemaining && cycle < MAX_BOATS_PER_PASSING) {
+      cycle++;
+
+      if (this._bridge_sensors['71']?.voor) {
+        this._lanes['71'].set_state(TrafficlightState.GREEN);
+
+        await this.delay_for(10000);
+        await this.wait_for_empty_bridge_water();
+
+        this._lanes['71'].set_state(TrafficlightState.RED);
+      }
+
+      if (this._bridge_sensors['72']?.voor) {
+        this._lanes['72'].set_state(TrafficlightState.GREEN);
+
+        await this.delay_for(10000);
+        await this.wait_for_empty_bridge_water();
+
+        this._lanes['72'].set_state(TrafficlightState.RED);
+      }
+
+      boatsRemaining = this._bridge_sensors['71']?.voor || this._bridge_sensors['72']?.voor;
+
+      if (boatsRemaining && cycle < MAX_BOATS_PER_PASSING) {
+        console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}]`);
+      }
+    }
+
+    await this.wait_for_empty_bridge_water();
+
+    this._lanes['81'].set_state(TrafficlightState.RED);
+    await this.wait_for_bridge_closed();
+
+    this.toggle_bridge_lights(TrafficlightState.GREEN);
+
+    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}] closed`);
+
+    this._in_bridge_cycle = false;
   }
 
   /* Incoming data functions */
@@ -336,7 +363,7 @@ export class Controller {
         const existingEntry = this._lane_queue.get(group);
         if (existingEntry) {
           if (existingEntry.activeSince > 0) {
-            if (this._time > existingEntry.activeSince + 5000) {
+            if (this._time > existingEntry.activeSince + MAX_TIME_GREEN) {
               this._lane_queue.remove(group);
               return;
             }
@@ -377,7 +404,7 @@ export class Controller {
   handle_topic_voorrangsvoertuig(message: string) {
     const queue: PriorityVehicleQueue = JSON.parse(message)?.queue;
 
-    // Check if any emergency vehicles are no longer in the queue
+    // If intersection was in emergency cycle, check if its still relevant. if not reset
     if (this._priority_lane) {
       const emergency_vehicles = queue
         .filter(v => v.prioriteit === 1)
@@ -389,47 +416,52 @@ export class Controller {
       }
     }
 
-    // Process all priority vehicles
-    const emergencyVehicles = queue.filter(v => v.prioriteit === 1 && v.baan.split('.')[0] !== '41' && v.baan.split('.')[0] !== '42');
     const publicTransport = queue.filter(v => v.prioriteit === 2);
+    const emergencyVehicles = queue
+      .filter(v => v.prioriteit === 1 && v.baan.split('.')[0] !== '41' && v.baan.split('.')[0] !== '42');
 
-    // Handle emergency vehicles (priority 1) - multiple can be active
     if (emergencyVehicles.length > 0) {
       this._in_cycle = true;
+
       const emergencyLanes = emergencyVehicles.map(v => v.baan.split('.')[0]);
-      this._priority_lane = emergencyLanes[0]; // Keep track of first emergency lane for compatibility
+      this._priority_lane = emergencyLanes[0];
 
       for (const lane of Object.keys(this._lanes)) {
-      if (BRIDGE_LANES.includes(lane)) continue;
+        if (BRIDGE_LANES.includes(lane)) {
+          continue;
+        }
 
-      if (emergencyLanes.includes(lane)) {
-        this._lanes[lane].set_state(TrafficlightState.GREEN);
-      } else {
-        if (BRIDGE_LANES.includes(lane)) continue;
-        this._lanes[lane].set_state(TrafficlightState.RED);
+        if (emergencyLanes.includes(lane)) {
+          this._lanes[lane].set_state(TrafficlightState.GREEN);
+        } else {
+          this._lanes[lane].set_state(TrafficlightState.RED);
+        }
       }
-      }
+
+      console.log(`[time=${this._time}]\t[emergency_vehicle=${emergencyLanes.join(',')}]`);
     }
 
-    // Handle public transport (priority 2)
     for (const entry of publicTransport) {
-      const [ group ] = entry.baan.split('.');
+      const [ lane ] = entry.baan.split('.');
 
-      // Skip lanes 41 and 42
-      if (group === '41' || group === '42') continue;
+      if (BRIDGE_LANES.includes(lane)) {
+        continue;
+      }
 
       let priority = -1;
-      const existingEntry = this._lane_queue.get(group);
+      const existingEntry = this._lane_queue.get(lane);
 
-    if (existingEntry) {
-      if (existingEntry.activeSince > 0) {
-        priority -= 3;
+      if (existingEntry) {
+        if (existingEntry.activeSince > 0) {
+          priority -= 3;
+        }
+
+        this._lane_queue.update_priority(lane, priority);
+      } else {
+          this._lane_queue.enqueue(lane, priority, this._time);
       }
 
-      this._lane_queue.update_priority(group, priority);
-    } else {
-        this._lane_queue.enqueue(group, priority, this._time);
-      }
+      console.log(`[time=${this._time}]\t[public_transport=${lane}]\t[priority=${priority}]`);
     }
   }
 

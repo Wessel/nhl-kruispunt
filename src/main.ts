@@ -53,6 +53,6 @@ if (args.ip) connection_string = connection_string.replace(/localhost/, String(a
 if (args.port) connection_string = connection_string.replace(/5556/, String(args.port));
 if (args.cstr) connection_string = String(args.cstr);
 
-console.log(`Simulator connection string:\t ${connection_string}`)
+console.log(`[cstr=${connection_string}]`)
 
 controller.connect_to_simulator(connection_string);
