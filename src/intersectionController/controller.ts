@@ -244,7 +244,9 @@ export class Controller {
       await this.delay_for(MAX_TIME_GREEN);
     }
 
-    this._in_cycle = false;
+    if (!this._priority_lane) {
+      this._in_cycle = false;
+    }
   }
 
   async handle_bridge(): Promise<void> {
