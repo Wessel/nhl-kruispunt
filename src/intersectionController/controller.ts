@@ -10,7 +10,7 @@ import {
 import {
   PRIORITY_HIGH, PRIORITY_LOW, BRIDGE_LANES,
   PEDESTRIAN_MULTIPLIER, DELAY_REMOVING, DELAY_EMPTY,
-  MAX_BOATS_PER_PASSING, MAX_TIME_GREEN
+  MAX_BOATS_PER_PASSING, MAX_TIME_GREEN, PRIORITY_PEDESTRIAN
 } from '../constants';
 
 import { PriorityQueue } from '../priorityQueue';
@@ -240,6 +240,8 @@ export class Controller {
           }
         }
       }
+
+      await this.delay_for(MAX_TIME_GREEN);
     }
 
     this._in_cycle = false;
@@ -339,6 +341,9 @@ export class Controller {
     let bridge = 0;
     Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
+      const isPedestrian = this._intersection && (
+        this._intersection.groups[group].vehicle_type.includes(VehicleType.PEDESTRIAN)
+        || this._intersection.groups[group].vehicle_type.includes(VehicleType.BIKE));
 
       // Skip all lanes related to bridges, due to them being handled by the bridge control
       if (BRIDGE_LANES.includes(group)) {
@@ -357,6 +362,10 @@ export class Controller {
         priority = PRIORITY_HIGH;
       } else if (sensorData.voor || sensorData.achter) {
         priority = PRIORITY_LOW;
+      }
+
+      if (isPedestrian && (sensorData.voor || sensorData.achter)) {
+        priority = PRIORITY_PEDESTRIAN;
       }
 
       if (priority) {
@@ -384,11 +393,7 @@ export class Controller {
 
         this._lane_queue.remove(group);
 
-        if (
-          this._intersection && (
-          this._intersection.groups[group].vehicle_type.includes(VehicleType.PEDESTRIAN)
-            || this._intersection.groups[group].vehicle_type.includes(VehicleType.BIKE))
-        ) {
+        if (isPedestrian) {
           await this.delay_for(DELAY_REMOVING * PEDESTRIAN_MULTIPLIER);
         } else {
           await this.delay_for(DELAY_REMOVING);
