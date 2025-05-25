@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
-[Serializable]
+[System.Serializable]
 public class SpawnModeValue
 {
   public SpawnMode mode;
@@ -29,17 +30,33 @@ public class EntitySpawner : MonoBehaviour
 
   private void OnValidate()
   {
-    Array enumValues = (SpawnMode[])Enum.GetValues(typeof(SpawnMode));
-
-    foreach (SpawnMode mode in enumValues)
+    // Zorg ervoor dat de spawnModeValues zijn ingesteld met standaardwaarden
+    if (spawnModeValues.Count == 0)
     {
-      if (!spawnModeValues.Exists(x => x.mode == mode))
+      InitializeDefaultSpawnModes();
+    }
+
+    var enumValues = (SpawnMode[])System.Enum.GetValues(typeof(SpawnMode));
+    var existingModes = new HashSet<SpawnMode>(spawnModeValues.Select(x => x.mode));
+
+    foreach (var mode in enumValues)
+    {
+      if (!existingModes.Contains(mode))
       {
-        spawnModeValues.Add(new SpawnModeValue { mode = mode });
+        float defaultTimer = mode switch
+        {
+          SpawnMode.Easy => 11f,
+          SpawnMode.Normal => 7f,
+          SpawnMode.Hard => 4f,
+          _ => 10f // Standaardwaarde voor onbekende modi
+        };
+
+        spawnModeValues.Add(new SpawnModeValue { mode = mode, spawntimer = defaultTimer });
       }
     }
 
-    spawnModeValues.RemoveAll(x => Array.IndexOf(enumValues, x.mode) == -1);
+    // Verwijder alle spawnModeValues die niet meer in de enum staan
+    spawnModeValues.RemoveAll(x => !enumValues.Contains(x.mode));
     spawnModeValues.Sort((a, b) => a.mode.CompareTo(b.mode));
   }
 
@@ -49,6 +66,13 @@ public class EntitySpawner : MonoBehaviour
     EventManager.Instance.SetSpawnMode.AddListener(OnSpawnModeChanged);
     EventManager.Instance.Reset.AddListener(ResetSpawnTimer);
     ResetSpawnTimer();
+  }
+
+  private void InitializeDefaultSpawnModes()
+  {
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Easy, spawntimer = 11f });
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Normal, spawntimer = 7f });
+    spawnModeValues.Add(new SpawnModeValue { mode = SpawnMode.Hard, spawntimer = 4f });
   }
 
   void Update()
