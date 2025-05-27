@@ -10,7 +10,7 @@ import {
 import {
   PRIORITY_HIGH, PRIORITY_LOW, BRIDGE_LANES,
   PEDESTRIAN_MULTIPLIER, DELAY_REMOVING, DELAY_EMPTY,
-  MAX_BOATS_PER_PASSING, MAX_TIME_GREEN
+  MAX_BOATS_PER_PASSING, MAX_TIME_GREEN, PRIORITY_PEDESTRIAN
 } from '../constants';
 
 import { PriorityQueue } from '../priorityQueue';
@@ -105,6 +105,19 @@ export class Controller {
         continue;
       }
 
+      if (
+        this._intersection.groups[lane].transition_blockers?.green?.some(
+          blocker =>
+            blocker.type === "sensor" &&
+            blocker.sensor === "brug_file" &&
+            blocker.sensor_state === true &&
+            this._sensors_special.brug_file === true
+        )
+      ) {
+        notAllowed.push(lane);
+        continue;
+      }
+
       for (const nestedLane of this._intersection.groups[lane].intersects_with) {
         notAllowed.push(String(nestedLane));
       }
@@ -185,7 +198,6 @@ export class Controller {
   async wait_for_bridge_opened(): Promise<void> {
     return new Promise<void>((resolve) => {
       const check_bridge = () => {
-        console.log(`Checking if bridge is opened: ${this._bridge_state}`);
         if (this._bridge_state === BridgeState.OPEN) {
           resolve();
         } else {
@@ -240,9 +252,13 @@ export class Controller {
           }
         }
       }
+
+      await this.delay_for(MAX_TIME_GREEN);
     }
 
-    this._in_cycle = false;
+    if (!this._priority_lane) {
+      this._in_cycle = false;
+    }
   }
 
   async handle_bridge(): Promise<void> {
@@ -254,7 +270,7 @@ export class Controller {
     }
 
     this._in_bridge_cycle = true;
-    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]`);
+    console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]`);
 
     this.toggle_bridge_lights(TrafficlightState.RED);
 
@@ -292,7 +308,7 @@ export class Controller {
       boatsRemaining = this._bridge_sensors['71']?.voor || this._bridge_sensors['72']?.voor;
 
       if (boatsRemaining && cycle < MAX_BOATS_PER_PASSING) {
-        console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}]`);
+        console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]\t[cycle=${cycle}]`);
       }
     }
 
@@ -303,7 +319,7 @@ export class Controller {
 
     this.toggle_bridge_lights(TrafficlightState.GREEN);
 
-    console.log(`[time=${this._time}]\t[bridge=${this._bridge_sensors}]\t[cycle=${cycle}] closed`);
+    console.log(`[time=${this._time}]\t[bridge=${JSON.stringify(this._bridge_sensors)}]\t[cycle=${cycle}] closed`);
 
     this._in_bridge_cycle = false;
   }
@@ -339,6 +355,9 @@ export class Controller {
     let bridge = 0;
     Object.keys(data).forEach(async(key) => {
       const [ group ] = key.split('.');
+      const isPedestrian = this._intersection && this._intersection.groups[group].vehicle_type && (
+        this._intersection.groups[group].vehicle_type.includes(VehicleType.PEDESTRIAN)
+        || this._intersection.groups[group].vehicle_type.includes(VehicleType.BIKE));
 
       // Skip all lanes related to bridges, due to them being handled by the bridge control
       if (BRIDGE_LANES.includes(group)) {
@@ -357,6 +376,10 @@ export class Controller {
         priority = PRIORITY_HIGH;
       } else if (sensorData.voor || sensorData.achter) {
         priority = PRIORITY_LOW;
+      }
+
+      if (isPedestrian && (sensorData.voor || sensorData.achter)) {
+        priority = PRIORITY_PEDESTRIAN;
       }
 
       if (priority) {
@@ -384,11 +407,7 @@ export class Controller {
 
         this._lane_queue.remove(group);
 
-        if (
-          this._intersection && (
-          this._intersection.groups[group].vehicle_type.includes(VehicleType.PEDESTRIAN)
-            || this._intersection.groups[group].vehicle_type.includes(VehicleType.BIKE))
-        ) {
+        if (isPedestrian) {
           await this.delay_for(DELAY_REMOVING * PEDESTRIAN_MULTIPLIER);
         } else {
           await this.delay_for(DELAY_REMOVING);

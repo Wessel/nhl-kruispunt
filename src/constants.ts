@@ -1,3 +1,4 @@
+export const PRIORITY_PEDESTRIAN = 0;
 export const PRIORITY_HIGH = 1;
 export const PRIORITY_LOW = 2;
 

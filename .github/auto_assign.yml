@@ -1,0 +1,5 @@
+addReviewers: true
+reviewers: [wessel]
+
+numberOfReviewers: 0
+runOnDraft: true
