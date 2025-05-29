@@ -1,1 +1,0 @@
-gooi json error wanneer json loads niet lukt
